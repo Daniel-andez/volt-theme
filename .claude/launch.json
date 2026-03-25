@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "configurations": [
+    {
+      "name": "Shopify Theme Dev",
+      "runtimeExecutable": "shopify",
+      "runtimeArgs": ["theme", "dev", "--path", "."],
+      "port": 9292
+    }
+  ]
+}
