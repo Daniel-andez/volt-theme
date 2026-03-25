@@ -21,7 +21,9 @@
       "Bash(do sed:*)",
       "Bash(done)",
       "Bash(sed -i 's/zap-theme\\\\.js/volt-theme.js/g' assets/volt-theme.js)",
-      "Bash(rm assets/zap-theme.css assets/zap-theme.js)"
+      "Bash(rm assets/zap-theme.css assets/zap-theme.js)",
+      "WebFetch(domain:shopify.dev)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ]
   }
 }
