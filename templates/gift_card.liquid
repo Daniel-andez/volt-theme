@@ -1,0 +1,98 @@
+{% layout none %}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ 'gift_card.title' | t }} — {{ shop.name }}</title>
+    {% render 'head-variables' %}
+    {{ 'volt-theme.css' | asset_url | stylesheet_tag }}
+    {{ content_for_header }}
+    <style>
+      .gift-card-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--volt-surface); padding: 2rem; }
+      .gift-card-box  { background: var(--volt-bg); border-radius: var(--volt-radius-lg); box-shadow: var(--volt-shadow-lg); padding: 2.5rem; max-width: 480px; width: 100%; text-align: center; }
+      .gift-card-logo { margin-bottom: 1.5rem; }
+      .gift-card-balance { font-size: 3rem; font-weight: 900; letter-spacing: -0.04em; color: var(--volt-accent); margin-bottom: .5rem; }
+      .gift-card-code { font-size: 1.375rem; font-weight: 700; letter-spacing: .12em; background: var(--volt-surface); padding: .75rem 1.25rem; border-radius: var(--volt-radius-md); margin: 1.25rem 0; display: inline-block; }
+      .gift-card-qr   { margin: 1rem auto; }
+    </style>
+  </head>
+  <body>
+    <main class="gift-card-page">
+      <div class="gift-card-box">
+
+        <div class="gift-card-logo">
+          {%- if settings.logo -%}
+            {{ settings.logo | image_url: width: 180 | image_tag: alt: shop.name, width: 120 }}
+          {%- else -%}
+            <span style="font-size:1.5rem; font-weight:900; letter-spacing:-0.04em;">{{ shop.name }}</span>
+          {%- endif -%}
+        </div>
+
+        <p class="gift-card-balance">{{ gift_card.balance | money }}</p>
+        <h1 style="font-size:1.25rem; margin-bottom:.5rem;">{{ 'gift_card.title' | t }}</h1>
+        <p style="color:var(--volt-text-secondary); font-size:.9375rem;">{{ 'gift_card.use_at_checkout' | t }}</p>
+
+        {%- if gift_card.enabled == false or gift_card.expired -%}
+          <p style="color:var(--volt-error); font-weight:600; margin-top:.75rem;">{{ 'gift_card.expired' | t }}</p>
+        {%- endif -%}
+
+        {%- if gift_card.expires_on -%}
+          <p style="font-size:.875rem; color:var(--volt-text-secondary); margin-top:.35rem;">
+            {{ 'gift_card.expires_on' | t: expires_on: gift_card.expires_on | date: '%B %e, %Y' }}
+          </p>
+        {%- endif -%}
+
+        <div class="gift-card-code" id="gift-card-code" aria-label="{{ 'gift_card.code_label' | t | default: 'Gift card code' }}">
+          {{ gift_card.code | format_code }}
+        </div>
+
+        <button
+          type="button"
+          class="btn btn--secondary btn--sm"
+          onclick="navigator.clipboard.writeText('{{ gift_card.code }}').then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Copy code', 1500); })"
+          style="margin-bottom:1rem;"
+        >
+          Copy code
+        </button>
+
+        {%- if gift_card.pass_url -%}
+          <div style="margin-top:.75rem;">
+            <a href="{{ gift_card.pass_url }}">
+              <img
+                src="{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}"
+                alt="{{ 'gift_card.add_to_apple_wallet' | t }}"
+                width="180"
+                height="54"
+                loading="lazy"
+              >
+            </a>
+          </div>
+        {%- endif -%}
+
+        <div class="gift-card-qr" id="gift-card-qr"></div>
+
+        <div style="margin-top:1.5rem;">
+          <a href="{{ shop.url }}" class="btn btn--primary btn--full">{{ 'gift_card.shop_link' | t | default: 'Shop now' }}</a>
+        </div>
+
+      </div>
+    </main>
+
+    <script>
+      // Render QR code via Shopify's built-in QR endpoint
+      (function() {
+        var el = document.getElementById('gift-card-qr');
+        if (!el) return;
+        var code = '{{ gift_card.code }}';
+        var img  = document.createElement('img');
+        img.src    = 'https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl={{ gift_card.code | url_encode }}&choe=UTF-8';
+        img.alt    = code;
+        img.width  = 120;
+        img.height = 120;
+        img.style.margin = '0 auto';
+        el.appendChild(img);
+      })();
+    </script>
+  </body>
+</html>

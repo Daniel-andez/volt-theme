@@ -4,31 +4,31 @@
 {% endcomment %}
 
 <div class="container section">
-  <h1 style="margin-bottom:var(--zap-space-xl);">{{ 'cart.general.title' | t }}</h1>
+  <h1 style="margin-bottom:var(--volt-space-xl);">{{ 'cart.general.title' | t }}</h1>
 
   {%- if cart.item_count > 0 -%}
     {%- form 'cart', cart, id: 'cart-page-form' -%}
-      <div style="display:grid; grid-template-columns:1fr 360px; gap:var(--zap-space-2xl); align-items:start;">
+      <div style="display:grid; grid-template-columns:1fr 360px; gap:var(--volt-space-2xl); align-items:start;">
 
         {%- comment -%} Line items {%- endcomment -%}
         <div>
           {%- for item in cart.items -%}
-            <div class="cart-item" style="padding:1rem 0; border-bottom:1px solid var(--zap-border); display:flex; gap:1rem;">
+            <div class="cart-item" style="padding:1rem 0; border-bottom:1px solid var(--volt-border); display:flex; gap:1rem;">
               <a href="{{ item.url }}">
                 <img
                   src="{{ item.image | image_url: width: 120 }}"
                   alt="{{ item.product.title | escape }}"
                   width="96" height="96"
-                  style="border-radius:var(--zap-radius-sm); object-fit:cover; flex-shrink:0;"
+                  style="border-radius:var(--volt-radius-sm); object-fit:cover; flex-shrink:0;"
                   loading="lazy"
                 >
               </a>
               <div style="flex:1; display:flex; flex-direction:column; gap:.4rem;">
                 <a href="{{ item.url }}" style="font-weight:600;">{{ item.product.title }}</a>
                 {%- unless item.variant.title == 'Default Title' -%}
-                  <p style="font-size:.875rem; color:var(--zap-text-secondary);">{{ item.variant.title }}</p>
+                  <p style="font-size:.875rem; color:var(--volt-text-secondary);">{{ item.variant.title }}</p>
                 {%- endunless -%}
-                <p style="font-size:.875rem; color:var(--zap-text-secondary);">{{ item.variant.sku }}</p>
+                <p style="font-size:.875rem; color:var(--volt-text-secondary);">{{ item.variant.sku }}</p>
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-top:auto;">
                   <div class="quantity-selector quantity-selector--small">
                     <button type="button" class="quantity-selector__btn" data-qty="-1" data-key="{{ item.key }}">−</button>
@@ -45,7 +45,7 @@
                   </div>
                   <div>
                     {%- if item.original_line_price != item.final_line_price -%}
-                      <s style="font-size:.875rem; color:var(--zap-text-secondary); margin-right:.35rem;">{{ item.original_line_price | money }}</s>
+                      <s style="font-size:.875rem; color:var(--volt-text-secondary); margin-right:.35rem;">{{ item.original_line_price | money }}</s>
                     {%- endif -%}
                     <strong>{{ item.final_line_price | money }}</strong>
                   </div>
@@ -54,7 +54,7 @@
               <a
                 href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity=0"
                 aria-label="{{ 'cart.general.remove' | t }}: {{ item.product.title | escape }}"
-                style="opacity:.35; align-self:flex-start; transition:opacity var(--zap-duration); flex-shrink:0;"
+                style="opacity:.35; align-self:flex-start; transition:opacity var(--volt-duration); flex-shrink:0;"
                 onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.35"
               >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -64,7 +64,7 @@
 
           {%- comment -%} Cart note {%- endcomment -%}
           {%- if settings.cart_notes_enable -%}
-            <div style="margin-top:var(--zap-space-lg);">
+            <div style="margin-top:var(--volt-space-lg);">
               <label for="CartNote" style="font-size:.875rem; font-weight:600; display:block; margin-bottom:.4rem;">
                 {{ 'cart.general.note' | t }}
               </label>
@@ -84,22 +84,22 @@
         </div>
 
         {%- comment -%} Order summary {%- endcomment -%}
-        <div style="background:var(--zap-surface); border-radius:var(--zap-radius-md); padding:var(--zap-space-xl); position:sticky; top:calc(var(--header-height) + 1rem);">
-          <h2 style="font-size:1.125rem; margin-bottom:var(--zap-space-md);">{{ 'cart.general.order_summary' | t }}</h2>
+        <div style="background:var(--volt-surface); border-radius:var(--volt-radius-md); padding:var(--volt-space-xl); position:sticky; top:calc(var(--header-height) + 1rem);">
+          <h2 style="font-size:1.125rem; margin-bottom:var(--volt-space-md);">{{ 'cart.general.order_summary' | t }}</h2>
 
           {%- for discount in cart.cart_level_discount_applications -%}
-            <div style="display:flex; justify-content:space-between; font-size:.875rem; color:var(--zap-success); margin-bottom:.5rem;">
+            <div style="display:flex; justify-content:space-between; font-size:.875rem; color:var(--volt-success); margin-bottom:.5rem;">
               <span>{{ discount.title }}</span>
               <span>-{{ discount.total_allocated_amount | money }}</span>
             </div>
           {%- endfor -%}
 
-          <div style="display:flex; justify-content:space-between; font-size:1.125rem; font-weight:700; padding-top:.75rem; border-top:1px solid var(--zap-border); margin-bottom:var(--zap-space-md);">
+          <div style="display:flex; justify-content:space-between; font-size:1.125rem; font-weight:700; padding-top:.75rem; border-top:1px solid var(--volt-border); margin-bottom:var(--volt-space-md);">
             <span>{{ 'cart.general.subtotal' | t }}</span>
             <span>{{ cart.total_price | money_with_currency }}</span>
           </div>
 
-          <p style="font-size:.8125rem; color:var(--zap-text-secondary); margin-bottom:var(--zap-space-md);">
+          <p style="font-size:.8125rem; color:var(--volt-text-secondary); margin-bottom:var(--volt-space-md);">
             {{ 'cart.general.taxes_shipping_at_checkout' | t }}
           </p>
 
@@ -122,10 +122,10 @@
     {%- endform -%}
 
   {%- else -%}
-    <div style="text-align:center; padding:var(--zap-space-3xl) 0;">
-      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style="margin:0 auto var(--zap-space-lg);opacity:.25;"><circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="2"/><path d="M22 22h20l-3 18H25L22 22z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="27" cy="46" r="2" fill="currentColor"/><circle cx="37" cy="46" r="2" fill="currentColor"/></svg>
+    <div style="text-align:center; padding:var(--volt-space-3xl) 0;">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style="margin:0 auto var(--volt-space-lg);opacity:.25;"><circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="2"/><path d="M22 22h20l-3 18H25L22 22z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="27" cy="46" r="2" fill="currentColor"/><circle cx="37" cy="46" r="2" fill="currentColor"/></svg>
       <h2 style="margin-bottom:.75rem;">{{ 'cart.general.empty' | t }}</h2>
-      <p style="color:var(--zap-text-secondary); margin-bottom:var(--zap-space-xl);">{{ 'cart.general.empty_description' | t | default: 'Your cart is looking a bit empty.' }}</p>
+      <p style="color:var(--volt-text-secondary); margin-bottom:var(--volt-space-xl);">{{ 'cart.general.empty_description' | t | default: 'Your cart is looking a bit empty.' }}</p>
       <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary btn--lg">
         {{ 'cart.general.continue_shopping' | t }}
       </a>

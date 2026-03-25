@@ -1,0 +1,74 @@
+{% comment %}sections/main-list-collections.liquid — All collections grid{% endcomment %}
+
+{%- assign cols = section.settings.columns | default: '3' -%}
+
+<div class="container section--sm">
+  <header style="margin-bottom:var(--volt-space-xl);">
+    <h1>{{ 'collections.title' | t | default: 'All Collections' }}</h1>
+  </header>
+
+  <div class="collection-grid" style="--grid-cols:{{ cols }};">
+    {%- for collection in collections -%}
+      <a href="{{ collection.url }}" class="collection-card">
+        <div class="collection-card__media" style="aspect-ratio:{{ section.settings.image_ratio | default: '1' }}; background:var(--volt-surface); border-radius:var(--volt-radius-md); overflow:hidden; position:relative;">
+          {%- if collection.image -%}
+            {{
+              collection.image
+              | image_url: width: 600
+              | image_tag:
+                alt: collection.image.alt | default: collection.title | escape,
+                loading: forloop.index > 6 | ternary: 'lazy', 'eager',
+                width: 600,
+                style: 'width:100%; height:100%; object-fit:cover; transition:transform .4s cubic-bezier(.4,0,.2,1);'
+            }}
+          {%- elsif collection.products.first.featured_image -%}
+            {{
+              collection.products.first.featured_image
+              | image_url: width: 600
+              | image_tag:
+                alt: collection.title | escape,
+                loading: 'lazy',
+                width: 600,
+                style: 'width:100%; height:100%; object-fit:cover; transition:transform .4s cubic-bezier(.4,0,.2,1);'
+            }}
+          {%- else -%}
+            {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+          <div style="position:absolute; inset:0; background:rgba(0,0,0,.2); transition:background .3s;"></div>
+          <div style="position:absolute; bottom:1rem; left:1rem; right:1rem;">
+            <h2 style="font-size:1.125rem; color:#fff; margin:0; text-shadow:0 1px 4px rgba(0,0,0,.4);">{{ collection.title }}</h2>
+            {%- if collection.products_count > 0 -%}
+              <p style="font-size:.8rem; color:rgba(255,255,255,.8); margin:0;">{{ collection.products_count }} {{ 'collections.general.products' | t | default: 'products' }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      </a>
+    {%- else -%}
+      {%- for i in (1..6) -%}
+        <div class="collection-card">
+          <div style="aspect-ratio:1; background:var(--volt-surface); border-radius:var(--volt-radius-md);">
+            {{ 'collection-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+<style>
+  .collection-card { display:block; text-decoration:none; }
+  .collection-card:hover .collection-card__media img { transform:scale(1.05); }
+  .collection-card:hover .collection-card__media > div:nth-child(2) { background:rgba(0,0,0,.3); }
+</style>
+
+{% schema %}
+{
+  "name": "Collections list",
+  "tag": "section",
+  "settings": [
+    { "type": "select", "id": "columns",     "label": "Columns", "options": [{"value":"2","label":"2"},{"value":"3","label":"3"},{"value":"4","label":"4"}], "default": "3" },
+    { "type": "select", "id": "image_ratio", "label": "Image ratio", "options": [{"value":"1","label":"Square"},{"value":"4/3","label":"Landscape (4:3)"},{"value":"3/4","label":"Portrait (3:4)"}], "default": "1" }
+  ],
+  "presets": [{ "name": "Collections list" }]
+}
+{% endschema %}

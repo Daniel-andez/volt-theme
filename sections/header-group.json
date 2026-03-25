@@ -1,0 +1,33 @@
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": {
+        "show_bar": true,
+        "bg_color": "#111111",
+        "text_color": "#FFFFFF",
+        "dismissible": true
+      },
+      "blocks": {
+        "msg_1": {
+          "type": "message",
+          "settings": { "text": "🚀 Free shipping on orders over $50" }
+        }
+      },
+      "block_order": ["msg_1"]
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "logo_width": 140,
+        "menu": "main-menu",
+        "show_search": true,
+        "enable_sticky": true,
+        "transparent_home": false
+      }
+    }
+  },
+  "order": ["announcement", "header"]
+}

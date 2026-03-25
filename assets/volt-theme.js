@@ -1,30 +1,30 @@
 /**
- * zap-theme.js
+ * volt-theme.js
  * ─────────────────────────────────────────────────────────────────────────────
  * Vanilla ES6+ — zero dependencies.
  * Modules (all self-initialising via init() called at bottom):
- *   • ZapUtils          — shared helpers
- *   • ZapHeader         — sticky, transparent, scroll-shrink, search panel
- *   • ZapMobileNav      — mobile drawer + expand/collapse
- *   • ZapCartDrawer     — slide-out cart, live count, notes
- *   • ZapProductForm    — variant picker, quantity, ATC, product recommendations
- *   • ZapAgeVerifier    — cookie-backed age gate
- *   • ZapPromoPopup     — timed popup with session storage dismiss
- *   • ZapCountdown      — product-page countdown timer
- *   • ZapPredictive     — predictive search
- *   • ZapBackToTop      — scroll-triggered back-to-top button
- *   • ZapAnnouncement   — dismissible announcement bar
- *   • ZapQuickView      — quick view modal (lazy-loads product HTML)
- *   • ZapInfiniteScroll — intersection-observer-based pagination
+ *   • VoltUtils          — shared helpers
+ *   • VoltHeader         — sticky, transparent, scroll-shrink, search panel
+ *   • VoltMobileNav      — mobile drawer + expand/collapse
+ *   • VoltCartDrawer     — slide-out cart, live count, notes
+ *   • VoltProductForm    — variant picker, quantity, ATC, product recommendations
+ *   • VoltAgeVerifier    — cookie-backed age gate
+ *   • VoltPromoPopup     — timed popup with session storage dismiss
+ *   • VoltCountdown      — product-page countdown timer
+ *   • VoltPredictive     — predictive search
+ *   • VoltBackToTop      — scroll-triggered back-to-top button
+ *   • VoltAnnouncement   — dismissible announcement bar
+ *   • VoltQuickView      — quick view modal (lazy-loads product HTML)
+ *   • VoltInfiniteScroll — intersection-observer-based pagination
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 'use strict';
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ZapUtils — helpers used across modules
+   VoltUtils — helpers used across modules
 ═══════════════════════════════════════════════════════════════════════════ */
-const ZapUtils = {
+const VoltUtils = {
   /** Debounce a function */
   debounce(fn, delay = 300) {
     let timer;
@@ -88,9 +88,9 @@ const ZapUtils = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ZapHeader — sticky behaviour, transparent home, search panel
+   VoltHeader — sticky behaviour, transparent home, search panel
 ═══════════════════════════════════════════════════════════════════════════ */
-const ZapHeader = {
+const VoltHeader = {
   init() {
     this.header      = document.getElementById('site-header');
     this.searchBtn   = document.querySelector('[data-toggle-search]');
@@ -98,7 +98,7 @@ const ZapHeader = {
     if (!this.header) return;
 
     this._setHeight();
-    window.addEventListener('resize', ZapUtils.debounce(() => this._setHeight(), 200));
+    window.addEventListener('resize', VoltUtils.debounce(() => this._setHeight(), 200));
 
     if (this.header.classList.contains('site-header--sticky')) {
       window.addEventListener('scroll', this._onScroll.bind(this), { passive: true });
@@ -138,9 +138,9 @@ const ZapHeader = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ZapMobileNav — drawer open/close + sub-menu accordion
+   VoltMobileNav — drawer open/close + sub-menu accordion
 ═══════════════════════════════════════════════════════════════════════════ */
-const ZapMobileNav = {
+const VoltMobileNav = {
   init() {
     this.toggle   = document.querySelector('[data-menu-toggle]');
     this.close    = document.querySelector('[data-menu-close]');
@@ -165,7 +165,7 @@ const ZapMobileNav = {
     this.overlay?.classList.add('is-active');
     this.toggle.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
-    ZapUtils.trapFocus(this.nav);
+    VoltUtils.trapFocus(this.nav);
   },
 
   close_() {
@@ -174,7 +174,7 @@ const ZapMobileNav = {
     this.overlay?.classList.remove('is-active');
     this.toggle?.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
-    ZapUtils.removeFocusTrap(this.nav);
+    VoltUtils.removeFocusTrap(this.nav);
     this.toggle?.focus();
   },
 
@@ -187,9 +187,9 @@ const ZapMobileNav = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ZapCartDrawer — open/close, fetch cart, update count, render items
+   VoltCartDrawer — open/close, fetch cart, update count, render items
 ═══════════════════════════════════════════════════════════════════════════ */
-const ZapCartDrawer = {
+const VoltCartDrawer = {
   init() {
     this.drawer   = document.getElementById('cart-drawer');
     this.overlay  = document.getElementById('cart-overlay');
@@ -208,10 +208,10 @@ const ZapCartDrawer = {
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') this.close(); });
 
     // Cart note debounced save
-    this.noteEl?.addEventListener('input', ZapUtils.debounce(() => this._saveNote(), 800));
+    this.noteEl?.addEventListener('input', VoltUtils.debounce(() => this._saveNote(), 800));
 
-    // Listen for custom ATC events from ZapProductForm
-    document.addEventListener('zap:cart:updated', () => this._fetchCart());
+    // Listen for custom ATC events from VoltProductForm
+    document.addEventListener('volt:cart:updated', () => this._fetchCart());
   },
 
   open() {
@@ -219,7 +219,7 @@ const ZapCartDrawer = {
     this.overlay?.classList.add('is-active');
     this.drawer.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    ZapUtils.trapFocus(this.drawer);
+    VoltUtils.trapFocus(this.drawer);
     this._fetchCart();
   },
 
@@ -228,17 +228,17 @@ const ZapCartDrawer = {
     this.overlay?.classList.remove('is-active');
     this.drawer.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-    ZapUtils.removeFocusTrap(this.drawer);
+    VoltUtils.removeFocusTrap(this.drawer);
     document.querySelector('[data-open-cart]')?.focus();
   },
 
   async _fetchCart() {
     try {
-      const cart = await ZapUtils.fetchJSON('/cart.js');
+      const cart = await VoltUtils.fetchJSON('/cart.js');
       this._renderItems(cart);
       this._updateCount(cart.item_count);
     } catch (err) {
-      console.warn('[ZapCart] fetch error', err);
+      console.warn('[VoltCart] fetch error', err);
     }
   },
 
@@ -246,8 +246,8 @@ const ZapCartDrawer = {
     if (!this.items) return;
 
     if (cart.item_count === 0) {
-      this.items.innerHTML = `<p style="text-align:center;padding:2rem;color:var(--zap-text-secondary)">Your cart is empty.</p>`;
-      if (this.subtotal) this.subtotal.textContent = ZapUtils.formatMoney(0);
+      this.items.innerHTML = `<p style="text-align:center;padding:2rem;color:var(--volt-text-secondary)">Your cart is empty.</p>`;
+      if (this.subtotal) this.subtotal.textContent = VoltUtils.formatMoney(0);
       return;
     }
 
@@ -265,7 +265,7 @@ const ZapCartDrawer = {
               <input type="number" value="${item.quantity}" min="0" class="quantity-selector__input" data-qty-input data-key="${item.key}" aria-label="Quantity for ${item.product_title}">
               <button type="button" class="quantity-selector__btn" data-qty="+1" data-key="${item.key}">+</button>
             </div>
-            <span class="cart-item__price">${ZapUtils.formatMoney(item.final_line_price)}</span>
+            <span class="cart-item__price">${VoltUtils.formatMoney(item.final_line_price)}</span>
           </div>
         </div>
         <button class="cart-item__remove" data-remove="${item.key}" aria-label="Remove ${item.product_title}">
@@ -275,7 +275,7 @@ const ZapCartDrawer = {
     `).join('');
 
     this.items.innerHTML = `<div class="cart-items">${html}</div>`;
-    if (this.subtotal) this.subtotal.textContent = ZapUtils.formatMoney(cart.total_price);
+    if (this.subtotal) this.subtotal.textContent = VoltUtils.formatMoney(cart.total_price);
 
     // Restore note value
     if (this.noteEl && cart.note) this.noteEl.value = cart.note;
@@ -294,11 +294,11 @@ const ZapCartDrawer = {
 
   async _changeQty(key, delta) {
     try {
-      const cart  = await ZapUtils.fetchJSON('/cart.js');
+      const cart  = await VoltUtils.fetchJSON('/cart.js');
       const item  = cart.items.find(i => i.key === key);
       if (!item) return;
       await this._setQty(key, item.quantity + delta);
-    } catch (err) { console.warn('[ZapCart] qty error', err); }
+    } catch (err) { console.warn('[VoltCart] qty error', err); }
   },
 
   async _setQty(key, qty) {
@@ -311,7 +311,7 @@ const ZapCartDrawer = {
       const cart = await res.json();
       this._renderItems(cart);
       this._updateCount(cart.item_count);
-    } catch (err) { console.warn('[ZapCart] setQty error', err); }
+    } catch (err) { console.warn('[VoltCart] setQty error', err); }
   },
 
   _updateCount(count) {
@@ -334,9 +334,9 @@ const ZapCartDrawer = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ZapProductForm — variant selection, qty, ATC, recommendations
+   VoltProductForm — variant selection, qty, ATC, recommendations
 ═══════════════════════════════════════════════════════════════════════════ */
-const ZapProductForm = {
+const VoltProductForm = {
   init() {
     this.forms = document.querySelectorAll('[data-product-form]');
     this.forms.forEach(form => this._initForm(form));
@@ -411,10 +411,10 @@ const ZapProductForm = {
       const priceEl   = priceBlock.querySelector('.product-price__regular, .product-price__sale');
       const compareEl = priceBlock.querySelector('.product-price__compare');
       if (variant.compare_at_price > variant.price) {
-        if (priceEl)   { priceEl.className   = 'product-price__sale';    priceEl.textContent = ZapUtils.formatMoney(variant.price); }
-        if (compareEl) { compareEl.textContent = ZapUtils.formatMoney(variant.compare_at_price); compareEl.hidden = false; }
+        if (priceEl)   { priceEl.className   = 'product-price__sale';    priceEl.textContent = VoltUtils.formatMoney(variant.price); }
+        if (compareEl) { compareEl.textContent = VoltUtils.formatMoney(variant.compare_at_price); compareEl.hidden = false; }
       } else {
-        if (priceEl)   { priceEl.className   = 'product-price__regular'; priceEl.textContent = ZapUtils.formatMoney(variant.price); }
+        if (priceEl)   { priceEl.className   = 'product-price__regular'; priceEl.textContent = VoltUtils.formatMoney(variant.price); }
         if (compareEl) { compareEl.hidden = true; }
       }
       priceBlock.querySelector('[itemprop="price"]')?.setAttribute('content', (variant.price / 100).toFixed(2));
@@ -461,14 +461,14 @@ const ZapProductForm = {
       if (!res.ok) throw new Error('Could not add to cart');
 
       // Signal cart update
-      document.dispatchEvent(new CustomEvent('zap:cart:updated'));
+      document.dispatchEvent(new CustomEvent('volt:cart:updated'));
 
       // Open drawer if applicable
       const cartType = document.documentElement.dataset.cartType;
       if (cartType === 'drawer') {
-        ZapCartDrawer.open();
+        VoltCartDrawer.open();
       } else {
-        ZapUtils.announce('Item added to cart');
+        VoltUtils.announce('Item added to cart');
         if (atcText) {
           atcText.textContent = 'Added!';
           setTimeout(() => { if (atcText) atcText.textContent = originalText; atcBtn.disabled = false; }, 1500);
@@ -476,8 +476,8 @@ const ZapProductForm = {
         }
       }
     } catch (err) {
-      console.warn('[ZapATC] error', err);
-      ZapUtils.announce('Could not add item to cart. Please try again.');
+      console.warn('[VoltATC] error', err);
+      VoltUtils.announce('Could not add item to cart. Please try again.');
     } finally {
       if (atcBtn && atcText) {
         atcBtn.disabled = false;
@@ -497,7 +497,7 @@ const ZapProductForm = {
       const doc  = new DOMParser().parseFromString(html, 'text/html');
       const recs = doc.querySelector('.product-recommendations');
       if (recs?.innerHTML.trim()) container.innerHTML = recs.innerHTML;
-    } catch (err) { console.warn('[ZapRecs]', err); }
+    } catch (err) { console.warn('[VoltRecs]', err); }
   },
 
   async _initCrossSell() {
@@ -507,13 +507,13 @@ const ZapProductForm = {
     const itemsEl   = container.querySelector('[id^="cross-sell-items"]');
     if (!itemsEl) return;
     try {
-      const data = await ZapUtils.fetchJSON(`/recommendations/products.json?product_id=${productId}&limit=4&intent=complementary`);
+      const data = await VoltUtils.fetchJSON(`/recommendations/products.json?product_id=${productId}&limit=4&intent=complementary`);
       if (!data.products?.length) { container.hidden = true; return; }
       itemsEl.innerHTML = data.products.map(p => `
         <a href="${p.url}" class="cross-sell-card">
           <img src="${p.featured_image}" alt="${p.title}" width="72" height="72" loading="lazy">
           <span class="cross-sell-card__title">${p.title}</span>
-          <span class="cross-sell-card__price">${ZapUtils.formatMoney(p.price)}</span>
+          <span class="cross-sell-card__price">${VoltUtils.formatMoney(p.price)}</span>
         </a>
       `).join('');
     } catch { container.hidden = true; }
@@ -544,32 +544,32 @@ const ZapProductForm = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ZapAgeVerifier — cookie-backed age gate
+   VoltAgeVerifier — cookie-backed age gate
 ═══════════════════════════════════════════════════════════════════════════ */
-const ZapAgeVerifier = {
+const VoltAgeVerifier = {
   COOKIE: 'zap_age_verified',
 
   init() {
     this.el = document.getElementById('age-verifier');
     if (!this.el) return;
-    if (ZapUtils.getCookie(this.COOKIE)) { this.el.classList.add('is-hidden'); return; }
+    if (VoltUtils.getCookie(this.COOKIE)) { this.el.classList.add('is-hidden'); return; }
     document.body.style.overflow = 'hidden';
-    ZapUtils.trapFocus(this.el);
+    VoltUtils.trapFocus(this.el);
   },
 
   accept() {
-    ZapUtils.setCookie(this.COOKIE, '1', 365);
+    VoltUtils.setCookie(this.COOKIE, '1', 365);
     this.el?.classList.add('is-hidden');
     document.body.style.overflow = '';
-    ZapUtils.removeFocusTrap(this.el);
+    VoltUtils.removeFocusTrap(this.el);
   },
 };
-window.__zap = { ageVerifier: ZapAgeVerifier };
+window.__zap = { ageVerifier: VoltAgeVerifier };
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ZapPromoPopup — session-storage dismiss, delayed open
+   VoltPromoPopup — session-storage dismiss, delayed open
 ═══════════════════════════════════════════════════════════════════════════ */
-const ZapPromoPopup = {
+const VoltPromoPopup = {
   KEY: 'zap_popup_dismissed',
 
   init() {
@@ -588,30 +588,30 @@ const ZapPromoPopup = {
 
   _open() {
     this.popup.classList.add('is-active');
-    ZapUtils.trapFocus(this.popup);
+    VoltUtils.trapFocus(this.popup);
   },
 
   _close() {
     this.popup.classList.remove('is-active');
     sessionStorage.setItem(this.KEY, '1');
-    ZapUtils.removeFocusTrap(this.popup);
+    VoltUtils.removeFocusTrap(this.popup);
   },
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ZapPredictive — predictive search
+   VoltPredictive — predictive search
 ═══════════════════════════════════════════════════════════════════════════ */
-const ZapPredictive = {
+const VoltPredictive = {
   init() {
     const input   = document.querySelector('[data-predictive-search]');
     const results = document.getElementById('predictive-results');
     if (!input || !results) return;
 
-    input.addEventListener('input', ZapUtils.debounce(async () => {
+    input.addEventListener('input', VoltUtils.debounce(async () => {
       const q = input.value.trim();
       if (q.length < 2) { results.innerHTML = ''; return; }
       try {
-        const data = await ZapUtils.fetchJSON(
+        const data = await VoltUtils.fetchJSON(
           `/search/suggest.json?q=${encodeURIComponent(q)}&resources[type]=product&resources[limit]=5`
         );
         const products = data.resources?.results?.products || [];
@@ -621,7 +621,7 @@ const ZapPredictive = {
                 <a href="${p.url}" class="predictive-item">
                   ${p.image ? `<img src="${p.image}" alt="${p.title}" width="48" height="48" loading="lazy">` : ''}
                   <span class="predictive-item__title">${p.title}</span>
-                  <span class="predictive-item__price">${ZapUtils.formatMoney(p.price)}</span>
+                  <span class="predictive-item__price">${VoltUtils.formatMoney(p.price)}</span>
                 </a>
               </li>`).join('')}
             </ul>`
@@ -632,13 +632,13 @@ const ZapPredictive = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ZapBackToTop — scroll-triggered button
+   VoltBackToTop — scroll-triggered button
 ═══════════════════════════════════════════════════════════════════════════ */
-const ZapBackToTop = {
+const VoltBackToTop = {
   init() {
     this.btn = document.getElementById('back-to-top');
     if (!this.btn) return;
-    window.addEventListener('scroll', ZapUtils.debounce(() => {
+    window.addEventListener('scroll', VoltUtils.debounce(() => {
       const show = window.scrollY > 400;
       this.btn.hidden = !show;
     }, 100), { passive: true });
@@ -647,9 +647,9 @@ const ZapBackToTop = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ZapAnnouncement — dismissible announcement bar
+   VoltAnnouncement — dismissible announcement bar
 ═══════════════════════════════════════════════════════════════════════════ */
-const ZapAnnouncement = {
+const VoltAnnouncement = {
   KEY: 'zap_announcement_dismissed',
 
   init() {
@@ -665,9 +665,9 @@ const ZapAnnouncement = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ZapMediaGallery — thumbnail switching + touch/swipe carousel
+   VoltMediaGallery — thumbnail switching + touch/swipe carousel
 ═══════════════════════════════════════════════════════════════════════════ */
-const ZapMediaGallery = {
+const VoltMediaGallery = {
   init() {
     document.querySelectorAll('.product-media-gallery').forEach(gallery => this._initGallery(gallery));
   },
@@ -705,9 +705,9 @@ const ZapMediaGallery = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ZapSizeGuide — <dialog> modal
+   VoltSizeGuide — <dialog> modal
 ═══════════════════════════════════════════════════════════════════════════ */
-const ZapSizeGuide = {
+const VoltSizeGuide = {
   init() {
     this.dialog = document.getElementById('size-guide-modal');
     if (!this.dialog) return;
@@ -719,9 +719,9 @@ const ZapSizeGuide = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ZapInfiniteScroll — intersection-observer pagination
+   VoltInfiniteScroll — intersection-observer pagination
 ═══════════════════════════════════════════════════════════════════════════ */
-const ZapInfiniteScroll = {
+const VoltInfiniteScroll = {
   init() {
     this.sentinel = document.getElementById('infinite-scroll-sentinel');
     if (!this.sentinel) return;
@@ -751,7 +751,7 @@ const ZapInfiniteScroll = {
       this.sentinel.dataset.nextUrl = nextSentinel?.dataset.nextUrl || '';
       if (!nextSentinel?.dataset.nextUrl) this.sentinel.hidden = true;
     } catch (err) {
-      console.warn('[ZapInfiniteScroll]', err);
+      console.warn('[VoltInfiniteScroll]', err);
     } finally {
       this.loading = false;
       this.sentinel.querySelector('.infinite-loader')?.setAttribute('hidden', '');
@@ -760,9 +760,9 @@ const ZapInfiniteScroll = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ZapFilters — collection filter form (live update via fetch)
+   VoltFilters — collection filter form (live update via fetch)
 ═══════════════════════════════════════════════════════════════════════════ */
-const ZapFilters = {
+const VoltFilters = {
   init() {
     this.form = document.getElementById('collection-filters-form');
     if (!this.form) return;
@@ -795,9 +795,9 @@ const ZapFilters = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ZapSlideshow — hero section autoplay + touch
+   VoltSlideshow — hero section autoplay + touch
 ═══════════════════════════════════════════════════════════════════════════ */
-const ZapSlideshow = {
+const VoltSlideshow = {
   init() {
     document.querySelectorAll('.slideshow[data-autoplay]').forEach(ss => this._initSlideshow(ss));
   },
@@ -857,18 +857,18 @@ const ZapSlideshow = {
    Bootstrap — DOMContentLoaded
 ═══════════════════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
-  ZapHeader.init();
-  ZapMobileNav.init();
-  ZapCartDrawer.init();
-  ZapProductForm.init();
-  ZapAgeVerifier.init();
-  ZapPromoPopup.init();
-  ZapPredictive.init();
-  ZapBackToTop.init();
-  ZapAnnouncement.init();
-  ZapMediaGallery.init();
-  ZapSizeGuide.init();
-  ZapInfiniteScroll.init();
-  ZapFilters.init();
-  ZapSlideshow.init();
+  VoltHeader.init();
+  VoltMobileNav.init();
+  VoltCartDrawer.init();
+  VoltProductForm.init();
+  VoltAgeVerifier.init();
+  VoltPromoPopup.init();
+  VoltPredictive.init();
+  VoltBackToTop.init();
+  VoltAnnouncement.init();
+  VoltMediaGallery.init();
+  VoltSizeGuide.init();
+  VoltInfiniteScroll.init();
+  VoltFilters.init();
+  VoltSlideshow.init();
 });

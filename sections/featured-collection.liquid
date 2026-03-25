@@ -16,10 +16,10 @@
 
     {%- comment -%} Section heading {%- endcomment -%}
     {%- if section.settings.heading != blank or section.settings.link_label != blank -%}
-      <div style="display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:var(--zap-space-xl); gap:1rem; flex-wrap:wrap;">
+      <div style="display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:var(--volt-space-xl); gap:1rem; flex-wrap:wrap;">
         <div>
           {%- if section.settings.eyebrow != blank -%}
-            <p style="font-size:.75rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--zap-accent); margin-bottom:.35rem;">{{ section.settings.eyebrow }}</p>
+            <p style="font-size:.75rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--volt-accent); margin-bottom:.35rem;">{{ section.settings.eyebrow }}</p>
           {%- endif -%}
           {%- if section.settings.heading != blank -%}
             <h2 style="margin:0;">{{ section.settings.heading }}</h2>
@@ -48,12 +48,12 @@
         {%- else -%}
           {%- for i in (1..limit) -%}
             <div class="product-card">
-              <div class="product-card__media-wrap" style="aspect-ratio:1; background:var(--zap-surface);">
+              <div class="product-card__media-wrap" style="aspect-ratio:1; background:var(--volt-surface);">
                 {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
               </div>
               <div class="product-card__info">
-                <div class="product-card__title" style="background:var(--zap-surface); height:1em; border-radius:4px; width:70%;"></div>
-                <div class="product-card__prices" style="margin-top:.5rem; background:var(--zap-surface); height:1em; border-radius:4px; width:30%;"></div>
+                <div class="product-card__title" style="background:var(--volt-surface); height:1em; border-radius:4px; width:70%;"></div>
+                <div class="product-card__prices" style="margin-top:.5rem; background:var(--volt-surface); height:1em; border-radius:4px; width:30%;"></div>
               </div>
             </div>
           {%- endfor -%}

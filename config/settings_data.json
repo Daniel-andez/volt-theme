@@ -1,0 +1,27 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "colors_accent":         "#FFD600",
+    "colors_background":     "#FFFFFF",
+    "colors_text":           "#111111",
+    "type_header_font":      "inter_n7",
+    "type_body_font":        "inter_n4",
+    "type_base_size":        16,
+    "container_max_width":   1320,
+    "border_radius":         8,
+    "cart_type":             "drawer",
+    "cart_notes_enable":     true,
+    "age_verifier_enable":   false,
+    "promo_popup_enable":    false,
+    "enable_animations":     true,
+    "sticky_header":         true
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /d)",
+      "Bash(unzip -q \"D:\\\\Downloads\\\\skeleton-theme-main.zip\" -d /tmp/extracted)",
+      "Read(//tmp/**)",
+      "Bash(cp assets/zap-theme.css assets/volt-theme.css)",
+      "Bash(cp assets/zap-theme.js assets/volt-theme.js)",
+      "Bash(sed -i 's/--zap-/--volt-/g; s/\\\\.zap-/\\\\.volt-/g; s/zap-/volt-/g' assets/volt-theme.css)",
+      "Bash(sed -i 's/Zap\\\\\\([A-Z]\\\\\\)/Volt\\\\1/g; s/zap:/volt:/g; s/\\\\[data-open-cart\\\\]/[data-open-cart]/g' assets/volt-theme.js)",
+      "Bash(sed -i 's/--zap-/--volt-/g' layout/theme.liquid)",
+      "Bash(sed -i 's/\\\\.zap-overlay/\\\\.volt-overlay/g; s/zap-overlay/volt-overlay/g' layout/theme.liquid)",
+      "Bash(sed -i \"s/window\\\\.__zap/window.__volt/g\" layout/theme.liquid)",
+      "Bash(sed -i \"s/window\\\\.__volt\\\\.ageVerifier\\\\.accept\\(\\)/window.__volt.ageVerifier.accept\\(\\)/g\" layout/theme.liquid)",
+      "Bash(sed -i \"s/''zap-theme\\\\.css''/''volt-theme.css''/g; s/''zap-theme\\\\.js''/''volt-theme.js''/g\" layout/theme.liquid)",
+      "Bash(sed -i 's/--zap-/--volt-/g' snippets/head-variables.liquid)",
+      "Bash(sed -i 's/--zap-/--volt-/g' sections/main-product.liquid)",
+      "Bash(sed -i 's/--zap-/--volt-/g' sections/header.liquid)",
+      "Bash(sed -i 's/--zap-/--volt-/g' snippets/product-card.liquid)",
+      "Bash(for f:*)",
+      "Bash(do sed:*)",
+      "Bash(done)",
+      "Bash(sed -i 's/zap-theme\\\\.js/volt-theme.js/g' assets/volt-theme.js)",
+      "Bash(rm assets/zap-theme.css assets/zap-theme.js)"
+    ]
+  }
+}

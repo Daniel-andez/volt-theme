@@ -1,0 +1,71 @@
+{
+  "general": {
+    "404":             "Not found",
+    "article":         "Article",
+    "block":           "Block",
+    "blog":            "Blog",
+    "cart":            "Cart",
+    "collection":      "Collection",
+    "collections":     "Collections",
+    "colors":          "Colors",
+    "content":         "Content",
+    "fonts":           "Fonts",
+    "footer":          "Footer",
+    "header":          "Header",
+    "layout":          "Layout",
+    "page":            "Page",
+    "password":        "Password",
+    "primary":         "Primary",
+    "product":         "Product",
+    "search":          "Search",
+    "secondary":       "Secondary",
+    "section":         "Section",
+    "settings":        "Settings",
+    "text":            "Text",
+    "theme":           "Theme",
+    "typography":      "Typography",
+    "logo":            "Logo",
+    "navigation":      "Navigation",
+    "social_media":    "Social media",
+    "checkout":        "Checkout",
+    "cart_drawer":     "Cart drawer",
+    "marketing":       "Marketing & Conversion",
+    "merchandising":   "Merchandising",
+    "discovery":       "Product discovery"
+  },
+  "labels": {
+    "accent_color":         "Accent color",
+    "background":           "Background",
+    "foreground":           "Text",
+    "border_radius":        "Border radius",
+    "cart_type":            "Cart type",
+    "cart_notes":           "Cart notes",
+    "age_verifier":         "Age verifier",
+    "promo_popup":          "Promo popup",
+    "sticky_header":        "Sticky header",
+    "mega_menu":            "Mega menu",
+    "infinite_scroll":      "Infinite scroll",
+    "color_swatches":       "Color swatches",
+    "animations":           "Enable animations",
+    "page_width":           "Page width",
+    "page_margin":          "Page margin",
+    "show_payment_icons":   "Show payment icons",
+    "body_font":            "Body font",
+    "heading_font":         "Heading font",
+    "base_font_size":       "Base font size",
+    "logo":                 "Logo",
+    "favicon":              "Favicon"
+  },
+  "options": {
+    "cart_type": {
+      "drawer":   "Slide-out drawer",
+      "page":     "Cart page",
+      "mini":     "Mini cart"
+    },
+    "page_width": {
+      "narrow":   "Narrow (1200px)",
+      "standard": "Standard (1320px)",
+      "wide":     "Wide (1540px)"
+    }
+  }
+}

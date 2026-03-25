@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "settings": {
+        "columns": "3",
+        "image_ratio": "1"
+      }
+    }
+  },
+  "order": ["main"]
+}

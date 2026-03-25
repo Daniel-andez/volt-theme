@@ -1,0 +1,22 @@
+extends: theme-check:recommended
+
+# Volt Theme — Theme Check configuration
+# Docs: https://shopify.dev/docs/themes/tools/theme-check
+
+CheckList:
+  # Allow larger asset files for the full-featured theme
+  AssetSizeCSS:
+    enabled: true
+    threshold_in_bytes: 150000
+
+  AssetSizeJavaScript:
+    enabled: true
+    threshold_in_bytes: 150000
+
+  # Disable warnings for missing translation keys during development
+  MissingRequiredTemplateFiles:
+    enabled: true
+
+  # Enforce OS 2.0 section schema
+  ValidSchema:
+    enabled: true

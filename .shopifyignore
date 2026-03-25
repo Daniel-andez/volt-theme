@@ -1,0 +1,21 @@
+# Volt Theme — Shopify CLI ignore rules
+# Files listed here are excluded from push/pull/dev operations.
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor directories
+.vscode/
+.idea/
+
+# Node
+node_modules/
+
+# Build artifacts
+dist/
+*.zip
+release/
+
+# Shopify CLI
+.shopify/

@@ -9,10 +9,10 @@
 -%}
 
 <div class="container section--sm">
-  <header style="margin-bottom:var(--zap-space-xl);">
+  <header style="margin-bottom:var(--volt-space-xl);">
     <h1>{{ blog.title }}</h1>
     {%- if blog.articles_count > 0 -%}
-      <p style="color:var(--zap-text-secondary); margin-top:.35rem; font-size:.9rem;">
+      <p style="color:var(--volt-text-secondary); margin-top:.35rem; font-size:.9rem;">
         {{ 'blogs.general.articles_with_count' | t: count: blog.articles_count }}
       </p>
     {%- endif -%}
@@ -32,14 +32,14 @@
                   alt: article.image.alt | default: article.title | escape,
                   loading: forloop.index > 3 | ternary: 'lazy', 'eager',
                   width: 720,
-                  style: 'width:100%; aspect-ratio:16/10; object-fit:cover; border-radius:var(--zap-radius-md) var(--zap-radius-md) 0 0;'
+                  style: 'width:100%; aspect-ratio:16/10; object-fit:cover; border-radius:var(--volt-radius-md) var(--volt-radius-md) 0 0;'
               }}
             </a>
           {%- endif -%}
 
           <div style="padding:.875rem .125rem;">
             {%- if section.settings.show_date or section.settings.show_author -%}
-              <p style="font-size:.75rem; color:var(--zap-text-secondary); margin-bottom:.4rem;">
+              <p style="font-size:.75rem; color:var(--volt-text-secondary); margin-bottom:.4rem;">
                 {%- if section.settings.show_date -%}
                   <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
                     {{ article.published_at | date: format: 'month_day_year' }}
@@ -56,12 +56,12 @@
             </h2>
 
             {%- if section.settings.show_excerpt and article.excerpt != blank -%}
-              <p style="font-size:.9rem; color:var(--zap-text-secondary); display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">
+              <p style="font-size:.9rem; color:var(--volt-text-secondary); display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">
                 {{ article.excerpt | strip_html }}
               </p>
             {%- endif -%}
 
-            <a href="{{ article.url }}" style="display:inline-flex; align-items:center; gap:.3rem; font-size:.875rem; font-weight:600; margin-top:.75rem; color:var(--zap-text);">
+            <a href="{{ article.url }}" style="display:inline-flex; align-items:center; gap:.3rem; font-size:.875rem; font-weight:600; margin-top:.75rem; color:var(--volt-text);">
               {{ 'blogs.article.read_more' | t }}
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
@@ -69,12 +69,12 @@
 
         </article>
       {%- else -%}
-        <p style="grid-column:1/-1; color:var(--zap-text-secondary);">{{ 'blogs.general.no_articles' | t }}</p>
+        <p style="grid-column:1/-1; color:var(--volt-text-secondary);">{{ 'blogs.general.no_articles' | t }}</p>
       {%- endfor -%}
     </div>
 
     {%- if paginate.pages > 1 -%}
-      <nav class="pagination" style="margin-top:var(--zap-space-3xl);" aria-label="{{ 'general.pagination.label' | t }}">
+      <nav class="pagination" style="margin-top:var(--volt-space-3xl);" aria-label="{{ 'general.pagination.label' | t }}">
         <ol class="pagination__list">
           {%- if paginate.previous -%}<li><a href="{{ paginate.previous.url }}" class="pagination__link">←</a></li>{%- endif -%}
           {%- for part in paginate.parts -%}
@@ -94,8 +94,8 @@
 </div>
 
 <style>
-  .blog-card { border-radius: var(--zap-radius-md); overflow: hidden; transition: box-shadow var(--zap-duration) var(--zap-ease), transform var(--zap-duration) var(--zap-ease); }
-  .blog-card:hover { box-shadow: var(--zap-shadow-md); transform: translateY(-2px); }
+  .blog-card { border-radius: var(--volt-radius-md); overflow: hidden; transition: box-shadow var(--volt-duration) var(--volt-ease), transform var(--volt-duration) var(--volt-ease); }
+  .blog-card:hover { box-shadow: var(--volt-shadow-md); transform: translateY(-2px); }
   .blog-card a { text-decoration: none; }
   .blog-card h2 a:hover { text-decoration: underline; }
 </style>

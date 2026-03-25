@@ -1,0 +1,32 @@
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "show_newsletter":        true,
+        "newsletter_label":       "Stay in the loop",
+        "show_payment_icons":     true,
+        "show_locale_selector":   true,
+        "show_currency_selector": true
+      },
+      "blocks": {
+        "col_shop": {
+          "type": "nav_column",
+          "settings": { "heading": "Shop", "menu": "footer" }
+        },
+        "col_help": {
+          "type": "nav_column",
+          "settings": { "heading": "Help", "menu": "footer" }
+        },
+        "col_company": {
+          "type": "nav_column",
+          "settings": { "heading": "Company", "menu": "footer" }
+        }
+      },
+      "block_order": ["col_shop", "col_help", "col_company"]
+    }
+  },
+  "order": ["footer"]
+}

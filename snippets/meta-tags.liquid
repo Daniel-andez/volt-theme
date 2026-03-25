@@ -1,0 +1,85 @@
+{% comment %}
+  snippets/meta-tags.liquid
+  Consolidated <head> meta tags — SEO, Open Graph, Twitter Cards, favicon.
+  Render inside <head>: {% render 'meta-tags' %}
+{% endcomment %}
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="{{ settings.colors_accent | default: '#FFD600' }}">
+
+{%- comment -%} ── Title ── {%- endcomment -%}
+<title>
+  {%- if request.page_type == 'index' -%}
+    {{ page_title }}{% if shop.description != blank %} — {{ shop.description | truncate: 60 }}{% endif %}
+  {%- elsif request.page_type == '404' -%}
+    {{ '404.title' | t }} — {{ shop.name }}
+  {%- else -%}
+    {{ page_title }} — {{ shop.name }}
+  {%- endif -%}
+</title>
+
+{%- comment -%} ── SEO description ── {%- endcomment -%}
+{%- if page_description -%}
+  <meta name="description" content="{{ page_description | escape }}">
+{%- elsif shop.description != blank -%}
+  <meta name="description" content="{{ shop.description | escape }}">
+{%- endif -%}
+
+{%- comment -%} ── Canonical ── {%- endcomment -%}
+<link rel="canonical" href="{{ canonical_url }}">
+
+{%- comment -%} ── Open Graph ── {%- endcomment -%}
+<meta property="og:site_name"    content="{{ shop.name | escape }}">
+<meta property="og:url"          content="{{ canonical_url }}">
+<meta property="og:title"        content="{{ page_title | escape }}">
+<meta property="og:type"         content="{% if request.page_type == 'product' %}product{% elsif request.page_type == 'article' %}article{% else %}website{% endif %}">
+
+{%- if page_description -%}
+  <meta property="og:description" content="{{ page_description | escape }}">
+{%- endif -%}
+
+{%- assign og_image = nil -%}
+{%- if request.page_type == 'product' and product.featured_image -%}
+  {%- assign og_image = product.featured_image | image_url: width: 1200 -%}
+{%- elsif request.page_type == 'collection' and collection.image -%}
+  {%- assign og_image = collection.image | image_url: width: 1200 -%}
+{%- elsif request.page_type == 'article' and article.image -%}
+  {%- assign og_image = article.image | image_url: width: 1200 -%}
+{%- elsif settings.logo -%}
+  {%- assign og_image = settings.logo | image_url: width: 600 -%}
+{%- endif -%}
+
+{%- if og_image -%}
+  <meta property="og:image"       content="https:{{ og_image }}">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt"    content="{{ page_title | escape }}">
+{%- endif -%}
+
+{%- comment -%} Product-specific OG tags {%- endcomment -%}
+{%- if request.page_type == 'product' -%}
+  <meta property="product:price:amount"   content="{{ product.selected_or_first_available_variant.price | money_without_currency }}">
+  <meta property="product:price:currency" content="{{ cart.currency.iso_code }}">
+{%- endif -%}
+
+{%- comment -%} ── Twitter Card ── {%- endcomment -%}
+<meta name="twitter:card"        content="{{ og_image | default: '' | size | ternary: 'summary_large_image', 'summary' }}">
+<meta name="twitter:title"       content="{{ page_title | escape }}">
+{%- if page_description -%}
+  <meta name="twitter:description" content="{{ page_description | escape }}">
+{%- endif -%}
+{%- if og_image -%}
+  <meta name="twitter:image"     content="https:{{ og_image }}">
+{%- endif -%}
+
+{%- comment -%} ── Favicon ── {%- endcomment -%}
+{%- if settings.favicon -%}
+  <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32 }}">
+{%- endif -%}
+
+{%- comment -%} ── Preconnect hints ── {%- endcomment -%}
+<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+{%- unless settings.type_body_font.system? -%}
+  <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+{%- endunless -%}

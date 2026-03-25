@@ -1,0 +1,43 @@
+{% comment %}
+  blocks/text.liquid — Reusable text block for custom sections.
+  Usage: add via section schema "blocks" of type "text"
+{% endcomment %}
+
+{%- liquid
+  assign text_size  = block.settings.text_size  | default: 'normal'
+  assign text_align = block.settings.text_align | default: 'left'
+  assign weight     = block.settings.bold | default: false
+-%}
+
+<div
+  class="block-text"
+  style="text-align:{{ text_align }}; font-weight:{{ weight | ternary: '700', '400' }};"
+  {{ block.shopify_attributes }}
+>
+  {%- if block.settings.heading != blank -%}
+    <{{ block.settings.heading_tag | default: 'h2' }} style="margin-bottom:.5em;">{{ block.settings.heading }}</{{ block.settings.heading_tag | default: 'h2' }}>
+  {%- endif -%}
+  {%- if block.settings.text != blank -%}
+    <div class="rte" style="font-size:{{ text_size == 'large' ? '1.125rem' : text_size == 'small' ? '.875rem' : '1rem' }};">{{ block.settings.text }}</div>
+  {%- endif -%}
+  {%- if block.settings.btn_label != blank -%}
+    <a href="{{ block.settings.btn_url | default: '#' }}" class="btn btn--{{ block.settings.btn_style | default: 'primary' }}" style="margin-top:1rem;">{{ block.settings.btn_label }}</a>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Text",
+  "settings": [
+    { "type": "text",     "id": "heading",     "label": "Heading" },
+    { "type": "select",   "id": "heading_tag", "label": "Heading tag", "options": [{"value":"h1","label":"H1"},{"value":"h2","label":"H2"},{"value":"h3","label":"H3"},{"value":"h4","label":"H4"},{"value":"p","label":"Paragraph"}], "default": "h2" },
+    { "type": "richtext", "id": "text",        "label": "Text" },
+    { "type": "select",   "id": "text_size",   "label": "Text size",  "options": [{"value":"small","label":"Small"},{"value":"normal","label":"Normal"},{"value":"large","label":"Large"}], "default": "normal" },
+    { "type": "select",   "id": "text_align",  "label": "Alignment",  "options": [{"value":"left","label":"Left"},{"value":"center","label":"Centre"},{"value":"right","label":"Right"}], "default": "left" },
+    { "type": "checkbox", "id": "bold",        "label": "Bold text",  "default": false },
+    { "type": "text",     "id": "btn_label",   "label": "Button label" },
+    { "type": "url",      "id": "btn_url",     "label": "Button link" },
+    { "type": "select",   "id": "btn_style",   "label": "Button style", "options": [{"value":"primary","label":"Primary"},{"value":"secondary","label":"Outline"},{"value":"dark","label":"Dark"}], "default": "primary" }
+  ]
+}
+{% endschema %}

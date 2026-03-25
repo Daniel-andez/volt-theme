@@ -38,10 +38,10 @@
 <div class="container section--sm">
 
   {%- comment -%} ── Collection header ── {%- endcomment -%}
-  <header class="collection-header" style="margin-bottom: var(--zap-space-xl);">
+  <header class="collection-header" style="margin-bottom: var(--volt-space-xl);">
     <h1 class="collection-header__title">{{ collection.title }}</h1>
     {%- if collection.description != blank -%}
-      <div class="collection-header__desc rte" style="margin-top:.5rem; max-width:65ch; color:var(--zap-text-secondary);">
+      <div class="collection-header__desc rte" style="margin-top:.5rem; max-width:65ch; color:var(--volt-text-secondary);">
         {{ collection.description }}
       </div>
     {%- endif -%}
@@ -122,7 +122,7 @@
           </span>
         {%- endfor -%}
       {%- endfor -%}
-      <a href="{{ collection.url }}" class="active-filter-tag" style="color:var(--zap-text-secondary);">
+      <a href="{{ collection.url }}" class="active-filter-tag" style="color:var(--volt-text-secondary);">
         {{ 'collections.filters.clear_all' | t }}
       </a>
     </div>
@@ -275,7 +275,7 @@
               lazy_load: forloop.index > 4
             %}
           {%- else -%}
-            <div style="grid-column:1/-1; text-align:center; padding:var(--zap-space-3xl); color:var(--zap-text-secondary);">
+            <div style="grid-column:1/-1; text-align:center; padding:var(--volt-space-3xl); color:var(--volt-text-secondary);">
               <p>{{ 'collections.general.no_matches' | t }}</p>
               <a href="{{ routes.all_products_collection_url }}" class="btn btn--secondary" style="margin-top:1rem;">
                 {{ 'collections.general.view_all' | t }}
@@ -331,42 +331,42 @@
 
 <style>
   /* Inline pagination styles */
-  .pagination { margin-top: var(--zap-space-3xl); }
+  .pagination { margin-top: var(--volt-space-3xl); }
   .pagination__list { display: flex; justify-content: center; align-items: center; gap: .35rem; flex-wrap: wrap; }
   .pagination__link {
     display: flex; align-items: center; justify-content: center;
     min-width: 40px; height: 40px;
     padding: 0 .5rem;
-    border: 1.5px solid var(--zap-border);
-    border-radius: var(--zap-radius-sm);
+    border: 1.5px solid var(--volt-border);
+    border-radius: var(--volt-radius-sm);
     font-size: .875rem;
     font-weight: 500;
-    transition: border-color var(--zap-duration), background var(--zap-duration);
+    transition: border-color var(--volt-duration), background var(--volt-duration);
   }
   .pagination__link:hover,
-  .pagination__link.is-current { background: var(--zap-text); color: var(--zap-text-invert); border-color: var(--zap-text); }
+  .pagination__link.is-current { background: var(--volt-text); color: var(--volt-text-invert); border-color: var(--volt-text); }
 
   .grid-toggle { display: flex; gap: .25rem; }
   .grid-toggle__btn {
     display: flex; align-items: center; gap: 2px;
     padding: .4rem .5rem;
-    border: 1.5px solid var(--zap-border);
-    border-radius: var(--zap-radius-sm);
-    transition: border-color var(--zap-duration), background var(--zap-duration);
+    border: 1.5px solid var(--volt-border);
+    border-radius: var(--volt-radius-sm);
+    transition: border-color var(--volt-duration), background var(--volt-duration);
   }
   .grid-toggle__btn span { display: block; width: 5px; height: 16px; background: currentColor; border-radius: 1px; opacity: .4; }
-  .grid-toggle__btn.is-active { border-color: var(--zap-text); background: var(--zap-text); color: #fff; }
+  .grid-toggle__btn.is-active { border-color: var(--volt-text); background: var(--volt-text); color: #fff; }
   .grid-toggle__btn.is-active span { opacity: 1; background: #fff; }
 
   .filter-swatches { display: flex; flex-wrap: wrap; gap: .4rem; }
   .filter-option--disabled { opacity: .35; pointer-events: none; }
-  .filter-chevron { transition: rotate var(--zap-duration); }
+  .filter-chevron { transition: rotate var(--volt-duration); }
 
   .breadcrumbs { padding-block: .75rem; }
   .breadcrumbs__list { display: flex; align-items: center; gap: .35rem; font-size: .8125rem; flex-wrap: wrap; }
-  .breadcrumbs__link { color: var(--zap-text-secondary); transition: color var(--zap-duration); }
-  .breadcrumbs__link:hover { color: var(--zap-text); }
-  .breadcrumbs__sep { color: var(--zap-text-secondary); }
+  .breadcrumbs__link { color: var(--volt-text-secondary); transition: color var(--volt-duration); }
+  .breadcrumbs__link:hover { color: var(--volt-text); }
+  .breadcrumbs__sep { color: var(--volt-text-secondary); }
 
   @media (min-width: 992px) {
     .filter-drawer-toggle { display: none; }
@@ -377,13 +377,13 @@
       inset-block: 0;
       left: 0;
       width: min(300px, 88vw);
-      background: var(--zap-bg);
+      background: var(--volt-bg);
       z-index: var(--z-drawer);
       overflow-y: auto;
       transform: translateX(-110%);
-      transition: transform var(--zap-duration-lg) var(--zap-ease);
+      transition: transform var(--volt-duration-lg) var(--volt-ease);
       padding: 1.25rem;
-      box-shadow: var(--zap-shadow-lg);
+      box-shadow: var(--volt-shadow-lg);
     }
     #filters-panel.is-open { transform: translateX(0); }
   }

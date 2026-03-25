@@ -1,0 +1,46 @@
+{% comment %}
+  blocks/group.liquid — Container block that groups child blocks.
+  Used for flexible layout inside custom sections.
+{% endcomment %}
+
+{%- liquid
+  assign direction = block.settings.direction | default: 'horizontal'
+  assign gap       = block.settings.gap       | default: 'md'
+  assign align     = block.settings.align     | default: 'start'
+
+  case gap
+    when 'sm'  | assign gap_val = 'var(--volt-space-sm)'
+    when 'md'  | assign gap_val = 'var(--volt-space-md)'
+    when 'lg'  | assign gap_val = 'var(--volt-space-lg)'
+    when 'xl'  | assign gap_val = 'var(--volt-space-xl)'
+  endcase
+-%}
+
+<div
+  class="block-group"
+  style="
+    display:flex;
+    flex-direction:{{ direction == 'horizontal' ? 'row' : 'column' }};
+    flex-wrap:wrap;
+    gap:{{ gap_val }};
+    align-items:{{ align }};
+    justify-content:{{ block.settings.justify | default: 'flex-start' }};
+    padding:{{ block.settings.padding | default: 0 }}px;
+  "
+  {{ block.shopify_attributes }}
+>
+  {{ content }}
+</div>
+
+{% schema %}
+{
+  "name": "Group",
+  "settings": [
+    { "type": "select",  "id": "direction", "label": "Direction",    "options": [{"value":"horizontal","label":"Horizontal"},{"value":"vertical","label":"Vertical"}], "default": "horizontal" },
+    { "type": "select",  "id": "gap",       "label": "Gap",          "options": [{"value":"sm","label":"Small"},{"value":"md","label":"Medium"},{"value":"lg","label":"Large"},{"value":"xl","label":"XL"}], "default": "md" },
+    { "type": "select",  "id": "align",     "label": "Align items",  "options": [{"value":"start","label":"Top/Left"},{"value":"center","label":"Centre"},{"value":"end","label":"Bottom/Right"},{"value":"stretch","label":"Stretch"}], "default": "start" },
+    { "type": "select",  "id": "justify",   "label": "Justify",      "options": [{"value":"flex-start","label":"Start"},{"value":"center","label":"Centre"},{"value":"flex-end","label":"End"},{"value":"space-between","label":"Space between"},{"value":"space-around","label":"Space around"}], "default": "flex-start" },
+    { "type": "range",   "id": "padding",   "label": "Padding (px)", "min": 0, "max": 80, "step": 4, "default": 0 }
+  ]
+}
+{% endschema %}

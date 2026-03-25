@@ -8,7 +8,7 @@
 <div class="container section--sm">
 
   {%- comment -%} Search form {%- endcomment -%}
-  <div style="max-width:600px; margin-inline:auto; margin-bottom:var(--zap-space-xl);">
+  <div style="max-width:600px; margin-inline:auto; margin-bottom:var(--volt-space-xl);">
     <form action="{{ routes.search_url }}" method="get" role="search">
       <input type="hidden" name="type" value="product">
       <div style="display:flex; gap:.5rem;">
@@ -28,7 +28,7 @@
   </div>
 
   {%- if search.performed -%}
-    <p style="color:var(--zap-text-secondary); margin-bottom:var(--zap-space-lg);">
+    <p style="color:var(--volt-text-secondary); margin-bottom:var(--volt-space-lg);">
       {%- if search.results_count == 0 -%}
         {{ 'general.search.no_results' | t: terms: search.terms }}
       {%- else -%}
@@ -42,9 +42,9 @@
           {%- if item.object_type == 'product' -%}
             {% render 'product-card', product: item, show_swatches: true, show_quick_add: true, image_ratio: section.settings.image_ratio %}
           {%- else -%}
-            <article style="padding:var(--zap-space-md); border:1px solid var(--zap-border); border-radius:var(--zap-radius-md);">
+            <article style="padding:var(--volt-space-md); border:1px solid var(--volt-border); border-radius:var(--volt-radius-md);">
               <h3 style="margin-bottom:.4rem;"><a href="{{ item.url }}">{{ item.title }}</a></h3>
-              <p style="font-size:.875rem; color:var(--zap-text-secondary); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">{{ item.content | strip_html }}</p>
+              <p style="font-size:.875rem; color:var(--volt-text-secondary); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">{{ item.content | strip_html }}</p>
             </article>
           {%- endif -%}
         {%- endfor -%}
