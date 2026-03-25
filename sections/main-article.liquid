@@ -1,0 +1,106 @@
+{% comment %}sections/main-article.liquid{% endcomment %}
+
+<article class="container section--sm container--narrow" itemscope itemtype="https://schema.org/BlogPosting">
+
+  {%- if section.settings.show_back_to_blog -%}
+    <a href="{{ blog.url }}" style="display:inline-flex; align-items:center; gap:.35rem; font-size:.875rem; font-weight:600; color:var(--zap-text-secondary); margin-bottom:var(--zap-space-lg); transition:color var(--zap-duration);" onmouseover="this.style.color='var(--zap-text)'" onmouseout="this.style.color='var(--zap-text-secondary)'">
+      ← {{ 'blogs.article.back_to_blog' | t: title: blog.title }}
+    </a>
+  {%- endif -%}
+
+  <header style="margin-bottom:var(--zap-space-xl);">
+    <h1 itemprop="headline">{{ article.title }}</h1>
+
+    {%- if section.settings.show_date or section.settings.show_author -%}
+      <p style="color:var(--zap-text-secondary); font-size:.875rem; margin-top:.5rem; display:flex; align-items:center; gap:.6rem; flex-wrap:wrap;">
+        {%- if section.settings.show_date -%}
+          <time itemprop="datePublished" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+            {{ article.published_at | date: format: 'month_day_year' }}
+          </time>
+        {%- endif -%}
+        {%- if section.settings.show_author -%}
+          <span aria-hidden="true">·</span>
+          <span itemprop="author">{{ article.author }}</span>
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+  </header>
+
+  {%- if article.image -%}
+    <div style="margin-bottom:var(--zap-space-xl); border-radius:var(--zap-radius-md); overflow:hidden;">
+      {{
+        article.image
+        | image_url: width: 1200
+        | image_tag:
+          itemprop: 'image',
+          alt: article.image.alt | default: article.title | escape,
+          loading: 'eager',
+          fetchpriority: 'high',
+          width: 1200,
+          style: 'width:100%; aspect-ratio:16/9; object-fit:cover;'
+      }}
+    </div>
+  {%- endif -%}
+
+  <div class="rte" itemprop="articleBody">
+    {{ article.content }}
+  </div>
+
+  {%- if section.settings.show_share_buttons -%}
+    <div style="margin-top:var(--zap-space-xl); padding-top:var(--zap-space-lg); border-top:1px solid var(--zap-border); display:flex; align-items:center; gap:.75rem; flex-wrap:wrap;">
+      <span style="font-size:.875rem; font-weight:600;">{{ 'blogs.article.share' | t }}</span>
+      <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.origin | append: article.url | url_encode }}"
+         target="_blank" rel="noopener" class="btn btn--secondary btn--sm" aria-label="Share on Facebook">
+        Facebook
+      </a>
+      <a href="https://twitter.com/intent/tweet?url={{ request.origin | append: article.url | url_encode }}&text={{ article.title | url_encode }}"
+         target="_blank" rel="noopener" class="btn btn--secondary btn--sm" aria-label="Share on X">
+        X / Twitter
+      </a>
+    </div>
+  {%- endif -%}
+
+  {%- if blog.comments_enabled? -%}
+    <section style="margin-top:var(--zap-space-3xl);">
+      <h2>{{ 'blogs.comments.title' | t: count: article.comments_count }}</h2>
+      {%- for comment in article.comments -%}
+        <div style="padding:var(--zap-space-md) 0; border-bottom:1px solid var(--zap-border);">
+          <p style="font-size:.8125rem; color:var(--zap-text-secondary); margin-bottom:.4rem;">
+            <strong>{{ comment.author }}</strong> · {{ comment.created_at | date: format: 'month_day_year' }}
+          </p>
+          <p>{{ comment.content }}</p>
+        </div>
+      {%- endfor -%}
+
+      {%- form 'new_comment', article -%}
+        <h3 style="margin-top:var(--zap-space-xl);">{{ 'blogs.comments.post_a_comment' | t }}</h3>
+        {%- if form.posted_successfully? -%}
+          <p style="color:var(--zap-success);">{{ 'blogs.comments.success' | t }}</p>
+        {%- endif -%}
+        <div style="display:grid; gap:var(--zap-space-md); margin-top:var(--zap-space-lg);">
+          <div class="grid-2">
+            <div class="form-group" style="margin:0;"><label class="form-label" for="comment_author">{{ 'blogs.comments.name' | t }}</label><input type="text" id="comment_author" name="comment[author]" class="form-input" required></div>
+            <div class="form-group" style="margin:0;"><label class="form-label" for="comment_email">{{ 'blogs.comments.email' | t }}</label><input type="email" id="comment_email" name="comment[email]" class="form-input" required></div>
+          </div>
+          <div class="form-group" style="margin:0;"><label class="form-label" for="comment_body">{{ 'blogs.comments.message' | t }}</label><textarea id="comment_body" name="comment[body]" class="form-textarea" required rows="4"></textarea></div>
+          <button type="submit" class="btn btn--primary">{{ 'blogs.comments.post' | t }}</button>
+        </div>
+      {%- endform -%}
+    </section>
+  {%- endif -%}
+
+</article>
+
+{% schema %}
+{
+  "name": "Article",
+  "tag": "section",
+  "settings": [
+    { "type": "checkbox", "id": "show_date",          "label": "Show date",            "default": true  },
+    { "type": "checkbox", "id": "show_author",        "label": "Show author",          "default": true  },
+    { "type": "checkbox", "id": "show_share_buttons", "label": "Show share buttons",   "default": true  },
+    { "type": "checkbox", "id": "show_back_to_blog",  "label": "Show back-to-blog link","default": true }
+  ],
+  "presets": [{ "name": "Article" }]
+}
+{% endschema %}

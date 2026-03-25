@@ -1,0 +1,20 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "products_per_page": 24,
+        "grid_columns": "3",
+        "image_ratio": "1",
+        "show_filters": true,
+        "show_sort": true,
+        "show_vendor": false,
+        "show_swatches": true,
+        "show_quick_add": true,
+        "enable_infinite_scroll": false,
+        "show_breadcrumbs": true
+      }
+    }
+  },
+  "order": ["main"]
+}

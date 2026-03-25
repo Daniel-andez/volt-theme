@@ -1,0 +1,28 @@
+{
+  "general": {
+    "accessibility":     { "close": "Chiudi", "skip_to_content": "Vai al contenuto" },
+    "breadcrumbs":       { "label": "Breadcrumb", "home": "Home" },
+    "currency_selector": { "label": "Valuta" },
+    "locale_selector":   { "label": "Lingua" },
+    "footer":            { "copyright": "Tutti i diritti riservati." },
+    "newsletter":        { "email_placeholder": "La tua email", "submit": "Iscriviti", "success": "Grazie per l'iscrizione!" },
+    "pagination":        { "label": "Paginazione", "previous": "Precedente", "next": "Successivo" },
+    "search":            { "label": "Cerca", "placeholder": "Cerca prodotti…", "submit": "Cerca", "no_results": "Nessun risultato per "{{ terms }}"", "results_with_count": "{{ count }} risultati per "{{ terms }}"" }
+  },
+  "products": {
+    "product": { "add_to_cart": "Aggiungi al carrello", "sold_out": "Esaurito", "new": "Nuovo", "quick_view": "Anteprima rapida", "price": { "label": "Prezzo", "from_price_html": "Da {{ price }}" }, "color": "Colore", "quantity": "Quantità" }
+  },
+  "collections": {
+    "general": { "items_with_count": "{{ count }} prodotti", "no_matches": "Nessun prodotto trovato.", "view_all": "Vedi tutto", "grid_toggle": "Vista griglia", "columns": "colonne" },
+    "sorting":  { "label": "Ordina per", "manual": "In evidenza", "best_selling": "Più venduti", "title_ascending": "A–Z", "title_descending": "Z–A", "price_ascending": "Prezzo crescente", "price_descending": "Prezzo decrescente", "created_descending": "Più recenti", "created_ascending": "Meno recenti" },
+    "filters":  { "title": "Filtri", "active": "Filtri attivi", "remove": "Rimuovi", "clear_all": "Rimuovi tutti", "apply_price": "Applica", "price_min": "Min", "price_max": "Max" }
+  },
+  "cart": {
+    "general": { "title": "Il tuo carrello", "empty": "Il carrello è vuoto", "continue_shopping": "Continua gli acquisti", "subtotal": "Subtotale", "order_summary": "Riepilogo ordine", "checkout": "Pagamento", "taxes_shipping_at_checkout": "Tasse e spedizione calcolate al checkout", "note": "Nota d'ordine", "note_placeholder": "Aggiungi una nota", "remove": "Rimuovi", "quantity": "Quantità", "update": "Aggiorna carrello" }
+  },
+  "blogs": {
+    "general": { "articles_with_count": "{{ count }} articoli", "no_articles": "Nessun articolo ancora." },
+    "article": { "back_to_blog": "Torna a {{ title }}", "share": "Condividi", "read_more": "Leggi tutto" },
+    "comments": { "title": "{{ count }} commenti", "post_a_comment": "Lascia un commento", "name": "Nome", "email": "Email", "message": "Messaggio", "post": "Pubblica", "success": "Commento pubblicato. Grazie!" }
+  }
+}

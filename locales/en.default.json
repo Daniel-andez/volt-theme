@@ -1,0 +1,139 @@
+{
+  "general": {
+    "accessibility": {
+      "close": "Close",
+      "skip_to_content": "Skip to content"
+    },
+    "breadcrumbs": {
+      "label": "Breadcrumbs",
+      "home": "Home"
+    },
+    "currency_selector": { "label": "Currency" },
+    "locale_selector":   { "label": "Language" },
+    "footer":            { "copyright": "All rights reserved." },
+    "newsletter": {
+      "email_placeholder": "Enter your email",
+      "submit": "Subscribe",
+      "success": "Thanks for subscribing!"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "previous": "Previous page",
+      "next": "Next page"
+    },
+    "search": {
+      "label": "Search",
+      "placeholder": "Search products…",
+      "submit": "Search",
+      "no_results": "No results for "{{ terms }}"",
+      "results_with_count": "{{ count }} results for "{{ terms }}""
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "new": "New",
+      "quick_view": "Quick view",
+      "price": {
+        "label": "Price",
+        "from_price_html": "From {{ price }}"
+      },
+      "color": "Color",
+      "quantity": "Quantity"
+    }
+  },
+  "collections": {
+    "general": {
+      "items_with_count": "{{ count }} products",
+      "no_matches": "No products found.",
+      "view_all": "View all",
+      "grid_toggle": "Grid view",
+      "columns": "columns"
+    },
+    "sorting": {
+      "label": "Sort by",
+      "manual": "Featured",
+      "best_selling": "Best selling",
+      "title_ascending": "A–Z",
+      "title_descending": "Z–A",
+      "price_ascending": "Price: low to high",
+      "price_descending": "Price: high to low",
+      "created_descending": "Newest",
+      "created_ascending": "Oldest"
+    },
+    "filters": {
+      "title": "Filters",
+      "active": "Active filters",
+      "remove": "Remove filter",
+      "clear_all": "Clear all",
+      "apply_price": "Apply",
+      "price_min": "Min",
+      "price_max": "Max"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your cart",
+      "empty": "Your cart is empty",
+      "empty_description": "Looks like you haven't added anything yet.",
+      "continue_shopping": "Continue shopping",
+      "subtotal": "Subtotal",
+      "order_summary": "Order summary",
+      "checkout": "Checkout",
+      "taxes_shipping_at_checkout": "Taxes and shipping calculated at checkout",
+      "note": "Order note",
+      "note_placeholder": "Add a note to your order",
+      "remove": "Remove",
+      "quantity": "Quantity",
+      "update": "Update cart"
+    }
+  },
+  "blogs": {
+    "general": {
+      "articles_with_count": "{{ count }} articles",
+      "no_articles": "No articles yet."
+    },
+    "article": {
+      "back_to_blog": "Back to {{ title }}",
+      "share": "Share",
+      "read_more": "Read more"
+    },
+    "comments": {
+      "title": "{{ count }} comments",
+      "post_a_comment": "Leave a comment",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "post": "Post comment",
+      "success": "Your comment has been posted. Thank you!"
+    }
+  },
+  "sections": {
+    "slideshow": {
+      "label": "Slideshow",
+      "of": "of",
+      "previous_slide": "Previous slide",
+      "next_slide": "Next slide",
+      "dots_label": "Slide navigation",
+      "go_to_slide": "Go to slide {{ num }}"
+    },
+    "announcement_bar": {
+      "label": "Announcement"
+    },
+    "header": {
+      "menu_open": "Open menu",
+      "menu_close": "Close menu",
+      "search_open": "Search",
+      "cart": "Cart ({{ count }})"
+    }
+  },
+  "404": {
+    "general": {
+      "title": "Page not found",
+      "description": "The page you were looking for doesn't exist.",
+      "back_home": "Back to home",
+      "shop_all": "Shop all"
+    }
+  }
+}

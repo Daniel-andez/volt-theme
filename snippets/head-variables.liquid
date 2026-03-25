@@ -1,0 +1,126 @@
+{% comment %}
+  head-variables.liquid
+  ─────────────────────────────────────────────────────────────────────────────
+  Translates all theme editor settings into CSS custom properties.
+  Included once in <head> via layout/theme.liquid.
+  All design tokens live here — components reference var(--zap-*) only.
+  ─────────────────────────────────────────────────────────────────────────────
+{% endcomment %}
+
+{% liquid
+  assign font_heading_scale = settings.font_heading_scale | divided_by: 100.0
+  assign body_size_rem      = settings.font_body_size | append: 'px'
+%}
+
+<style>
+  /* ─── Font Faces (Shopify font API) ─────────────────────────── */
+  {{ settings.font_heading | font_face: font_display: 'swap' }}
+  {{ settings.font_body    | font_face: font_display: 'swap' }}
+
+  /* ─── Root Design Tokens ────────────────────────────────────── */
+  :root {
+    /* Colors */
+    --zap-accent:              {{ settings.color_accent }};
+    --zap-accent-hover:        {{ settings.color_accent_hover }};
+    --zap-bg:                  {{ settings.color_background }};
+    --zap-surface:             {{ settings.color_surface }};
+    --zap-border:              {{ settings.color_border }};
+
+    --zap-text:                {{ settings.color_text_primary }};
+    --zap-text-secondary:      {{ settings.color_text_secondary }};
+    --zap-text-inverse:        {{ settings.color_text_inverse }};
+
+    --zap-btn-primary-bg:      {{ settings.color_button_primary_bg }};
+    --zap-btn-primary-text:    {{ settings.color_button_primary_text }};
+    --zap-btn-secondary-bg:    {{ settings.color_button_secondary_bg }};
+    --zap-btn-secondary-text:  {{ settings.color_button_secondary_text }};
+
+    --zap-header-bg:           {{ settings.color_header_bg }};
+    --zap-header-text:         {{ settings.color_header_text }};
+    --zap-footer-bg:           {{ settings.color_footer_bg }};
+    --zap-footer-text:         {{ settings.color_footer_text }};
+
+    --zap-success:             {{ settings.color_success }};
+    --zap-error:               {{ settings.color_error }};
+    --zap-warning:             {{ settings.color_warning }};
+
+    /* Typography */
+    --zap-font-heading:        {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+    --zap-font-body:           {{ settings.font_body.family }},    {{ settings.font_body.fallback_families }};
+    --zap-font-heading-weight: {{ settings.font_heading_weight }};
+    --zap-font-heading-transform: {{ settings.font_heading_transform }};
+    --zap-font-body-size:      {{ body_size_rem }};
+    --zap-font-body-lh:        {{ settings.font_body_line_height }};
+
+    /* Heading scale — multiply each heading size by this factor */
+    --zap-heading-scale:       {{ font_heading_scale }};
+
+    /* Computed heading sizes */
+    --zap-h1: calc(3rem   * var(--zap-heading-scale));
+    --zap-h2: calc(2.25rem * var(--zap-heading-scale));
+    --zap-h3: calc(1.75rem * var(--zap-heading-scale));
+    --zap-h4: calc(1.375rem * var(--zap-heading-scale));
+    --zap-h5: calc(1.125rem * var(--zap-heading-scale));
+    --zap-h6: calc(1rem    * var(--zap-heading-scale));
+
+    /* Layout */
+    --zap-page-width:          {{ settings.layout_page_width }};
+    --zap-section-spacing:     {{ settings.layout_section_spacing }}px;
+    --zap-grid-gap:            {{ settings.layout_grid_gap }}px;
+    --zap-radius:              {{ settings.layout_border_radius }}px;
+
+    /* Header */
+    --zap-logo-width:          {{ settings.header_logo_width }}px;
+
+    /* Promo banner */
+    --zap-promo-bg:            {{ settings.promo_banner_bg }};
+    --zap-promo-text:          {{ settings.promo_banner_text_color }};
+
+    /* Transitions */
+    --zap-ease:                cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --zap-duration:            220ms;
+    --zap-duration-slow:       400ms;
+  }
+
+  /* ─── RTL Support ───────────────────────────────────────────── */
+  {% if settings.i18n_rtl_support %}
+    html { direction: rtl; }
+  {% endif %}
+
+  /* ─── Reduced-motion overrides ──────────────────────────────── */
+  {% unless settings.layout_animations_enabled %}
+    *, *::before, *::after {
+      animation-duration:   0.01ms !important;
+      transition-duration:  0.01ms !important;
+    }
+  {% endunless %}
+
+  /* ─── Global base styles using tokens ──────────────────────── */
+  html {
+    font-size: var(--zap-font-body-size);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family:      var(--zap-font-body);
+    line-height:      var(--zap-font-body-lh);
+    color:            var(--zap-text);
+    background-color: var(--zap-bg);
+    margin: 0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family:    var(--zap-font-heading);
+    font-weight:    var(--zap-font-heading-weight);
+    text-transform: var(--zap-font-heading-transform);
+    line-height:    1.15;
+    margin: 0 0 0.5em;
+  }
+
+  h1 { font-size: var(--zap-h1); }
+  h2 { font-size: var(--zap-h2); }
+  h3 { font-size: var(--zap-h3); }
+  h4 { font-size: var(--zap-h4); }
+  h5 { font-size: var(--zap-h5); }
+  h6 { font-size: var(--zap-h6); }
+</style>

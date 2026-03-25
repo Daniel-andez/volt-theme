@@ -1,0 +1,28 @@
+{
+  "general": {
+    "accessibility":     { "close": "Cerrar", "skip_to_content": "Saltar al contenido" },
+    "breadcrumbs":       { "label": "Migas de pan", "home": "Inicio" },
+    "currency_selector": { "label": "Moneda" },
+    "locale_selector":   { "label": "Idioma" },
+    "footer":            { "copyright": "Todos los derechos reservados." },
+    "newsletter":        { "email_placeholder": "Tu email", "submit": "Suscribirse", "success": "¡Gracias por suscribirte!" },
+    "pagination":        { "label": "Paginación", "previous": "Anterior", "next": "Siguiente" },
+    "search":            { "label": "Buscar", "placeholder": "Buscar productos…", "submit": "Buscar", "no_results": "Sin resultados para "{{ terms }}"", "results_with_count": "{{ count }} resultados para "{{ terms }}"" }
+  },
+  "products": {
+    "product": { "add_to_cart": "Añadir al carrito", "sold_out": "Agotado", "new": "Nuevo", "quick_view": "Vista rápida", "price": { "label": "Precio", "from_price_html": "Desde {{ price }}" }, "color": "Color", "quantity": "Cantidad" }
+  },
+  "collections": {
+    "general": { "items_with_count": "{{ count }} productos", "no_matches": "Sin productos.", "view_all": "Ver todo", "grid_toggle": "Vista de cuadrícula", "columns": "columnas" },
+    "sorting":  { "label": "Ordenar por", "manual": "Destacado", "best_selling": "Más vendidos", "title_ascending": "A–Z", "title_descending": "Z–A", "price_ascending": "Precio: menor a mayor", "price_descending": "Precio: mayor a menor", "created_descending": "Más nuevos", "created_ascending": "Más antiguos" },
+    "filters":  { "title": "Filtros", "active": "Filtros activos", "remove": "Eliminar", "clear_all": "Limpiar todo", "apply_price": "Aplicar", "price_min": "Mín", "price_max": "Máx" }
+  },
+  "cart": {
+    "general": { "title": "Tu carrito", "empty": "Tu carrito está vacío", "continue_shopping": "Seguir comprando", "subtotal": "Subtotal", "order_summary": "Resumen del pedido", "checkout": "Pagar", "taxes_shipping_at_checkout": "Impuestos y envío calculados al pagar", "note": "Nota del pedido", "note_placeholder": "Añade una nota", "remove": "Eliminar", "quantity": "Cantidad", "update": "Actualizar carrito" }
+  },
+  "blogs": {
+    "general": { "articles_with_count": "{{ count }} artículos", "no_articles": "Aún no hay artículos." },
+    "article": { "back_to_blog": "Volver a {{ title }}", "share": "Compartir", "read_more": "Leer más" },
+    "comments": { "title": "{{ count }} comentarios", "post_a_comment": "Deja un comentario", "name": "Nombre", "email": "Email", "message": "Mensaje", "post": "Publicar", "success": "Comentario publicado. ¡Gracias!" }
+  }
+}

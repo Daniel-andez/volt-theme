@@ -1,0 +1,96 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "vendor",
+          "settings": {}
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "badges": {
+          "type": "badges",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "countdown": {
+          "type": "countdown_timer",
+          "settings": {
+            "enable_countdown": false
+          }
+        },
+        "options": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button"
+          }
+        },
+        "quantity": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true
+          }
+        },
+        "stock": {
+          "type": "stock_counter",
+          "settings": {
+            "show_stock_counter": true,
+            "low_stock_threshold": 10
+          }
+        },
+        "trust": {
+          "type": "trust_badges",
+          "settings": {
+            "show_trust_badges": true
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "shipping": {
+          "type": "shipping_info",
+          "settings": {}
+        },
+        "cross_sell": {
+          "type": "cross_sell",
+          "settings": {
+            "show_cross_sell": true
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "badges",
+        "price",
+        "countdown",
+        "options",
+        "quantity",
+        "buy_buttons",
+        "stock",
+        "trust",
+        "description",
+        "shipping",
+        "cross_sell"
+      ],
+      "settings": {
+        "show_breadcrumbs": true,
+        "media_layout": "stacked",
+        "enable_zoom": true,
+        "enable_video_loop": true
+      }
+    }
+  },
+  "order": ["main"]
+}

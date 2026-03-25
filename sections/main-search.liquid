@@ -1,0 +1,68 @@
+{% comment %}sections/main-search.liquid{% endcomment %}
+
+{%- liquid
+  assign ppp = section.settings.products_per_page | default: 24
+  assign cols = section.settings.grid_columns | default: '3'
+-%}
+
+<div class="container section--sm">
+
+  {%- comment -%} Search form {%- endcomment -%}
+  <div style="max-width:600px; margin-inline:auto; margin-bottom:var(--zap-space-xl);">
+    <form action="{{ routes.search_url }}" method="get" role="search">
+      <input type="hidden" name="type" value="product">
+      <div style="display:flex; gap:.5rem;">
+        <input
+          type="search"
+          name="q"
+          value="{{ search.terms | escape }}"
+          placeholder="{{ 'general.search.placeholder' | t }}"
+          class="form-input"
+          style="flex:1;"
+          autofocus
+          aria-label="{{ 'general.search.label' | t }}"
+        >
+        <button type="submit" class="btn btn--primary">{{ 'general.search.submit' | t }}</button>
+      </div>
+    </form>
+  </div>
+
+  {%- if search.performed -%}
+    <p style="color:var(--zap-text-secondary); margin-bottom:var(--zap-space-lg);">
+      {%- if search.results_count == 0 -%}
+        {{ 'general.search.no_results' | t: terms: search.terms }}
+      {%- else -%}
+        {{ 'general.search.results_with_count' | t: count: search.results_count, terms: search.terms }}
+      {%- endif -%}
+    </p>
+
+    {%- paginate search.results by ppp -%}
+      <div class="collection-grid" style="--grid-cols:{{ cols }};">
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {% render 'product-card', product: item, show_swatches: true, show_quick_add: true, image_ratio: section.settings.image_ratio %}
+          {%- else -%}
+            <article style="padding:var(--zap-space-md); border:1px solid var(--zap-border); border-radius:var(--zap-radius-md);">
+              <h3 style="margin-bottom:.4rem;"><a href="{{ item.url }}">{{ item.title }}</a></h3>
+              <p style="font-size:.875rem; color:var(--zap-text-secondary); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">{{ item.content | strip_html }}</p>
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endpaginate -%}
+  {%- endif -%}
+
+</div>
+
+{% schema %}
+{
+  "name": "Search",
+  "tag": "section",
+  "settings": [
+    { "type": "range",  "id": "products_per_page", "label": "Products per page", "min": 8,  "max": 48, "step": 4, "default": 24 },
+    { "type": "select", "id": "grid_columns",       "label": "Columns", "options": [{"value":"2","label":"2"},{"value":"3","label":"3"},{"value":"4","label":"4"}], "default": "3" },
+    { "type": "select", "id": "image_ratio",        "label": "Image ratio", "options": [{"value":"1","label":"Square"},{"value":"4/5","label":"Portrait (4:5)"}], "default": "1" }
+  ],
+  "presets": [{ "name": "Search" }]
+}
+{% endschema %}

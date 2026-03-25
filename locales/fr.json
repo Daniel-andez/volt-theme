@@ -1,0 +1,28 @@
+{
+  "general": {
+    "accessibility":     { "close": "Fermer", "skip_to_content": "Aller au contenu" },
+    "breadcrumbs":       { "label": "Fil d'Ariane", "home": "Accueil" },
+    "currency_selector": { "label": "Devise" },
+    "locale_selector":   { "label": "Langue" },
+    "footer":            { "copyright": "Tous droits réservés." },
+    "newsletter":        { "email_placeholder": "Votre email", "submit": "S'abonner", "success": "Merci pour votre inscription !" },
+    "pagination":        { "label": "Pagination", "previous": "Précédent", "next": "Suivant" },
+    "search":            { "label": "Rechercher", "placeholder": "Rechercher des produits…", "submit": "Rechercher", "no_results": "Aucun résultat pour "{{ terms }}"", "results_with_count": "{{ count }} résultats pour "{{ terms }}"" }
+  },
+  "products": {
+    "product": { "add_to_cart": "Ajouter au panier", "sold_out": "Épuisé", "new": "Nouveau", "quick_view": "Vue rapide", "price": { "label": "Prix", "from_price_html": "À partir de {{ price }}" }, "color": "Couleur", "quantity": "Quantité" }
+  },
+  "collections": {
+    "general": { "items_with_count": "{{ count }} produits", "no_matches": "Aucun produit trouvé.", "view_all": "Voir tout", "grid_toggle": "Vue grille", "columns": "colonnes" },
+    "sorting":  { "label": "Trier par", "manual": "En vedette", "best_selling": "Meilleures ventes", "title_ascending": "A–Z", "title_descending": "Z–A", "price_ascending": "Prix croissant", "price_descending": "Prix décroissant", "created_descending": "Plus récents", "created_ascending": "Plus anciens" },
+    "filters":  { "title": "Filtres", "active": "Filtres actifs", "remove": "Supprimer", "clear_all": "Tout effacer", "apply_price": "Appliquer", "price_min": "Min", "price_max": "Max" }
+  },
+  "cart": {
+    "general": { "title": "Votre panier", "empty": "Votre panier est vide", "continue_shopping": "Continuer vos achats", "subtotal": "Sous-total", "order_summary": "Récapitulatif", "checkout": "Payer", "taxes_shipping_at_checkout": "Taxes et frais calculés à la caisse", "note": "Note de commande", "note_placeholder": "Ajouter une note", "remove": "Supprimer", "quantity": "Quantité", "update": "Mettre à jour" }
+  },
+  "blogs": {
+    "general": { "articles_with_count": "{{ count }} articles", "no_articles": "Aucun article pour l'instant." },
+    "article": { "back_to_blog": "Retour à {{ title }}", "share": "Partager", "read_more": "Lire la suite" },
+    "comments": { "title": "{{ count }} commentaires", "post_a_comment": "Laisser un commentaire", "name": "Nom", "email": "Email", "message": "Message", "post": "Publier", "success": "Commentaire publié. Merci !" }
+  }
+}

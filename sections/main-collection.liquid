@@ -1,0 +1,507 @@
+{% comment %}
+  sections/main-collection.liquid
+  ─────────────────────────────────────────────────────────────────────────────
+  OS 2.0 collection page.
+  Features: sidebar filters, sort, grid-columns toggle, infinite scroll,
+            active filter tags, visual swatch filters, breadcrumbs.
+  ─────────────────────────────────────────────────────────────────────────────
+{% endcomment %}
+
+{%- liquid
+  assign products_per_page = section.settings.products_per_page | default: 24
+  assign show_filters      = section.settings.show_filters
+  assign show_sort         = section.settings.show_sort
+  assign grid_cols         = section.settings.grid_columns | default: 3
+  assign enable_infinite   = section.settings.enable_infinite_scroll
+  assign show_breadcrumbs  = section.settings.show_breadcrumbs
+
+  assign filter_count = 0
+  for filter in collection.filters
+    if filter.active_values.size > 0 or filter.min_value.value or filter.max_value.value
+      assign filter_count = filter_count | plus: 1
+    endif
+  endfor
+-%}
+
+{%- if show_breadcrumbs -%}
+  <nav class="breadcrumbs container" aria-label="{{ 'general.breadcrumbs.label' | t }}">
+    <ol class="breadcrumbs__list">
+      <li class="breadcrumbs__item"><a href="{{ routes.root_url }}" class="breadcrumbs__link">{{ 'general.breadcrumbs.home' | t }}</a></li>
+      {%- if collection.handle != 'all' -%}
+        <li class="breadcrumbs__item" aria-hidden="true"><span class="breadcrumbs__sep">›</span></li>
+        <li class="breadcrumbs__item"><span aria-current="page">{{ collection.title }}</span></li>
+      {%- endif -%}
+    </ol>
+  </nav>
+{%- endif -%}
+
+<div class="container section--sm">
+
+  {%- comment -%} ── Collection header ── {%- endcomment -%}
+  <header class="collection-header" style="margin-bottom: var(--zap-space-xl);">
+    <h1 class="collection-header__title">{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <div class="collection-header__desc rte" style="margin-top:.5rem; max-width:65ch; color:var(--zap-text-secondary);">
+        {{ collection.description }}
+      </div>
+    {%- endif -%}
+  </header>
+
+  {%- comment -%} ── Toolbar (sort + grid toggle + filter toggle) ── {%- endcomment -%}
+  <div class="collection-toolbar">
+    <p class="collection-count">
+      {{ 'collections.general.items_with_count' | t: count: collection.products_count }}
+    </p>
+
+    <div style="display:flex; align-items:center; gap:.75rem; flex-wrap:wrap;">
+
+      {%- comment -%} Grid column toggle {%- endcomment -%}
+      <div class="grid-toggle" aria-label="{{ 'collections.general.grid_toggle' | t }}">
+        {%- for cols in '2,3,4' | split: ',' -%}
+          <button
+            type="button"
+            class="grid-toggle__btn{% if grid_cols == cols %} is-active{% endif %}"
+            data-grid-cols="{{ cols }}"
+            aria-label="{{ cols }} {{ 'collections.general.columns' | t }}"
+          >
+            {%- for i in (1..cols) -%}<span></span>{%- endfor -%}
+          </button>
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} Sort {%- endcomment -%}
+      {%- if show_sort -%}
+        <div class="sort-select-wrap">
+          <select id="sort-by" name="sort_by" aria-label="{{ 'collections.sorting.label' | t }}">
+            {%- assign sort_options = 'manual,best-selling,title-ascending,title-descending,price-ascending,price-descending,created-descending,created-ascending' | split: ',' -%}
+            {%- for option in sort_options -%}
+              <option
+                value="{{ option }}"
+                {% if collection.sort_by == option or collection.default_sort_by == option and collection.sort_by == blank %} selected{% endif %}
+              >
+                {{- 'collections.sorting.' | append: option | replace: '-', '_' | t -}}
+              </option>
+            {%- endfor -%}
+          </select>
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Mobile filter toggle {%- endcomment -%}
+      {%- if show_filters -%}
+        <button
+          type="button"
+          class="btn btn--secondary btn--sm filter-drawer-toggle"
+          data-filter-toggle
+          aria-expanded="false"
+          aria-controls="filters-panel"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          {{ 'collections.filters.title' | t }}
+          {%- if filter_count > 0 -%}
+            <span class="badge badge--new" style="margin-left:.25rem;">{{ filter_count }}</span>
+          {%- endif -%}
+        </button>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- comment -%} ── Active filter pills ── {%- endcomment -%}
+  {%- if filter_count > 0 -%}
+    <div class="active-filters" role="list" aria-label="{{ 'collections.filters.active' | t }}">
+      {%- for filter in collection.filters -%}
+        {%- for value in filter.active_values -%}
+          <span class="active-filter-tag" role="listitem">
+            {{ value.label }}
+            <a href="{{ value.url_to_remove }}" aria-label="{{ 'collections.filters.remove' | t }}: {{ value.label | escape }}">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                <path d="M1 1l8 8M9 1L1 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </a>
+          </span>
+        {%- endfor -%}
+      {%- endfor -%}
+      <a href="{{ collection.url }}" class="active-filter-tag" style="color:var(--zap-text-secondary);">
+        {{ 'collections.filters.clear_all' | t }}
+      </a>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ── Layout ── {%- endcomment -%}
+  <div class="collection-layout{% unless show_filters %} collection-layout--no-sidebar{% endunless %}">
+
+    {%- comment -%} ── Sidebar filters ── {%- endcomment -%}
+    {%- if show_filters -%}
+      <aside
+        id="filters-panel"
+        class="collection-sidebar"
+        aria-label="{{ 'collections.filters.title' | t }}"
+      >
+        <form id="collection-filters-form" action="{{ collection.url }}">
+
+          {%- comment -%} Preserve sort {%- endcomment -%}
+          {%- if collection.sort_by != blank -%}
+            <input type="hidden" name="sort_by" value="{{ collection.sort_by }}">
+          {%- endif -%}
+
+          {%- for filter in collection.filters -%}
+            <div class="filter-group" x-data="{ open: true }">
+              <button
+                type="button"
+                class="filter-group__title"
+                aria-expanded="true"
+                aria-controls="filter-{{ filter.param_name }}"
+              >
+                {{ filter.label }}
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" class="filter-chevron">
+                  <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+
+              <div id="filter-{{ filter.param_name }}">
+
+                {%- case filter.type -%}
+
+                  {%- when 'list' -%}
+                    {%- liquid
+                      assign is_color = false
+                      assign lower_label = filter.label | downcase
+                      if lower_label == 'color' or lower_label == 'colour' or lower_label == 'colore' or lower_label == 'farbe'
+                        assign is_color = true
+                      endif
+                    -%}
+
+                    {%- if is_color -%}
+                      <div class="filter-swatches">
+                        {%- for value in filter.values -%}
+                          <label class="filter-swatch-option{% if value.active %} is-active{% endif %}{% if value.count == 0 and value.active == false %} is-unavailable{% endif %}">
+                            <input
+                              type="checkbox"
+                              name="{{ value.param_name }}"
+                              value="{{ value.value }}"
+                              {% if value.active %}checked{% endif %}
+                              {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                              class="sr-only"
+                            >
+                            <span
+                              class="swatch{% if value.active %} is-selected{% endif %}"
+                              style="background-color: {{ value.value | handleize }};"
+                              title="{{ value.label | escape }} ({{ value.count }})"
+                            ></span>
+                          </label>
+                        {%- endfor -%}
+                      </div>
+                    {%- else -%}
+                      {%- for value in filter.values -%}
+                        <label class="filter-option{% if value.count == 0 and value.active == false %} filter-option--disabled{% endif %}">
+                          <input
+                            type="checkbox"
+                            name="{{ value.param_name }}"
+                            value="{{ value.value }}"
+                            {% if value.active %}checked{% endif %}
+                            {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                          >
+                          <span>{{ value.label }}</span>
+                          <span style="margin-left:auto; opacity:.5; font-size:.8rem;">({{ value.count }})</span>
+                        </label>
+                      {%- endfor -%}
+                    {%- endif -%}
+
+                  {%- when 'price_range' -%}
+                    {%- liquid
+                      assign min_price = filter.min_value.value | default: 0
+                      assign max_price = filter.max_value.value | default: filter.range_max
+                    -%}
+                    <div class="price-filter">
+                      <div style="display:flex; gap:.5rem; margin-bottom:.5rem;">
+                        <div class="form-group" style="flex:1; margin:0;">
+                          <label class="form-label" for="filter-price-min">{{ 'collections.filters.price_min' | t }}</label>
+                          <input
+                            type="number"
+                            id="filter-price-min"
+                            name="{{ filter.min_value.param_name }}"
+                            value="{{ min_price | money_without_currency | remove: ',' }}"
+                            min="0"
+                            max="{{ filter.range_max | money_without_currency | remove: ',' }}"
+                            class="form-input"
+                          >
+                        </div>
+                        <div class="form-group" style="flex:1; margin:0;">
+                          <label class="form-label" for="filter-price-max">{{ 'collections.filters.price_max' | t }}</label>
+                          <input
+                            type="number"
+                            id="filter-price-max"
+                            name="{{ filter.max_value.param_name }}"
+                            value="{{ max_price | money_without_currency | remove: ',' }}"
+                            min="0"
+                            max="{{ filter.range_max | money_without_currency | remove: ',' }}"
+                            class="form-input"
+                          >
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn--secondary btn--sm btn--full">
+                        {{ 'collections.filters.apply_price' | t }}
+                      </button>
+                    </div>
+
+                {%- endcase -%}
+
+              </div>
+            </div>
+          {%- endfor -%}
+
+        </form>
+      </aside>
+    {%- endif -%}
+
+    {%- comment -%} ── Product grid ── {%- endcomment -%}
+    <div>
+      {%- paginate collection.products by products_per_page -%}
+
+        <div
+          class="collection-grid"
+          style="--grid-cols:{{ grid_cols }};"
+          id="collection-grid"
+          aria-live="polite"
+        >
+          {%- for product in collection.products -%}
+            {% render 'product-card',
+              product: product,
+              show_vendor: section.settings.show_vendor,
+              show_swatches: section.settings.show_swatches,
+              show_quick_add: section.settings.show_quick_add,
+              image_ratio: section.settings.image_ratio,
+              lazy_load: forloop.index > 4
+            %}
+          {%- else -%}
+            <div style="grid-column:1/-1; text-align:center; padding:var(--zap-space-3xl); color:var(--zap-text-secondary);">
+              <p>{{ 'collections.general.no_matches' | t }}</p>
+              <a href="{{ routes.all_products_collection_url }}" class="btn btn--secondary" style="margin-top:1rem;">
+                {{ 'collections.general.view_all' | t }}
+              </a>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- comment -%} Infinite scroll sentinel / pagination {%- endcomment -%}
+        {%- if enable_infinite -%}
+          <div
+            id="infinite-scroll-sentinel"
+            data-next-url="{% if paginate.next %}{{ paginate.next.url }}{% endif %}"
+          >
+            {%- if paginate.next -%}
+              <div class="infinite-loader" hidden></div>
+            {%- endif -%}
+          </div>
+        {%- else -%}
+          {%- if paginate.pages > 1 -%}
+            <nav class="pagination" aria-label="{{ 'general.pagination.label' | t }}">
+              <ol class="pagination__list">
+                {%- if paginate.previous -%}
+                  <li><a href="{{ paginate.previous.url }}" class="pagination__link pagination__link--prev" aria-label="{{ 'general.pagination.previous' | t }}">←</a></li>
+                {%- endif -%}
+                {%- for part in paginate.parts -%}
+                  <li>
+                    {%- if part.is_link -%}
+                      <a href="{{ part.url }}" class="pagination__link">{{ part.title }}</a>
+                    {%- else -%}
+                      {%- if part.title == paginate.current_page -%}
+                        <span class="pagination__link is-current" aria-current="page">{{ part.title }}</span>
+                      {%- else -%}
+                        <span class="pagination__ellipsis">{{ part.title }}</span>
+                      {%- endif -%}
+                    {%- endif -%}
+                  </li>
+                {%- endfor -%}
+                {%- if paginate.next -%}
+                  <li><a href="{{ paginate.next.url }}" class="pagination__link pagination__link--next" aria-label="{{ 'general.pagination.next' | t }}">→</a></li>
+                {%- endif -%}
+              </ol>
+            </nav>
+          {%- endif -%}
+        {%- endif -%}
+
+      {%- endpaginate -%}
+    </div>
+
+  </div>
+
+</div>
+
+<style>
+  /* Inline pagination styles */
+  .pagination { margin-top: var(--zap-space-3xl); }
+  .pagination__list { display: flex; justify-content: center; align-items: center; gap: .35rem; flex-wrap: wrap; }
+  .pagination__link {
+    display: flex; align-items: center; justify-content: center;
+    min-width: 40px; height: 40px;
+    padding: 0 .5rem;
+    border: 1.5px solid var(--zap-border);
+    border-radius: var(--zap-radius-sm);
+    font-size: .875rem;
+    font-weight: 500;
+    transition: border-color var(--zap-duration), background var(--zap-duration);
+  }
+  .pagination__link:hover,
+  .pagination__link.is-current { background: var(--zap-text); color: var(--zap-text-invert); border-color: var(--zap-text); }
+
+  .grid-toggle { display: flex; gap: .25rem; }
+  .grid-toggle__btn {
+    display: flex; align-items: center; gap: 2px;
+    padding: .4rem .5rem;
+    border: 1.5px solid var(--zap-border);
+    border-radius: var(--zap-radius-sm);
+    transition: border-color var(--zap-duration), background var(--zap-duration);
+  }
+  .grid-toggle__btn span { display: block; width: 5px; height: 16px; background: currentColor; border-radius: 1px; opacity: .4; }
+  .grid-toggle__btn.is-active { border-color: var(--zap-text); background: var(--zap-text); color: #fff; }
+  .grid-toggle__btn.is-active span { opacity: 1; background: #fff; }
+
+  .filter-swatches { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .filter-option--disabled { opacity: .35; pointer-events: none; }
+  .filter-chevron { transition: rotate var(--zap-duration); }
+
+  .breadcrumbs { padding-block: .75rem; }
+  .breadcrumbs__list { display: flex; align-items: center; gap: .35rem; font-size: .8125rem; flex-wrap: wrap; }
+  .breadcrumbs__link { color: var(--zap-text-secondary); transition: color var(--zap-duration); }
+  .breadcrumbs__link:hover { color: var(--zap-text); }
+  .breadcrumbs__sep { color: var(--zap-text-secondary); }
+
+  @media (min-width: 992px) {
+    .filter-drawer-toggle { display: none; }
+  }
+  @media (max-width: 991px) {
+    #filters-panel {
+      position: fixed;
+      inset-block: 0;
+      left: 0;
+      width: min(300px, 88vw);
+      background: var(--zap-bg);
+      z-index: var(--z-drawer);
+      overflow-y: auto;
+      transform: translateX(-110%);
+      transition: transform var(--zap-duration-lg) var(--zap-ease);
+      padding: 1.25rem;
+      box-shadow: var(--zap-shadow-lg);
+    }
+    #filters-panel.is-open { transform: translateX(0); }
+  }
+</style>
+
+<script>
+  // Grid column toggle
+  document.querySelectorAll('.grid-toggle__btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cols = btn.dataset.gridCols;
+      document.getElementById('collection-grid').style.setProperty('--grid-cols', cols);
+      document.querySelectorAll('.grid-toggle__btn').forEach(b => b.classList.toggle('is-active', b === btn));
+    });
+  });
+
+  // Mobile filter drawer
+  const filterToggle  = document.querySelector('[data-filter-toggle]');
+  const filtersPanel  = document.getElementById('filters-panel');
+  if (filterToggle && filtersPanel) {
+    filterToggle.addEventListener('click', () => {
+      const open = filtersPanel.classList.toggle('is-open');
+      filterToggle.setAttribute('aria-expanded', open);
+    });
+  }
+
+  // Filter accordion
+  document.querySelectorAll('.filter-group__title').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const panel    = btn.nextElementSibling;
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', !expanded);
+      panel.hidden = expanded;
+      btn.querySelector('.filter-chevron').style.rotate = expanded ? '' : '180deg';
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Collection",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "grid_columns",
+      "label": "Default grid columns (desktop)",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Product image ratio",
+      "options": [
+        { "value": "1",   "label": "Square (1:1)" },
+        { "value": "4/5", "label": "Portrait (4:5)" },
+        { "value": "3/4", "label": "Portrait (3:4)" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filters",
+      "label": "Show filters sidebar",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sort",
+      "label": "Show sort selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show product vendor",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_swatches",
+      "label": "Show colour swatches",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "label": "Show quick-add button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_infinite_scroll",
+      "label": "Infinite scroll (instead of pagination)",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Show breadcrumbs",
+      "default": true
+    }
+  ],
+  "presets": [
+    { "name": "Collection" }
+  ]
+}
+{% endschema %}

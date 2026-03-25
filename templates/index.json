@@ -1,0 +1,70 @@
+{
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": {
+        "show_bar": true
+      },
+      "blocks": {
+        "msg_1": {
+          "type": "message",
+          "settings": { "text": "🚀 Free shipping on orders over $50" }
+        },
+        "msg_2": {
+          "type": "message",
+          "settings": { "text": "⚡ New arrivals dropping weekly" }
+        }
+      },
+      "block_order": ["msg_1", "msg_2"]
+    },
+    "slideshow": {
+      "type": "slideshow",
+      "settings": {
+        "autoplay": true,
+        "autoplay_speed": 6,
+        "show_arrows": true,
+        "show_dots": true
+      },
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "heading": "New Collection",
+            "text": "Discover the season's most exciting drops.",
+            "btn_label": "Shop now",
+            "btn_style": "primary",
+            "text_color": "light",
+            "overlay_opacity": 30
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "heading": "Best Sellers",
+            "text": "The products everyone is talking about.",
+            "btn_label": "View all",
+            "btn_style": "primary",
+            "text_color": "light",
+            "overlay_opacity": 25
+          }
+        }
+      },
+      "block_order": ["slide_1", "slide_2"]
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Best Sellers",
+        "eyebrow": "Shop now",
+        "products_count": 8,
+        "columns": "4",
+        "show_swatches": true,
+        "show_quick_add": true,
+        "image_ratio": "1",
+        "link_label": "View all",
+        "link_url": "/collections/all"
+      }
+    }
+  },
+  "order": ["announcement", "slideshow", "featured_collection"]
+}

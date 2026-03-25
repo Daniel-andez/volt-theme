@@ -1,0 +1,158 @@
+{% comment %}
+  sections/featured-collection.liquid
+  ─────────────────────────────────────────────────────────────────────────────
+  Reusable featured collection grid for homepage / landing pages.
+  ─────────────────────────────────────────────────────────────────────────────
+{% endcomment %}
+
+{%- liquid
+  assign collection = collections[section.settings.collection]
+  assign limit      = section.settings.products_count | default: 8
+  assign cols       = section.settings.columns | default: 4
+-%}
+
+<section class="section featured-collection">
+  <div class="container">
+
+    {%- comment -%} Section heading {%- endcomment -%}
+    {%- if section.settings.heading != blank or section.settings.link_label != blank -%}
+      <div style="display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:var(--zap-space-xl); gap:1rem; flex-wrap:wrap;">
+        <div>
+          {%- if section.settings.eyebrow != blank -%}
+            <p style="font-size:.75rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--zap-accent); margin-bottom:.35rem;">{{ section.settings.eyebrow }}</p>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2 style="margin:0;">{{ section.settings.heading }}</h2>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.link_label != blank and section.settings.link_url != blank -%}
+          <a href="{{ section.settings.link_url }}" class="btn btn--secondary btn--sm">
+            {{ section.settings.link_label }}
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Product grid {%- endcomment -%}
+    <div class="collection-grid" style="--grid-cols:{{ cols }};">
+      {%- if collection != blank -%}
+        {%- for product in collection.products limit: limit -%}
+          {% render 'product-card',
+            product: product,
+            show_swatches: section.settings.show_swatches,
+            show_quick_add: section.settings.show_quick_add,
+            image_ratio: section.settings.image_ratio,
+            lazy_load: forloop.index > 4
+          %}
+        {%- else -%}
+          {%- for i in (1..limit) -%}
+            <div class="product-card">
+              <div class="product-card__media-wrap" style="aspect-ratio:1; background:var(--zap-surface);">
+                {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+              <div class="product-card__info">
+                <div class="product-card__title" style="background:var(--zap-surface); height:1em; border-radius:4px; width:70%;"></div>
+                <div class="product-card__prices" style="margin-top:.5rem; background:var(--zap-surface); height:1em; border-radius:4px; width:30%;"></div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..4) -%}
+          <div class="product-card">
+            <div class="product-card__media-wrap" style="aspect-ratio:1;">
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+            <div class="product-card__info">
+              <p class="product-card__title">Sample Product</p>
+              <div class="product-card__prices"><span class="product-price__regular">$29.00</span></div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Best sellers"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_count",
+      "label": "Number of products",
+      "min": 2,
+      "max": 12,
+      "step": 2,
+      "default": 8
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Columns (desktop)",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        { "value": "1",   "label": "Square" },
+        { "value": "4/5", "label": "Portrait (4:5)" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_swatches",
+      "label": "Show colour swatches",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "label": "Show quick-add",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "\"View all\" label",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "\"View all\" link"
+    }
+  ],
+  "presets": [
+    { "name": "Featured collection" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,28 @@
+{
+  "general": {
+    "accessibility":     { "close": "Schließen", "skip_to_content": "Zum Inhalt springen" },
+    "breadcrumbs":       { "label": "Breadcrumbs", "home": "Startseite" },
+    "currency_selector": { "label": "Währung" },
+    "locale_selector":   { "label": "Sprache" },
+    "footer":            { "copyright": "Alle Rechte vorbehalten." },
+    "newsletter":        { "email_placeholder": "Ihre E-Mail", "submit": "Abonnieren", "success": "Danke für Ihre Anmeldung!" },
+    "pagination":        { "label": "Seitennavigation", "previous": "Zurück", "next": "Weiter" },
+    "search":            { "label": "Suchen", "placeholder": "Produkte suchen…", "submit": "Suchen", "no_results": "Keine Ergebnisse für „{{ terms }}"", "results_with_count": "{{ count }} Ergebnisse für „{{ terms }}"" }
+  },
+  "products": {
+    "product": { "add_to_cart": "In den Warenkorb", "sold_out": "Ausverkauft", "new": "Neu", "quick_view": "Schnellansicht", "price": { "label": "Preis", "from_price_html": "Ab {{ price }}" }, "color": "Farbe", "quantity": "Menge" }
+  },
+  "collections": {
+    "general": { "items_with_count": "{{ count }} Produkte", "no_matches": "Keine Produkte gefunden.", "view_all": "Alle anzeigen", "grid_toggle": "Rasteransicht", "columns": "Spalten" },
+    "sorting":  { "label": "Sortieren nach", "manual": "Empfohlen", "best_selling": "Bestseller", "title_ascending": "A–Z", "title_descending": "Z–A", "price_ascending": "Preis aufsteigend", "price_descending": "Preis absteigend", "created_descending": "Neueste", "created_ascending": "Älteste" },
+    "filters":  { "title": "Filter", "active": "Aktive Filter", "remove": "Entfernen", "clear_all": "Alle löschen", "apply_price": "Anwenden", "price_min": "Min", "price_max": "Max" }
+  },
+  "cart": {
+    "general": { "title": "Ihr Warenkorb", "empty": "Ihr Warenkorb ist leer", "continue_shopping": "Weiter einkaufen", "subtotal": "Zwischensumme", "order_summary": "Bestellübersicht", "checkout": "Zur Kasse", "taxes_shipping_at_checkout": "Steuern und Versand werden beim Checkout berechnet", "note": "Bestellnotiz", "note_placeholder": "Notiz hinzufügen", "remove": "Entfernen", "quantity": "Menge", "update": "Warenkorb aktualisieren" }
+  },
+  "blogs": {
+    "general": { "articles_with_count": "{{ count }} Artikel", "no_articles": "Noch keine Artikel." },
+    "article": { "back_to_blog": "Zurück zu {{ title }}", "share": "Teilen", "read_more": "Weiterlesen" },
+    "comments": { "title": "{{ count }} Kommentare", "post_a_comment": "Kommentar hinterlassen", "name": "Name", "email": "E-Mail", "message": "Nachricht", "post": "Veröffentlichen", "success": "Kommentar veröffentlicht. Danke!" }
+  }
+}

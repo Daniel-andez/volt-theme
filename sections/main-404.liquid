@@ -1,0 +1,21 @@
+{% comment %}sections/main-404.liquid{% endcomment %}
+<div class="container section" style="text-align:center; padding-block:var(--zap-space-3xl);">
+  <p style="font-size:7rem; font-weight:900; line-height:1; letter-spacing:-.05em; color:var(--zap-accent);">404</p>
+  <h1 style="margin-block:.5rem 1rem;">{{ '404.general.title' | t | default: 'Page not found' }}</h1>
+  <p style="color:var(--zap-text-secondary); max-width:36ch; margin-inline:auto; margin-bottom:var(--zap-space-xl);">
+    {{ '404.general.description' | t | default: "The page you were looking for doesn't exist." }}
+  </p>
+  <div style="display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap;">
+    <a href="{{ routes.root_url }}" class="btn btn--primary btn--lg">{{ '404.general.back_home' | t | default: 'Back to home' }}</a>
+    <a href="{{ routes.all_products_collection_url }}" class="btn btn--secondary btn--lg">{{ '404.general.shop_all' | t | default: 'Shop all' }}</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "404",
+  "tag": "section",
+  "settings": [],
+  "presets": [{ "name": "404" }]
+}
+{% endschema %}

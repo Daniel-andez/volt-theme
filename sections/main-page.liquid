@@ -1,0 +1,14 @@
+{% comment %}sections/main-page.liquid{% endcomment %}
+<div class="container section--sm container--narrow">
+  <h1>{{ page.title }}</h1>
+  <div class="rte" style="margin-top:var(--zap-space-lg);">{{ page.content }}</div>
+</div>
+
+{% schema %}
+{
+  "name": "Page",
+  "tag": "section",
+  "settings": [],
+  "presets": [{ "name": "Page" }]
+}
+{% endschema %}

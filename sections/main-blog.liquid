@@ -1,0 +1,154 @@
+{% comment %}
+  sections/main-blog.liquid
+  Blog index — grid layout with featured image, excerpt, metadata.
+{% endcomment %}
+
+{%- liquid
+  assign posts_per_page = section.settings.posts_per_page | default: 9
+  assign cols           = section.settings.columns | default: '3'
+-%}
+
+<div class="container section--sm">
+  <header style="margin-bottom:var(--zap-space-xl);">
+    <h1>{{ blog.title }}</h1>
+    {%- if blog.articles_count > 0 -%}
+      <p style="color:var(--zap-text-secondary); margin-top:.35rem; font-size:.9rem;">
+        {{ 'blogs.general.articles_with_count' | t: count: blog.articles_count }}
+      </p>
+    {%- endif -%}
+  </header>
+
+  {%- paginate blog.articles by posts_per_page -%}
+    <div class="collection-grid" style="--grid-cols:{{ cols }};">
+      {%- for article in blog.articles -%}
+        <article class="blog-card">
+
+          {%- if section.settings.show_image and article.image -%}
+            <a href="{{ article.url }}" class="blog-card__image-link" tabindex="-1" aria-hidden="true">
+              {{
+                article.image
+                | image_url: width: 720
+                | image_tag:
+                  alt: article.image.alt | default: article.title | escape,
+                  loading: forloop.index > 3 | ternary: 'lazy', 'eager',
+                  width: 720,
+                  style: 'width:100%; aspect-ratio:16/10; object-fit:cover; border-radius:var(--zap-radius-md) var(--zap-radius-md) 0 0;'
+              }}
+            </a>
+          {%- endif -%}
+
+          <div style="padding:.875rem .125rem;">
+            {%- if section.settings.show_date or section.settings.show_author -%}
+              <p style="font-size:.75rem; color:var(--zap-text-secondary); margin-bottom:.4rem;">
+                {%- if section.settings.show_date -%}
+                  <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                    {{ article.published_at | date: format: 'month_day_year' }}
+                  </time>
+                {%- endif -%}
+                {%- if section.settings.show_author -%}
+                  &ensp;·&ensp;{{ article.author }}
+                {%- endif -%}
+              </p>
+            {%- endif -%}
+
+            <h2 style="font-size:1.125rem; margin-bottom:.5rem; line-height:1.25;">
+              <a href="{{ article.url }}">{{ article.title }}</a>
+            </h2>
+
+            {%- if section.settings.show_excerpt and article.excerpt != blank -%}
+              <p style="font-size:.9rem; color:var(--zap-text-secondary); display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">
+                {{ article.excerpt | strip_html }}
+              </p>
+            {%- endif -%}
+
+            <a href="{{ article.url }}" style="display:inline-flex; align-items:center; gap:.3rem; font-size:.875rem; font-weight:600; margin-top:.75rem; color:var(--zap-text);">
+              {{ 'blogs.article.read_more' | t }}
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+
+        </article>
+      {%- else -%}
+        <p style="grid-column:1/-1; color:var(--zap-text-secondary);">{{ 'blogs.general.no_articles' | t }}</p>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="pagination" style="margin-top:var(--zap-space-3xl);" aria-label="{{ 'general.pagination.label' | t }}">
+        <ol class="pagination__list">
+          {%- if paginate.previous -%}<li><a href="{{ paginate.previous.url }}" class="pagination__link">←</a></li>{%- endif -%}
+          {%- for part in paginate.parts -%}
+            <li>
+              {%- if part.is_link -%}
+                <a href="{{ part.url }}" class="pagination__link">{{ part.title }}</a>
+              {%- else -%}
+                <span class="pagination__link{% if part.title == paginate.current_page %} is-current{% endif %}">{{ part.title }}</span>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+          {%- if paginate.next -%}<li><a href="{{ paginate.next.url }}" class="pagination__link">→</a></li>{%- endif -%}
+        </ol>
+      </nav>
+    {%- endif -%}
+  {%- endpaginate -%}
+</div>
+
+<style>
+  .blog-card { border-radius: var(--zap-radius-md); overflow: hidden; transition: box-shadow var(--zap-duration) var(--zap-ease), transform var(--zap-duration) var(--zap-ease); }
+  .blog-card:hover { box-shadow: var(--zap-shadow-md); transform: translateY(-2px); }
+  .blog-card a { text-decoration: none; }
+  .blog-card h2 a:hover { text-decoration: underline; }
+</style>
+
+{% schema %}
+{
+  "name": "Blog",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "posts_per_page",
+      "label": "Posts per page",
+      "min": 3,
+      "max": 24,
+      "step": 3,
+      "default": 9
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Columns (desktop)",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show featured image",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "Show excerpt",
+      "default": true
+    }
+  ],
+  "presets": [{ "name": "Blog" }]
+}
+{% endschema %}
