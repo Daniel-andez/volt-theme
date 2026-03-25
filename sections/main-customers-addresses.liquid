@@ -1,0 +1,210 @@
+{% comment %}
+  sections/main-customers-addresses.liquid
+  Manage saved addresses: list + add new + edit/delete inline.
+{% endcomment %}
+
+{%- capture account_content -%}
+
+  <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:var(--volt-space-xl);">
+    <h2 class="account-section-title" style="margin-bottom:0;">{{ 'customer.addresses.title' | t }}</h2>
+    <button
+      type="button"
+      class="btn btn--primary btn--sm"
+      data-address-form-toggle="new"
+      aria-expanded="false"
+      aria-controls="address-form-new"
+    >
+      + {{ 'customer.addresses.add_new' | t }}
+    </button>
+  </div>
+
+  {%- comment -%} ── New address form (hidden by default) ── {%- endcomment -%}
+  <div id="address-form-new" class="address-form-panel" hidden>
+    <h3 class="address-form-panel__title">{{ 'customer.addresses.add_new' | t }}</h3>
+    {%- form 'customer_address', customer.new_address, id: 'address_form_new' -%}
+      {%- render 'address-fields', form: form -%}
+      <div style="display:flex; gap:.75rem; flex-wrap:wrap; margin-top:var(--volt-space-md);">
+        <button type="submit" class="btn btn--primary">{{ 'customer.addresses.save' | t }}</button>
+        <button type="button" class="btn btn--secondary" data-address-form-toggle="new">{{ 'customer.addresses.cancel' | t }}</button>
+      </div>
+    {%- endform -%}
+  </div>
+
+  {%- comment -%} ── Existing addresses ── {%- endcomment -%}
+  {%- if customer.addresses.size > 0 -%}
+    <div class="addresses-grid">
+      {%- for address in customer.addresses -%}
+        <div class="address-card" id="address-card-{{ address.id }}">
+
+          {%- if address == customer.default_address -%}
+            <span class="address-card__default-badge">{{ 'customer.addresses.default' | t }}</span>
+          {%- endif -%}
+
+          <address class="address-card__address">
+            {%- if address.first_name != blank or address.last_name != blank -%}
+              <strong>{{ address.first_name }} {{ address.last_name }}</strong><br>
+            {%- endif -%}
+            {%- if address.company != blank -%}{{ address.company }}<br>{%- endif -%}
+            {{ address.address1 }}<br>
+            {%- if address.address2 != blank -%}{{ address.address2 }}<br>{%- endif -%}
+            {{ address.city }}{%- if address.province != blank -%}, {{ address.province_code }}{%- endif %} {{ address.zip }}<br>
+            {{ address.country }}
+          </address>
+
+          <div class="address-card__actions">
+            <button
+              type="button"
+              class="btn btn--secondary btn--sm"
+              data-address-form-toggle="{{ address.id }}"
+              aria-expanded="false"
+              aria-controls="address-form-{{ address.id }}"
+            >
+              {{ 'customer.addresses.edit' | t }}
+            </button>
+
+            {%- unless address == customer.default_address -%}
+              {%- form 'customer_address', address, id: 'address_default_{{ address.id }}' -%}
+                <button
+                  type="submit"
+                  name="address[default]"
+                  value="true"
+                  class="btn btn--ghost btn--sm"
+                >
+                  {{ 'customer.addresses.set_default' | t }}
+                </button>
+              {%- endform -%}
+            {%- endunless -%}
+
+            <button
+              type="button"
+              class="btn btn--ghost btn--sm address-delete-btn"
+              data-confirm="{{ 'customer.addresses.delete_confirm' | t }}"
+              data-address-id="{{ address.id }}"
+              style="color:var(--volt-error);"
+            >
+              {{ 'customer.addresses.delete' | t }}
+            </button>
+          </div>
+
+          {%- comment -%} Inline edit form {%- endcomment -%}
+          <div id="address-form-{{ address.id }}" class="address-form-panel address-form-panel--inline" hidden>
+            {%- form 'customer_address', address, id: 'address_form_{{ address.id }}' -%}
+              {%- render 'address-fields', form: form, address: address -%}
+              <div style="display:flex; gap:.75rem; flex-wrap:wrap; margin-top:var(--volt-space-md);">
+                <button type="submit" class="btn btn--primary">{{ 'customer.addresses.save' | t }}</button>
+                <button type="button" class="btn btn--secondary" data-address-form-toggle="{{ address.id }}">{{ 'customer.addresses.cancel' | t }}</button>
+              </div>
+            {%- endform -%}
+          </div>
+
+        </div>
+      {%- endfor -%}
+    </div>
+
+  {%- else -%}
+    <div class="account-empty-state">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <path d="M24 4C17.373 4 12 9.373 12 16c0 10 12 28 12 28S36 26 36 16c0-6.627-5.373-12-12-12z" stroke="currentColor" stroke-width="2"/>
+        <circle cx="24" cy="16" r="4" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <h3>{{ 'customer.addresses.no_addresses' | t }}</h3>
+      <p>{{ 'customer.addresses.no_addresses_description' | t }}</p>
+    </div>
+  {%- endif -%}
+
+{%- endcapture -%}
+
+{% render 'customer-account-layout', content: account_content, active: 'addresses' %}
+
+{%- comment -%} Hidden delete form template {%- endcomment -%}
+<form id="address-delete-form" method="post" action="" style="display:none;">
+  <input type="hidden" name="_method" value="delete">
+  {{ form_authenticity_token }}
+</form>
+
+<style>
+  .addresses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--volt-space-lg);
+  }
+  .address-card {
+    border: 1.5px solid var(--volt-border);
+    border-radius: var(--volt-radius-lg);
+    padding: var(--volt-space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--volt-space-md);
+    position: relative;
+    transition: border-color var(--volt-duration);
+  }
+  .address-card:has(.address-card__default-badge) { border-color: var(--volt-accent); }
+  .address-card__default-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: .2em .6em;
+    background: var(--volt-accent);
+    color: var(--volt-accent-text);
+    border-radius: var(--volt-radius-sm);
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    width: fit-content;
+  }
+  .address-card__address { font-style: normal; font-size: .9rem; line-height: 1.7; }
+  .address-card__address strong { font-size: 1rem; }
+  .address-card__actions { display: flex; flex-wrap: wrap; gap: .4rem; }
+
+  .address-form-panel {
+    background: var(--volt-surface);
+    border-radius: var(--volt-radius-md);
+    padding: var(--volt-space-xl);
+    margin-bottom: var(--volt-space-xl);
+    border: 1.5px solid var(--volt-border);
+  }
+  .address-form-panel--inline { margin-top: var(--volt-space-md); margin-bottom: 0; }
+  .address-form-panel__title  { font-size: 1.125rem; font-weight: 700; margin-bottom: var(--volt-space-lg); }
+
+  .account-empty-state {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; gap: var(--volt-space-md); padding: var(--volt-space-3xl) 0;
+    color: var(--volt-text-secondary);
+  }
+  .account-empty-state svg { opacity: .3; }
+  .account-empty-state h3  { font-size: 1.25rem; color: var(--volt-text); }
+</style>
+
+<script>
+  // Toggle address forms
+  document.querySelectorAll('[data-address-form-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id     = btn.dataset.addressFormToggle;
+      const panel  = document.getElementById('address-form-' + id);
+      if (!panel) return;
+      const open   = panel.hidden;
+      panel.hidden = !open;
+      btn.setAttribute('aria-expanded', open);
+      if (open) panel.querySelector('input')?.focus();
+    });
+  });
+
+  // Delete address with confirmation
+  document.querySelectorAll('.address-delete-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!confirm(btn.dataset.confirm)) return;
+      const form   = document.getElementById('address-delete-form');
+      form.action  = '/account/addresses/' + btn.dataset.addressId;
+      form.submit();
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Addresses",
+  "tag": "section",
+  "settings": [],
+  "presets": [{ "name": "Addresses" }]
+}
+{% endschema %}

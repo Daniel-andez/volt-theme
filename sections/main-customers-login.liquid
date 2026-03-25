@@ -1,0 +1,105 @@
+{% comment %}
+  sections/main-customers-login.liquid
+  Login + link to register. Shopify handles auth via {% form 'customer_login' %}.
+{% endcomment %}
+
+<div class="customer-auth-page">
+  <div class="customer-auth-box">
+
+    {%- comment -%} Logo / brand {%- endcomment -%}
+    <a href="{{ routes.root_url }}" class="customer-auth-box__logo">
+      {%- if settings.logo -%}
+        {{ settings.logo | image_url: width: 160 | image_tag: alt: shop.name, width: 120 }}
+      {%- else -%}
+        {{ shop.name }}
+      {%- endif -%}
+    </a>
+
+    <h1 class="customer-auth-box__title">{{ 'customer.login.title' | t }}</h1>
+
+    {%- comment -%} Error messages {%- endcomment -%}
+    {%- if form.errors -%}
+      <div class="form-error" role="alert">
+        {{ form.errors | default_errors }}
+      </div>
+    {%- endif -%}
+
+    {%- form 'customer_login' -%}
+
+      <div class="form-group">
+        <label class="form-label" for="CustomerEmail">{{ 'customer.login.email' | t }}</label>
+        <input
+          type="email"
+          id="CustomerEmail"
+          name="customer[email]"
+          class="form-input"
+          autocomplete="email"
+          autocapitalize="off"
+          autocorrect="off"
+          required
+          {% if form.email %}value="{{ form.email }}"{% endif %}
+        >
+      </div>
+
+      <div class="form-group">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:.35rem;">
+          <label class="form-label" for="CustomerPassword" style="margin:0;">{{ 'customer.login.password' | t }}</label>
+          <a href="{{ routes.account_recover_url }}" class="form-link" style="font-size:.8125rem;">
+            {{ 'customer.login.forgot_password' | t }}
+          </a>
+        </div>
+        <div class="password-input-wrap">
+          <input
+            type="password"
+            id="CustomerPassword"
+            name="customer[password]"
+            class="form-input"
+            autocomplete="current-password"
+            required
+          >
+          <button
+            type="button"
+            class="password-toggle"
+            aria-label="{{ 'customer.login.show_password' | t }}"
+            onclick="
+              var i=document.getElementById('CustomerPassword');
+              i.type = i.type==='password' ? 'text' : 'password';
+              this.setAttribute('aria-pressed', i.type==='text');
+            "
+          >
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+              <path d="M1 9s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6z" stroke="currentColor" stroke-width="1.4"/>
+              <circle cx="9" cy="9" r="2.5" stroke="currentColor" stroke-width="1.4"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn--primary btn--full btn--lg" style="margin-top:.25rem;">
+        {{ 'customer.login.submit' | t }}
+      </button>
+
+    {%- endform -%}
+
+    <p class="customer-auth-box__switch">
+      {{ 'customer.login.no_account' | t }}
+      <a href="{{ routes.account_register_url }}" class="form-link">{{ 'customer.login.create_account' | t }}</a>
+    </p>
+
+    <a href="{{ routes.root_url }}" class="customer-auth-box__back">
+      ← {{ 'customer.login.continue_as_guest' | t }}
+    </a>
+
+  </div>
+</div>
+
+{% render 'customer-auth-styles' %}
+
+{% schema %}
+{
+  "name": "Login",
+  "tag": "section",
+  "settings": [],
+  "presets": [{ "name": "Login" }]
+}
+{% endschema %}

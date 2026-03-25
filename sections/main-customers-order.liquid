@@ -1,0 +1,218 @@
+{% comment %}
+  sections/main-customers-order.liquid
+  Detailed view of a single order.
+{% endcomment %}
+
+{%- capture account_content -%}
+
+  <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:var(--volt-space-xl);">
+    <div>
+      <a href="{{ routes.account_url }}" style="font-size:.875rem; color:var(--volt-text-secondary); display:inline-flex; align-items:center; gap:.3rem; margin-bottom:.5rem; transition:color var(--volt-duration);" onmouseover="this.style.color='var(--volt-text)'" onmouseout="this.style.color='var(--volt-text-secondary)'">
+        ← {{ 'customer.order.back' | t }}
+      </a>
+      <h2 class="account-section-title" style="margin-bottom:0;">{{ 'customer.order.title' | t: name: order.name }}</h2>
+    </div>
+    <span class="order-status order-status--{{ order.financial_status | handleize }}" style="font-size:.875rem;">
+      {{ order.financial_status_label }}
+    </span>
+  </div>
+
+  {%- comment -%} ── Order meta ── {%- endcomment -%}
+  <div class="order-meta-grid">
+    <div class="order-meta-card">
+      <p class="order-meta-card__label">{{ 'customer.order.date' | t }}</p>
+      <p class="order-meta-card__value">{{ order.created_at | date: format: 'month_day_year' }}</p>
+    </div>
+    <div class="order-meta-card">
+      <p class="order-meta-card__label">{{ 'customer.order.payment_status' | t }}</p>
+      <p class="order-meta-card__value">{{ order.financial_status_label }}</p>
+    </div>
+    <div class="order-meta-card">
+      <p class="order-meta-card__label">{{ 'customer.order.fulfillment_status' | t }}</p>
+      <p class="order-meta-card__value">{{ order.fulfillment_status_label }}</p>
+    </div>
+  </div>
+
+  {%- comment -%} ── Line items ── {%- endcomment -%}
+  <div class="order-items">
+    {%- for line_item in order.line_items -%}
+      <div class="order-item">
+        <div class="order-item__image-wrap">
+          {%- if line_item.image -%}
+            {{ line_item.image | image_url: width: 120 | image_tag: alt: line_item.title | escape, width: 80, height: 80, style: 'object-fit:cover; border-radius:var(--volt-radius-sm);' }}
+          {%- else -%}
+            <div style="width:80px; height:80px; background:var(--volt-surface); border-radius:var(--volt-radius-sm); display:flex; align-items:center; justify-content:center;">
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+        </div>
+        <div class="order-item__details">
+          <p class="order-item__title">
+            <a href="{{ line_item.product.url }}">{{ line_item.title }}</a>
+          </p>
+          {%- unless line_item.variant.title == 'Default Title' -%}
+            <p class="order-item__variant">{{ line_item.variant.title }}</p>
+          {%- endunless -%}
+          {%- if line_item.sku != blank -%}
+            <p class="order-item__sku">SKU: {{ line_item.sku }}</p>
+          {%- endif -%}
+          <p class="order-item__qty">{{ 'customer.order.qty' | t }}: {{ line_item.quantity }}</p>
+        </div>
+        <div class="order-item__price">
+          {%- if line_item.original_line_price != line_item.final_line_price -%}
+            <s style="font-size:.8125rem; color:var(--volt-text-secondary);">{{ line_item.original_line_price | money }}</s>
+          {%- endif -%}
+          {{ line_item.final_line_price | money }}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- comment -%} ── Totals ── {%- endcomment -%}
+  <div class="order-totals">
+    <div class="order-totals__row">
+      <span>{{ 'customer.order.subtotal' | t }}</span>
+      <span>{{ order.line_items_subtotal_price | money }}</span>
+    </div>
+    {%- for discount in order.cart_level_discount_applications -%}
+      <div class="order-totals__row order-totals__row--discount">
+        <span>{{ discount.title }}</span>
+        <span>-{{ discount.total_allocated_amount | money }}</span>
+      </div>
+    {%- endfor -%}
+    {%- for shipping_method in order.shipping_methods -%}
+      <div class="order-totals__row">
+        <span>{{ 'customer.order.shipping' | t }} ({{ shipping_method.title }})</span>
+        <span>{{ shipping_method.price | money }}</span>
+      </div>
+    {%- endfor -%}
+    {%- for tax_line in order.tax_lines -%}
+      <div class="order-totals__row">
+        <span>{{ 'customer.order.tax' | t }} ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%)</span>
+        <span>{{ tax_line.price | money }}</span>
+      </div>
+    {%- endfor -%}
+    <div class="order-totals__row order-totals__row--total">
+      <span>{{ 'customer.order.total' | t }}</span>
+      <span>{{ order.total_price | money_with_currency }}</span>
+    </div>
+  </div>
+
+  {%- comment -%} ── Addresses ── {%- endcomment -%}
+  <div class="order-addresses">
+    {%- if order.shipping_address -%}
+      <div class="order-address-card">
+        <p class="order-meta-card__label">{{ 'customer.order.shipping_address' | t }}</p>
+        {{ order.shipping_address | format_address }}
+      </div>
+    {%- endif -%}
+    {%- if order.billing_address -%}
+      <div class="order-address-card">
+        <p class="order-meta-card__label">{{ 'customer.order.billing_address' | t }}</p>
+        {{ order.billing_address | format_address }}
+      </div>
+    {%- endif -%}
+  </div>
+
+{%- endcapture -%}
+
+{% render 'customer-account-layout', content: account_content, active: 'orders' %}
+
+<style>
+  .order-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--volt-space-md);
+    margin-bottom: var(--volt-space-xl);
+  }
+  .order-meta-card {
+    background: var(--volt-surface);
+    border-radius: var(--volt-radius-md);
+    padding: var(--volt-space-md);
+  }
+  .order-meta-card__label {
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--volt-text-secondary);
+    margin-bottom: .3rem;
+  }
+  .order-meta-card__value { font-weight: 600; font-size: .9375rem; }
+
+  /* Line items */
+  .order-items { border-top: 2px solid var(--volt-border); margin-bottom: var(--volt-space-lg); }
+  .order-item {
+    display: flex;
+    gap: var(--volt-space-md);
+    padding: var(--volt-space-md) 0;
+    border-bottom: 1px solid var(--volt-border);
+    align-items: flex-start;
+  }
+  .order-item__details { flex: 1; min-width: 0; }
+  .order-item__title   { font-weight: 600; font-size: .9375rem; }
+  .order-item__title a:hover { text-decoration: underline; }
+  .order-item__variant,
+  .order-item__sku,
+  .order-item__qty { font-size: .8125rem; color: var(--volt-text-secondary); margin-top: .2rem; }
+  .order-item__price { font-weight: 700; white-space: nowrap; text-align: right; }
+
+  /* Totals */
+  .order-totals {
+    border-top: 1px solid var(--volt-border);
+    padding-top: var(--volt-space-md);
+    max-width: 320px;
+    margin-left: auto;
+    margin-bottom: var(--volt-space-xl);
+  }
+  .order-totals__row {
+    display: flex;
+    justify-content: space-between;
+    font-size: .9rem;
+    padding: .3rem 0;
+    color: var(--volt-text-secondary);
+  }
+  .order-totals__row--discount { color: var(--volt-success); }
+  .order-totals__row--total {
+    font-size: 1.0625rem;
+    font-weight: 800;
+    color: var(--volt-text);
+    padding-top: .65rem;
+    margin-top: .35rem;
+    border-top: 2px solid var(--volt-border);
+  }
+
+  /* Addresses */
+  .order-addresses {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--volt-space-md);
+  }
+  .order-address-card {
+    background: var(--volt-surface);
+    border-radius: var(--volt-radius-md);
+    padding: var(--volt-space-md);
+    font-size: .9rem;
+    line-height: 1.6;
+  }
+  .order-address-card address { font-style: normal; }
+
+  .order-status {
+    display: inline-flex; align-items: center;
+    padding: .3em .75em; border-radius: var(--volt-radius-pill);
+    font-weight: 700; text-transform: capitalize;
+  }
+  .order-status--paid           { background: color-mix(in srgb, var(--volt-success) 12%, transparent); color: var(--volt-success); }
+  .order-status--pending        { background: color-mix(in srgb, #F59E0B 12%, transparent);             color: #B45309; }
+  .order-status--refunded,
+  .order-status--voided         { background: color-mix(in srgb, var(--volt-error) 10%, transparent);   color: var(--volt-error); }
+</style>
+
+{% schema %}
+{
+  "name": "Order",
+  "tag": "section",
+  "settings": [],
+  "presets": [{ "name": "Order" }]
+}
+{% endschema %}

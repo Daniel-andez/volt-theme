@@ -1,0 +1,100 @@
+{% comment %}
+  snippets/address-fields.liquid
+  Reusable address form fields used on both new + edit forms.
+  Usage: {% render 'address-fields', form: form, address: address %}
+{% endcomment %}
+
+{%- assign addr = address | default: form -%}
+
+<div class="address-fields">
+
+  <div class="grid-2" style="gap:var(--volt-space-md);">
+    <div class="form-group">
+      <label class="form-label" for="{{ form.id }}_first_name">{{ 'customer.addresses.first_name' | t }}</label>
+      <input type="text"  id="{{ form.id }}_first_name" name="address[first_name]" class="form-input" value="{{ addr.first_name }}" autocomplete="given-name">
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="{{ form.id }}_last_name">{{ 'customer.addresses.last_name' | t }}</label>
+      <input type="text"  id="{{ form.id }}_last_name"  name="address[last_name]"  class="form-input" value="{{ addr.last_name }}"  autocomplete="family-name">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="{{ form.id }}_company">{{ 'customer.addresses.company' | t }}</label>
+    <input type="text" id="{{ form.id }}_company" name="address[company]" class="form-input" value="{{ addr.company }}" autocomplete="organization">
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="{{ form.id }}_phone">{{ 'customer.addresses.phone' | t }}</label>
+    <input type="tel" id="{{ form.id }}_phone" name="address[phone]" class="form-input" value="{{ addr.phone }}" autocomplete="tel">
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="{{ form.id }}_address1">{{ 'customer.addresses.address1' | t }}</label>
+    <input type="text" id="{{ form.id }}_address1" name="address[address1]" class="form-input" value="{{ addr.address1 }}" autocomplete="address-line1" required>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="{{ form.id }}_address2">{{ 'customer.addresses.address2' | t }}</label>
+    <input type="text" id="{{ form.id }}_address2" name="address[address2]" class="form-input" value="{{ addr.address2 }}" autocomplete="address-line2">
+  </div>
+
+  <div class="grid-2" style="gap:var(--volt-space-md);">
+    <div class="form-group">
+      <label class="form-label" for="{{ form.id }}_city">{{ 'customer.addresses.city' | t }}</label>
+      <input type="text" id="{{ form.id }}_city" name="address[city]" class="form-input" value="{{ addr.city }}" autocomplete="address-level2" required>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="{{ form.id }}_zip">{{ 'customer.addresses.zip' | t }}</label>
+      <input type="text" id="{{ form.id }}_zip" name="address[zip]" class="form-input" value="{{ addr.zip }}" autocomplete="postal-code">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="{{ form.id }}_country">{{ 'customer.addresses.country' | t }}</label>
+    <select
+      id="{{ form.id }}_country"
+      name="address[country]"
+      class="form-select"
+      data-default="{{ addr.country }}"
+    >
+      {{ all_country_option_tags }}
+    </select>
+  </div>
+
+  <div class="form-group" id="{{ form.id }}_province_wrap">
+    <label class="form-label" for="{{ form.id }}_province">{{ 'customer.addresses.province' | t }}</label>
+    <select id="{{ form.id }}_province" name="address[province]" class="form-select" data-default="{{ addr.province }}"></select>
+  </div>
+
+</div>
+
+<script>
+  // Shopify's province/state picker — triggered by country selector change
+  (function() {
+    var countryEl  = document.getElementById('{{ form.id }}_country');
+    var provinceEl = document.getElementById('{{ form.id }}_province');
+    var wrapEl     = document.getElementById('{{ form.id }}_province_wrap');
+    if (!countryEl || !provinceEl) return;
+
+    function updateProvinces() {
+      var selectedOption = countryEl.options[countryEl.selectedIndex];
+      var provinces      = JSON.parse(selectedOption.dataset.provinces || '[]');
+      provinceEl.innerHTML = '';
+      if (provinces.length > 0) {
+        provinces.forEach(function(p) {
+          var opt = document.createElement('option');
+          opt.value = p[0]; opt.text = p[1];
+          if (p[0] === provinceEl.dataset.default) opt.selected = true;
+          provinceEl.appendChild(opt);
+        });
+        wrapEl.hidden = false;
+      } else {
+        wrapEl.hidden = true;
+      }
+    }
+
+    countryEl.addEventListener('change', updateProvinces);
+    updateProvinces();
+  })();
+</script>

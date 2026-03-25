@@ -1,0 +1,140 @@
+{% comment %}
+  sections/main-customers-account.liquid
+  Dashboard: order history table + quick links.
+{% endcomment %}
+
+{%- capture account_content -%}
+
+  <h2 class="account-section-title">{{ 'customer.account.orders_title' | t }}</h2>
+
+  {%- if customer.orders.size > 0 -%}
+
+    {%- comment -%} Desktop table {%- endcomment -%}
+    <div class="orders-table-wrap">
+      <table class="orders-table" role="table">
+        <thead>
+          <tr>
+            <th scope="col">{{ 'customer.orders.order'       | t }}</th>
+            <th scope="col">{{ 'customer.orders.date'        | t }}</th>
+            <th scope="col">{{ 'customer.orders.status'      | t }}</th>
+            <th scope="col">{{ 'customer.orders.items'       | t }}</th>
+            <th scope="col" style="text-align:right;">{{ 'customer.orders.total' | t }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for order in customer.orders -%}
+            <tr class="orders-table__row">
+              <td>
+                <a href="{{ order.customer_url }}" class="orders-table__order-link">
+                  {{ order.name }}
+                </a>
+              </td>
+              <td>
+                <time datetime="{{ order.created_at | date: '%Y-%m-%d' }}">
+                  {{ order.created_at | date: format: 'month_day_year' }}
+                </time>
+              </td>
+              <td>
+                <span class="order-status order-status--{{ order.financial_status | handleize }}">
+                  {{ order.financial_status_label }}
+                </span>
+              </td>
+              <td>{{ order.line_items.size }}</td>
+              <td style="text-align:right; font-weight:700;">{{ order.total_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+
+  {%- else -%}
+
+    <div class="account-empty-state">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <rect x="6" y="8" width="36" height="32" rx="3" stroke="currentColor" stroke-width="2"/>
+        <path d="M14 18h20M14 24h14M14 30h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <h3>{{ 'customer.account.no_orders' | t }}</h3>
+      <p>{{ 'customer.account.no_orders_description' | t }}</p>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">
+        {{ 'customer.account.start_shopping' | t }}
+      </a>
+    </div>
+
+  {%- endif -%}
+
+{%- endcapture -%}
+
+{% render 'customer-account-layout', content: account_content, active: 'orders' %}
+
+<style>
+  /* Orders table */
+  .orders-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .9rem;
+  }
+  .orders-table thead th {
+    text-align: left;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--volt-text-secondary);
+    padding: .6rem 1rem .6rem 0;
+    border-bottom: 2px solid var(--volt-border);
+    white-space: nowrap;
+  }
+  .orders-table tbody td {
+    padding: 1rem 1rem 1rem 0;
+    border-bottom: 1px solid var(--volt-border);
+    vertical-align: middle;
+  }
+  .orders-table__row:hover td { background: var(--volt-surface); }
+  .orders-table__order-link {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .orders-table__order-link:hover { color: var(--volt-accent); }
+
+  /* Order status badges */
+  .order-status {
+    display: inline-flex;
+    align-items: center;
+    padding: .25em .65em;
+    border-radius: var(--volt-radius-pill);
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+  .order-status--paid            { background: color-mix(in srgb, var(--volt-success) 12%, transparent); color: var(--volt-success); }
+  .order-status--pending         { background: color-mix(in srgb, #F59E0B 12%, transparent);             color: #B45309; }
+  .order-status--refunded,
+  .order-status--voided          { background: color-mix(in srgb, var(--volt-error) 10%, transparent);   color: var(--volt-error); }
+  .order-status--partially-paid  { background: color-mix(in srgb, #6366F1 12%, transparent);             color: #4338CA; }
+
+  /* Empty state */
+  .account-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--volt-space-md);
+    padding: var(--volt-space-3xl) 0;
+    color: var(--volt-text-secondary);
+  }
+  .account-empty-state svg { opacity: .3; }
+  .account-empty-state h3  { font-size: 1.25rem; color: var(--volt-text); }
+  .account-empty-state p   { max-width: 32ch; font-size: .9375rem; }
+</style>
+
+{% schema %}
+{
+  "name": "Account",
+  "tag": "section",
+  "settings": [],
+  "presets": [{ "name": "Account" }]
+}
+{% endschema %}
