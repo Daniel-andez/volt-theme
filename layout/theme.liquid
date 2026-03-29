@@ -322,9 +322,7 @@
   <script src="{{ 'volt-theme.js' | asset_url }}" defer></script>
 
   <!-- Shopify-required scripts (analytics, etc.) -->
-  {% if content_for_header contains 'shopify' %}
-    {% render 'shopify-scripts' %}
-  {% endif %}
+  {% render 'shopify-scripts' %}
 
 </body>
 </html>
