@@ -1,7 +1,10 @@
-# Puro Interior San Gil — Auditoría y Plan de Crecimiento
+# Puro Interior — Auditoría y Plan de Crecimiento (Cadena regional Santander)
 
 **Consultoría de marketing digital · Retail de moda masculina**
-Fecha: 11 de junio de 2026 · Mercado: San Gil, Santander, Colombia
+Fecha: 11 de junio de 2026 · Mercado: **Santander, Colombia (multi-sede)** — Bucaramanga (Barrio El Prado) · Floridablanca (CC Caracolí, local 208) · Barrancabermeja · (San Gil/Guanentá si aplica)
+Cuentas: IG `@puro_interior` · FB `Puro interior Bucaramanga`
+
+> **Revisión v2** — Corregido tras confirmar con el cliente que el negocio es una **cadena regional con base en Bucaramanga (21+ años)**, no una tienda de San Gil. La premisa original del brief ("ubicación principal: San Gil") era incorrecta y se descartó. Toda la matemática de mercado se rehízo a escala regional.
 
 > Modo de trabajo solicitado: **crítica extrema, sin amabilidad innecesaria.** Cumplido.
 > Equipo simulado: Director de Marketing · Social Media Strategist · Community Manager · Analista de Competencia · Copywriter de Conversión · Especialista en Meta Ads · Consultor de Retail Local.
@@ -12,40 +15,44 @@ Fecha: 11 de junio de 2026 · Mercado: San Gil, Santander, Colombia
 
 Antes de una sola tabla, dos verdades que ningún consultor honesto puede ocultarte:
 
-### 0.1 No me entregaste las redes a auditar
+### 0.1 El verdadero cuello de botella: produces mucho, conviertes poco
 
-Tu encargo dice textualmente: *"realizar una auditoría completa de todas las redes sociales que te entregue"*. **No entregaste ni un solo enlace, handle, captura ni métrica.** Busqué tu marca públicamente (Google + Instagram) y **no encontré una cuenta clara y verificable de "Puro Interior San Gil"**. Aparece una "Puro Interior San Pío" en Floridablanca (otra ciudad, otra marca probablemente).
+Datos reales de `@puro_interior` (captura del cliente, jun-2026):
 
-Consecuencia dura: **cualquier score 0-100 que te dé sobre tu contenido real sería inventado.** Una agencia seria NO hace eso. Por tanto:
+| Métrica | Valor | Veredicto |
+|---|---:|---|
+| Publicaciones | **428** | Esfuerzo enorme de producción |
+| Seguidores | **1.879** | Audiencia mínima para 21 años de marca y 4 sedes |
+| Seguidos | **23** | Cero estrategia de engagement saliente |
+| **Eficiencia (seguidores ÷ posts)** | **4,4** | 🔴 **El número que lo explica todo** |
 
-- Los scores de la Fase 1 son un **diagnóstico hipotético** del patrón típico de una tienda de retail local que aún no ha profesionalizado su digital, ajustado con la única señal real que sí tengo: **eres invisible en búsqueda.** Eso ya es un dato, y es malo.
-- En cuanto me pases los handles, **reemplazo esos números por una auditoría real, post por post.**
+Compáralo con la competencia que sí crece:
 
-Que no aparezcas en una búsqueda básica de tu propio nombre + ciudad **ya es el primer hallazgo y es grave**: tu descubribilidad es casi nula.
+| Cuenta | Seguidores | Posts | Seguidores/post |
+|---|---:|---:|---:|
+| UNNO Underwear | 44.000 | 1.313 | **33,5** |
+| g3underwear | 29.000 | 1.277 | 22,7 |
+| ROPA INTERIOR JASZ | 19.000 | 1.298 | 14,6 |
+| **Puro Interior** | **1.879** | **428** | **4,4** |
 
-### 0.2 Uno de tus 4 objetivos es matemáticamente casi imposible
+**Eres entre 3x y 7x menos eficiente convirtiendo contenido en audiencia.** Esto invalida la hipótesis fácil ("publican poco / mal"). Publicas mucho y con buena producción. El problema NO es producción: es **alcance** (tu contenido no llega a desconocidos) y **conversión-a-seguidor** (a quien llega, no le das razón para seguirte).
 
-Hice el cálculo del mercado real (fuentes DANE 2024):
+**Causa raíz (hipótesis fuerte, confirmable con tus reels):** tu feed es un **lookbook de catálogo** — fotos de estudio de modelos con prendas de marca (Aerogear, Único, Clever), probablemente material que te entregan los proveedores. Es bonito, consistente y profesional… y genérico. No frena el scroll, no genera conversación, no construye comunidad ni territorio propio. Es publicidad, no contenido social.
 
-| Dato | Valor |
-|---|---|
-| Población San Gil (municipio) 2024 | **67.893 hab.** |
-| Hombres totales | 32.417 (47,7%) |
-| Hombres **18–45** (estimación estructura etaria Colombia ~40%) | **≈ 13.000** |
-| Usuarios de Instagram activos dentro de ese grupo (~55%) | ≈ 7.000 |
-| De ellos, % realista que seguiría a una tienda de ropa interior | 30–45% |
-| **Techo realista de seguidores ESTRICTAMENTE locales** | **≈ 2.500 – 4.500** |
+### 0.2 Tu meta de 10.000 seguidores SÍ es alcanzable (con la premisa correcta)
 
-**Tu meta de 10.000 seguidores locales equivale a ~77% de TODOS los hombres de 18 a 45 años del municipio entero.** Eso no es una meta, es una fantasía de métrica de vanidad. Ni la marca más dominante de un pueblo logra que 8 de cada 10 hombres jóvenes la sigan.
+En la v1 de este informe calculé que 10k era casi imposible — **porque el brief decía "ubicación principal: San Gil" y San Gil solo tiene 67.893 hab.** Confirmado contigo que eres una **cadena regional (4 sedes: Bucaramanga, Floridablanca, Barranca y San Gil)**, la matemática cambia por completo:
 
-Dos caminos honestos:
+| Mercado (footprint de tus sedes) | Población aprox. | Hombres 18-45 aprox. |
+|---|---:|---:|
+| Área Metropolitana Bucaramanga (BGA + Floridablanca + Girón + Piedecuesta) | ~1.140.000 | ~225.000 |
+| Barrancabermeja | ~191.000 | ~37.000 |
+| San Gil / Guanentá | ~68.000 | ~13.000 |
+| **Total alcanzable** | **~1,4 M** | **≈ 275.000** |
 
-1. **Redefinir "local" a regional** (provincia de Guanentá: San Gil como eje + Socorro, Barichara, Curití, Charalá, Mogotes, Pinchote, Villanueva…). Ahí sí hay ~25.000–30.000 hombres 18-45 y 10.000 se vuelve *agresivo pero alcanzable en 18-24 meses*.
-2. **Aceptar que los seguidores son un medio, no el fin.** Tus otros 3 objetivos (100 conversaciones WhatsApp/mes, 50 visitas/semana, ser la #1 de San Gil) son los correctos y SÍ son alcanzables. Los seguidores llegan como subproducto.
+**10.000 seguidores = solo ~3,6% de tu público masculino regional.** Eso es perfectamente alcanzable. El reto real no es el tamaño del mercado: es pasar de **1.879 → 10.000 (×5,3)**, lo que exige **arreglar el motor de alcance**, no producir más fotos bonitas.
 
-**Veredicto del Director de Marketing:** estás mezclando una métrica de vanidad (10k seguidores) con 3 objetivos de negocio reales. Si optimizas para seguidores, quemas plata. Si optimizas para conversaciones y visitas, los seguidores llegan solos. **Reordené todo el plan para perseguir negocio, no aplausos.**
-
-> Para el resto del informe asumo el reframe regional (Guanentá) y trato "10.000" como meta de 18-24 meses, no de 6.
+**Veredicto del Director de Marketing:** la meta es buena; el método actual jamás te llevará ahí. Con 4,4 seguidores/post necesitarías ~1.840 posts más para llegar a 10k. Con la eficiencia de UNNO (33/post) llegarías con ~245 posts. **La palanca no es publicar más: es publicar para alcance (reels de tendencia + hooks + contenido nativo local), no para catálogo.** Y mantén los KPIs de negocio (100 conversaciones/mes, visitas a tienda) como norte — son los que pagan la nómina.
 
 ---
 
@@ -53,24 +60,47 @@ Dos caminos honestos:
 
 ### 1.1 Qué se evalúa y qué bloquea cada eje
 
-> ⚠️ Diagnóstico **hipotético** basado en el patrón típico de retail local no optimizado + tu invisibilidad en búsqueda. Reemplazable con tus handles reales.
+> ✅ Auditoría sobre datos reales del perfil `@puro_interior` (captura jun-2026). Pendiente de capturas de reels/insights para profundizar engagement y mejores/peores posts.
 
-| # | Eje | Estado típico (hipótesis) | Qué probablemente lo bloquea |
+| # | Eje | Estado REAL observado | Qué lo bloquea |
 |---|---|---|---|
-| 1 | Branding | Logo y nombre existen, pero sin sistema visual (paleta, tipografía, tono) | No hay manual de marca; cada post parece de una tienda distinta |
-| 2 | Calidad visual | Fotos de producto sobre fondo de bodega/mostrador, luz mixta | Se fotografía el empaque, no el deseo. Falta dirección de arte |
-| 3 | Consistencia | Feed sin grilla ni criterio; mezcla flyers, memes y fotos | Nadie es dueño del feed; se publica lo que llega |
-| 4 | Calidad de reels | Reels = fotos con música, o casi inexistentes | No se produce video nativo; se ignora el formato de mayor alcance |
-| 5 | Calidad fotográfica | Producto plano, sin modelo, sin contexto de uso | Ropa interior NO se vende mostrando la prenda doblada |
-| 6 | Frecuencia | Irregular: ráfagas y luego silencios de días/semanas | No hay calendario ni batching |
-| 7 | Engagement | Likes bajos, comentarios casi nulos, 0 conversación | Contenido que informa precio en vez de generar deseo o diálogo |
-| 8 | Hooks | "Nuevos modelos disponibles 🔥" (no es hook) | No hay primeros 3 segundos diseñados para frenar el scroll |
-| 9 | CTAs | "Más información al DM" / sin CTA | No se dirige a WhatsApp con fricción cero ni a la tienda física |
-| 10 | Historias | Esporádicas, sin sistema (sin encuestas, sin "swipe up" a WhatsApp) | Se desperdicia el formato de mayor intención de compra |
-| 11 | Tendencias | Ausentes; no se usan audios ni formatos del momento | Miedo/desconocimiento del lenguaje de TikTok/Reels |
-| 12 | Posicionamiento vs. competencia | Indiferenciado: "otra tienda que vende boxers" | No hay propuesta de valor ni territorio de marca propio |
+| 1 | Branding | **Sólido.** Logo limpio, paleta cálida/neutra consistente, destacadas organizadas por marca (Aerogear, Único, Clever, X2, Jor, Tiendas), bio clara con propuesta + sedes + WhatsApp | Bio dice "4 sedes" pero lista 3 ciudades (confuso); páginas FB duplicadas; foto de perfil negra sobre fondo oscuro pierde contraste |
+| 2 | Calidad visual | **Alta.** Fotografía de estudio profesional, modelos, iluminación cuidada | Ninguno en calidad. El problema es que es *demasiado* publicitaria/uniforme |
+| 3 | Consistencia | **Muy alta.** El grid se ve cohesionado | La consistencia juega en contra: todo se ve igual = monótono, sin sorpresa |
+| 4 | Calidad de reels | Existen reels, pero parecen anuncios/lookbook (modelos posando, promos) | No hay reels nativos de tendencia, humor, educación o "behind the scenes" |
+| 5 | Calidad fotográfica | **Excelente** técnica | Probablemente material de proveedor → no diferencia tu marca de otra que venda lo mismo |
+| 6 | Frecuencia | Alta (428 posts) | El volumen sin alcance solo cansa a quien ya te sigue |
+| 7 | Engagement | Bajo respecto al volumen (1.879 seg. para 428 posts) | Contenido que se admira pero no invita a comentar/guardar/compartir |
+| 8 | Hooks | Visuales (cuerpo/modelo), no narrativos | Falta el gancho de los primeros 3 seg. en video que capte a desconocidos |
+| 9 | CTAs | **Presentes y correctos.** WhatsApp en bio + beacons.ai + promos (Camiseta gratis, Addi) | Falta CTA de *seguir/guardar* dentro del contenido; el embudo de venta está, el de comunidad no |
+| 10 | Historias | Destacadas bien armadas por marca | No se ve sistema de historias diarias con encuestas/preguntas/UGC (a confirmar) |
+| 11 | Tendencias | Ausentes | El contenido no monta audios/formatos del momento → el algoritmo no lo empuja a no-seguidores |
+| 12 | Posicionamiento vs. competencia | Indiferenciado: te ves como un lookbook de marca más | Vendes las marcas (Aerogear, Único…) pero no construyes "Puro Interior" como territorio propio |
 
-### 1.2 Matriz SWOT completa
+### 1.2 Datos duros de rendimiento (Meta Insights · 14 may – 10 jun)
+
+Esto ya no es lectura del grid: son los números de tu propio panel de Meta. Y son **alarmantes**.
+
+| Métrica (28 días salvo nota) | Valor | Lectura brutal |
+|---|---:|---|
+| Visualizaciones Facebook | 591 (↑206%) | "↑206%" es humo: 206% de casi-nada sigue siendo casi-nada. 591 vistas/mes para 4 sedes = invisible. |
+| Alcance Instagram (1 sem) | 225 | ~900/mes. Microscópico. |
+| Interacciones FB | **3** (↓25%) | Tres. En 28 días. Y bajando. |
+| Comentarios recientes | **0** | Cero conversación, cero comunidad. |
+| Seguidores netos | **−1** | Estás **perdiendo** seguidores, no ganando. |
+| Contactos nuevos por mensaje (1 sem) | **0** | 🔴 Tu meta de 100 conversaciones/mes hoy está en **CERO**. |
+| Tiempo medio de reproducción del reel top | **4 s** | 🔴 Te abandonan en el segundo 4. Prueba directa de que el contenido no engancha. |
+| Publicaciones de feed última semana | **0 FB / 0 IG** (solo 1 historia c/u) | La cadencia se desplomó. Estás casi dormido. |
+
+**Pero hay UNA señal de oro — la hoja de ruta entera en un solo dato:**
+
+> Publicaste **1 reel, 2 fotos y 6 historias.** Ese **único reel generó 404 de las 591 visualizaciones: 68% del alcance con el 11% del contenido.** El pico del 8 de junio en tu gráfica es ese reel.
+
+Traducción: **el formato que más te funciona es justo el que casi no usas.** No hay que inventar nada — hay que hacer reels (con hook arreglado, porque incluso el ganador se ve solo 4 s) y de forma consistente.
+
+Dato extra: **86,5% de tu alcance viene de NO seguidores (↑94%).** Cuando publicas formato de descubrimiento (reel), el algoritmo SÍ lo empuja a desconocidos. Meta no te castiga; simplemente casi no le das material que empujar.
+
+### 1.3 Matriz SWOT completa
 
 | FORTALEZAS (internas +) | DEBILIDADES (internas −) |
 |---|---|
@@ -88,19 +118,19 @@ Dos caminos honestos:
 | San Gil es **destino turístico** (deportes extremos) → tráfico masculino joven fitness | Depender de una sola persona que "lleva las redes en ratos libres" |
 | Aerogear + público gimnasio = colaboración con gyms locales | Comoditización por precio: guerra de descuentos que destruye margen |
 
-### 1.3 Scores (0-100) — diagnóstico hipotético
+### 1.4 Scores (0-100) — sobre datos duros de Meta
 
 | Dimensión | Score | Lectura brutal |
 |---|---:|---|
-| Branding | **42** | Existe un nombre, no una marca. Sin sistema visual, sin tono, sin territorio. |
-| Contenido | **35** | Catálogo fotografiado, no contenido. Cero video nativo. Cero hooks. |
-| Conversión | **28** | El camino de "lo vi" → "escribí a WhatsApp" → "fui a la tienda" no está construido. |
-| Alcance | **30** | Sin reels ni tendencias = el algoritmo no te muestra a desconocidos. Solo te ven quienes ya te siguen. |
-| Comunidad | **30** | Seguidores pasivos. Cero conversación, cero UGC, cero clientes-embajadores. |
-| Potencial de crecimiento | **82** | **Aquí está la buena noticia:** mercado libre + categoría de recompra + tienda física + costo de pauta bajo. El techo es alto; la ejecución es lo único que falta. |
+| Branding | **68** | Lo mejor que tienes: identidad limpia y consistente, destacadas por marca, bio con CTA. Pierde por "4 sedes/3 ciudades", FB duplicado y contraste de avatar. |
+| Contenido | **48** | Producción técnica alta, pero cadencia colapsada (0 posts de feed la última semana) y formato equivocado (lookbook en vez de reels). El reel ganador prueba que el camino existe. |
+| Conversión | **32** | El embudo existe (WhatsApp, beacons, Addi)… pero produce **0 contactos nuevos**. Un embudo sin tráfico no convierte nada. |
+| Alcance | **18** | 🔴 Probado por Meta: 591 vistas FB/28 días, 225 IG/semana. Prácticamente nulo para 4 sedes. |
+| Comunidad | **18** | 3 interacciones, 0 comentarios, −1 seguidor neto. Audiencia que se apaga. |
+| Potencial de crecimiento | **85** | **La buena noticia, ahora CON PRUEBA:** 1 solo reel = 68% de tu alcance, y el 86% de ese alcance fue a no-seguidores. La máquina funciona; está apagada. |
 
-> **SCORE GLOBAL: 38 / 100** — "Negocio sólido, marketing en estado embrionario."
-> La distancia entre 38 y un 75 no es talento ni presupuesto: es **sistema** (calendario, video, embudo a WhatsApp, dirección de arte). Todo lo que sigue construye ese sistema.
+> **SCORE GLOBAL: 45 / 100** — "Marca con producción profesional y motor de crecimiento apagado."
+> Trayectoria del diagnóstico: 38 (hipotético) → 52 (al ver el perfil: branding/producción mejores de lo esperado) → **45 (al ver los datos de Meta: el rendimiento real es peor que lo que el lindo grid sugiere).** No creces porque casi no alcanzas, y casi no alcanzas porque dejaste de publicar reels. La distancia entre 45 y 80 es **un solo cambio de motor: de lookbook dormido a reels nativos con hook, publicados con constancia.**
 
 ---
 
@@ -380,4 +410,14 @@ Con eso reemplazo los scores hipotéticos de la Fase 1 por una auditoría post-p
 ---
 
 ### Resumen ejecutivo en una línea
-**Tu negocio es bueno; tu marketing está sin construir. No te falta talento ni mercado — te falta un sistema (video + embudo a WhatsApp + dirección de arte + medir lo correcto). Y deja de perseguir 10.000 seguidores: persigue 100 conversaciones, y los seguidores vendrán solos.**
+**Tu producción es profesional pero tu cuenta está dormida: 591 vistas y 0 conversaciones nuevas en un mes. La prueba de la solución es tuya — tu único reel del mes generó el 68% del alcance. Deja de publicar lookbooks de catálogo y publica reels nativos con hook, de forma constante: ahí están tus 10.000 seguidores y tus 100 conversaciones.**
+
+---
+
+## Anexo · Evidencia auditada (datos reales del cliente)
+
+- **Instagram `@puro_interior`** (captura jun-2026): 428 publicaciones · 1.879 seguidores · 23 seguidos · bio con WhatsApp + beacons.ai/puro_interior · destacadas por marca (Aerogear, Único, Clever, X2, Jor, Tiendas) · 4 sedes (BGA, Floridablanca, Barranca, San Gil).
+- **Meta Business Suite Insights** (14 may – 10 jun): FB 591 visualizaciones (↑206%), 156 reproducciones de 3 s, 3 interacciones (↓25%), tiempo total 27 min 40 s, espectadores 315, 0 inversión en anuncios. Reel top: 306 vistas / 4 s de reproducción media / 3 interacciones.
+- **Resumen semanal** (31 may – 6 jun): 0 posts FB, 0 posts IG, 1 historia c/u · Alcance FB 12, IG 225 · **0 contactos nuevos por mensaje** · seguidores netos −1 · 86,5% del alcance de no-seguidores.
+- **Formatos** (período): publicado = 6 historias / 2 fotos / 1 reel · vistas = Reels 404 / fotos 129 / historias 26.
+- **Benchmarks competencia** (búsqueda pública): UNNO 44k seg./1.313 posts · g3underwear 29k/1.277 · JASZ 19k/1.298.
