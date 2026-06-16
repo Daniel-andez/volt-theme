@@ -1,0 +1,11 @@
+.env
+node_modules/
+dist/
+output/backups/*.json
+output/previews/*.json
+output/previews/*.csv
+!output/previews/preview-example.csv
+output/images/original/**/*
+output/images/optimized/**/*
+output/logs/*.log
+!output/**/.gitkeep

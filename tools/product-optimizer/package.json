@@ -1,0 +1,26 @@
+{
+  "name": "anarias-product-optimizer",
+  "version": "1.0.0",
+  "description": "Herramienta de auditoría y optimización de productos Shopify para ANARIAS Atelier",
+  "type": "module",
+  "scripts": {
+    "audit": "tsx src/scripts/audit.ts",
+    "preview": "tsx src/scripts/preview.ts",
+    "apply": "tsx src/scripts/apply.ts",
+    "rollback": "tsx src/scripts/rollback.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.27.0",
+    "dotenv": "^16.4.5",
+    "sharp": "^0.33.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.15.6",
+    "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
