@@ -150,7 +150,7 @@ export async function uploadOptimizedImage(
   const { readFileSync } = await import('fs');
   const { createStagedUpload, addProductMedia } = await import('../api/shopify-mutations.js');
 
-  const filename = optimizedPath.split('/').pop() ?? 'image.webp';
+  const filename = optimizedPath.split(/[\\/]/).pop() ?? 'image.webp';
   const buffer = readFileSync(optimizedPath);
   const fileSize = buffer.length;
 
