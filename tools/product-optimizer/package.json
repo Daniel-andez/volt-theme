@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "token": "tsx src/scripts/token.ts",
+    "clean-images": "tsx src/scripts/clean-images.ts",
     "audit": "tsx src/scripts/audit.ts",
     "preview": "tsx src/scripts/preview.ts",
     "apply": "tsx src/scripts/apply.ts",

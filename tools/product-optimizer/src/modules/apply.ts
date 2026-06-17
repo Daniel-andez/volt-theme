@@ -22,7 +22,7 @@ export type ApplyField =
   | 'alt_texts'
   | 'images';
 
-const ALL_FIELDS: ApplyField[] = ['description', 'seo', 'tags', 'alt_texts', 'images'];
+const ALL_FIELDS: ApplyField[] = ['description', 'seo', 'tags', 'alt_texts'];
 
 function parseArgs(): ApplyOptions {
   const args = process.argv.slice(2);
