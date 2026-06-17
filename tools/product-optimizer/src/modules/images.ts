@@ -29,7 +29,7 @@ function buildFilename(
   const colorSlug = colorOption?.values[0] ? '-' + slugify(colorOption.values[0]) : '';
   const typeSlug = product.productType ? '-' + slugify(product.productType) : '';
   const idx = mediaIndex === 0 ? '' : `-${mediaIndex + 1}`;
-  return `anarias-${nameSlug}${colorSlug}${typeSlug}${idx}.${ext}`;
+  return `${nameSlug}${colorSlug}-anarias-atelier${idx}.${ext}`;
 }
 
 async function downloadImage(url: string, destPath: string): Promise<void> {
