@@ -162,6 +162,40 @@ export async function createStagedUpload(
   return stagedTargets[0];
 }
 
+// ─── Delete product media ──────────────────────────────────────────────────
+
+interface ProductDeleteMediaResult {
+  productDeleteMedia: {
+    deletedMediaIds: string[];
+    mediaUserErrors: Array<{ field: string[]; message: string }>;
+  };
+}
+
+const PRODUCT_DELETE_MEDIA_MUTATION = `
+  mutation ProductDeleteMedia($productId: ID!, $mediaIds: [ID!]!) {
+    productDeleteMedia(productId: $productId, mediaIds: $mediaIds) {
+      deletedMediaIds
+      mediaUserErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+export async function deleteProductMedia(productId: string, mediaIds: string[]): Promise<void> {
+  const data = await shopifyGraphQL<ProductDeleteMediaResult>({
+    query: PRODUCT_DELETE_MEDIA_MUTATION,
+    variables: { productId, mediaIds },
+    estimatedCost: 20,
+  });
+
+  const { mediaUserErrors } = data.productDeleteMedia;
+  if (mediaUserErrors.length > 0) {
+    throw new Error(`productDeleteMedia errors: ${mediaUserErrors.map(e => e.message).join(' | ')}`);
+  }
+}
+
 // ─── Add optimized image to product ───────────────────────────────────────
 
 interface ProductCreateMediaResult {

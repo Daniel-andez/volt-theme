@@ -32,7 +32,7 @@ async function loadOrRunAudit(targetHandles: string[]): Promise<AuditResult[]> {
       await Promise.all(targetHandles.map(h => fetchProductByHandle(h)))
     ).filter((p): p is ShopifyProduct => p !== null);
   } else {
-    products = await fetchAllProducts();
+    products = await fetchAllProducts('status:active');
   }
 
   return auditAllProducts(products);
@@ -56,9 +56,10 @@ async function main() {
   }
 
   // Filter if target handles specified
-  const filtered = targetHandles.length > 0
+  const filtered = (targetHandles.length > 0
     ? auditResults.filter(r => targetHandles.includes(r.product.handle))
-    : auditResults;
+    : auditResults
+  ).filter(r => r.product.status === 'ACTIVE');
 
   logger.info(`Generando preview para ${filtered.length} productos...`);
   logger.info('Esto puede tomar varios minutos (Claude + procesamiento de imágenes).');

@@ -3,7 +3,7 @@ import { resolve } from 'path';
 import { config } from '../config/env.js';
 import { logger } from '../utils/logger.js';
 import { fetchProductByHandle } from '../api/shopify-queries.js';
-import { updateProduct, updateProductMediaAlt } from '../api/shopify-mutations.js';
+import { updateProduct, updateProductMediaAlt, deleteProductMedia } from '../api/shopify-mutations.js';
 import { uploadOptimizedImage } from './images.js';
 import { loadLatestPreview, loadLatestBackupForProduct } from './preview.js';
 import type { ApplyResult, PreviewRecord, ProductBackup } from '../types/index.js';
@@ -22,7 +22,7 @@ export type ApplyField =
   | 'alt_texts'
   | 'images';
 
-const ALL_FIELDS: ApplyField[] = ['title', 'description', 'seo', 'tags', 'alt_texts', 'images'];
+const ALL_FIELDS: ApplyField[] = ['description', 'seo', 'tags', 'alt_texts', 'images'];
 
 function parseArgs(): ApplyOptions {
   const args = process.argv.slice(2);
@@ -171,13 +171,16 @@ async function applyRecord(
       const alt = opt.alt_texts[altIndex] ?? '';
 
       if (dryRun) {
-        result.changes.push(`[DRY] imagen "${imgResult.newFilename}" se subiría a Shopify`);
+        result.changes.push(`[DRY] imagen "${imgResult.newFilename}" reemplazaría a la original`);
       } else {
         try {
           await uploadOptimizedImage(imgResult.optimizedPath, product.id, alt);
-          result.changes.push(`imagen "${imgResult.newFilename}" subida a Shopify`);
+          if (imgResult.mediaId) {
+            await deleteProductMedia(product.id, [imgResult.mediaId]);
+          }
+          result.changes.push(`imagen "${imgResult.newFilename}" reemplazada en Shopify`);
         } catch (e) {
-          result.errors.push(`image upload failed (${imgResult.newFilename}): ${(e as Error).message}`);
+          result.errors.push(`image replace failed (${imgResult.newFilename}): ${(e as Error).message}`);
         }
       }
     }
