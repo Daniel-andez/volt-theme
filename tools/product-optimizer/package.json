@@ -4,6 +4,7 @@
   "description": "Herramienta de auditoría y optimización de productos Shopify para ANARIAS Atelier",
   "type": "module",
   "scripts": {
+    "token": "tsx src/scripts/token.ts",
     "audit": "tsx src/scripts/audit.ts",
     "preview": "tsx src/scripts/preview.ts",
     "apply": "tsx src/scripts/apply.ts",
