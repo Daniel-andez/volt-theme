@@ -23,7 +23,10 @@
       "Bash(sed -i 's/zap-theme\\\\.js/volt-theme.js/g' assets/volt-theme.js)",
       "Bash(rm assets/zap-theme.css assets/zap-theme.js)",
       "WebFetch(domain:shopify.dev)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(mkdir -p /home/user/volt-theme/apps/product-optimizer)",
+      "Bash(cp -r /home/user/anarias-product-optimizer/. /home/user/volt-theme/apps/product-optimizer/)",
+      "Bash(rm -rf /home/user/volt-theme/apps/product-optimizer/.git)"
     ]
   }
 }
