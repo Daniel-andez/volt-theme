@@ -17,17 +17,22 @@ function ensureDirs() {
   mkdirSync(config.output.imagesOptimizedDir, { recursive: true });
 }
 
-function buildFilename(
+export function buildFilename(
   product: ShopifyProduct,
   mediaIndex: number,
   ext: string
 ): string {
-  const nameSlug = slugify(product.title).slice(0, 50);
+  // Strip any existing brand mention so we don't end up with "anarias-atelier-anarias-atelier"
+  const nameSlug = slugify(product.title)
+    .replace(/anarias(-atelier)?/g, '')
+    .replace(/-{2,}/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60)
+    .replace(/-+$/g, '');
   const colorOption = product.options.find(o =>
     ['color', 'colour', 'tono'].includes(o.name.toLowerCase())
   );
   const colorSlug = colorOption?.values[0] ? '-' + slugify(colorOption.values[0]) : '';
-  const typeSlug = product.productType ? '-' + slugify(product.productType) : '';
   const idx = mediaIndex === 0 ? '' : `-${mediaIndex + 1}`;
   return `${nameSlug}${colorSlug}-anarias-atelier${idx}.${ext}`;
 }
@@ -145,12 +150,14 @@ export async function processProductImages(
 export async function uploadOptimizedImage(
   optimizedPath: string,
   productId: string,
-  alt: string
+  alt: string,
+  uploadFilename?: string
 ): Promise<string> {
   const { readFileSync } = await import('fs');
   const { createStagedUpload, addProductMedia } = await import('../api/shopify-mutations.js');
 
-  const filename = optimizedPath.split(/[\\/]/).pop() ?? 'image.webp';
+  // Use the clean SEO filename for Shopify, not the local path (which carries a numeric prefix)
+  const filename = uploadFilename ?? optimizedPath.split(/[\\/]/).pop() ?? 'image.webp';
   const buffer = readFileSync(optimizedPath);
   const fileSize = buffer.length;
 

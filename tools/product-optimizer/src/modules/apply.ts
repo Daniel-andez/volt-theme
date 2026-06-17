@@ -174,7 +174,7 @@ async function applyRecord(
         result.changes.push(`[DRY] imagen "${imgResult.newFilename}" reemplazaría a la original`);
       } else {
         try {
-          await uploadOptimizedImage(imgResult.optimizedPath, product.id, alt);
+          await uploadOptimizedImage(imgResult.optimizedPath, product.id, alt, imgResult.newFilename);
           if (imgResult.mediaId) {
             await deleteProductMedia(product.id, [imgResult.mediaId]);
           }
