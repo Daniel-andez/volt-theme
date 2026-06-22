@@ -30,6 +30,11 @@ export const config = {
     apiKey: requireEnv('ANTHROPIC_API_KEY'),
     model: optionalEnv('CLAUDE_MODEL', 'claude-opus-4-8'),
   },
+  brand: {
+    name: optionalEnv('BRAND_NAME', 'Mi Tienda'),
+    slug: optionalEnv('BRAND_SLUG', 'mi-tienda'),
+    voice: optionalEnv('BRAND_VOICE', 'una marca de moda premium'),
+  },
   targets: {
     productIds: process.env.TARGET_PRODUCT_IDS
       ? process.env.TARGET_PRODUCT_IDS.split(',').map(s => s.trim()).filter(Boolean)

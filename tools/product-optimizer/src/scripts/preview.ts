@@ -41,7 +41,7 @@ async function loadOrRunAudit(targetHandles: string[]): Promise<AuditResult[]> {
 async function main() {
   initLogger('preview');
   logger.separator();
-  logger.info('ANARIAS Atelier — Product Optimizer');
+  logger.info(`${config.brand.name} — Product Optimizer`);
   logger.info('Modo: PREVIEW');
   logger.separator();
 

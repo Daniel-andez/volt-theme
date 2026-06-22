@@ -100,7 +100,7 @@ async function main() {
   const opts = parseArgs();
 
   logger.separator();
-  logger.info('ANARIAS Atelier — Arreglar imágenes (reemplazar duplicados + nombres limpios)');
+  logger.info(`${config.brand.name} — Arreglar imágenes (reemplazar duplicados + nombres limpios)`);
   if (opts.dryRun) logger.warn('MODO DRY-RUN — no se hará ningún cambio, solo reporte');
   logger.separator();
 

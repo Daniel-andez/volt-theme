@@ -1,10 +1,11 @@
 import { logger, initLogger } from '../utils/logger.js';
 import { runRollback } from '../modules/rollback.js';
+import { config } from '../config/env.js';
 
 async function main() {
   initLogger('rollback');
   logger.separator();
-  logger.info('ANARIAS Atelier — Product Optimizer');
+  logger.info(`${config.brand.name} — Product Optimizer`);
   logger.info('Modo: ROLLBACK');
   logger.info('');
   logger.info('Flags disponibles:');

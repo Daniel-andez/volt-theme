@@ -7,7 +7,9 @@ import type { ShopifyProduct, ClaudeOptimization } from '../types/index.js';
 
 const client = new Anthropic({ apiKey: config.anthropic.apiKey });
 
-const SYSTEM_PROMPT = `Eres el director creativo de ANARIAS Atelier, una marca de moda femenina premium colombiana.
+function buildSystemPrompt(): string {
+  const { name, voice } = config.brand;
+  return `Eres el director creativo de ${name}, ${voice}.
 Tu lenguaje es editorial, sofisticado, atemporal y cercano. Nunca genérico ni de fast-fashion.
 
 REGLAS ABSOLUTAS — no hay excepciones:
@@ -22,16 +24,17 @@ REGLAS ABSOLUTAS — no hay excepciones:
 7. seo_title: MÁXIMO 60 caracteres (cuenta exactamente, sin excepción).
 8. seo_description: MÁXIMO 160 caracteres (cuenta exactamente, sin excepción).
 9. alt_texts: uno por imagen, descriptivo, natural, útil para SEO.
-   Ejemplo: "Camisa oxford blanca ANARIAS Atelier — vista frontal sobre fondo neutro".
+   Ejemplo: "Camisa oxford blanca ${name} — vista frontal sobre fondo neutro".
 10. El HTML de description solo puede usar: <p>, <br>, <strong>, <em>, <ul>, <li>.
 11. Responde ÚNICAMENTE con el JSON válido. Sin texto adicional. Sin markdown.`;
+}
 
 function buildProductPrompt(product: ShopifyProduct): string {
   const productData = {
     title: product.title,
     handle: product.handle,
     productType: product.productType || 'No especificado',
-    vendor: product.vendor || 'ANARIAS Atelier',
+    vendor: product.vendor || config.brand.name,
     status: product.status,
     tags: product.tags,
     currentDescription: product.descriptionHtml || '(vacía)',
@@ -55,7 +58,7 @@ function buildProductPrompt(product: ShopifyProduct): string {
     })),
   };
 
-  return `Analiza este producto de ANARIAS Atelier y genera las optimizaciones de copy y SEO.
+  return `Analiza este producto de ${config.brand.name} y genera las optimizaciones de copy y SEO.
 
 DATOS DEL PRODUCTO:
 ${JSON.stringify(productData, null, 2)}
@@ -86,7 +89,7 @@ export async function optimizeProductWithClaude(
       const response = await client.messages.create({
         model: config.anthropic.model,
         max_tokens: 2048,
-        system: SYSTEM_PROMPT,
+        system: buildSystemPrompt(),
         messages: [{ role: 'user', content: buildProductPrompt(product) }],
       });
 

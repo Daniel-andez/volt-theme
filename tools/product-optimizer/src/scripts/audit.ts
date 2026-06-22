@@ -10,7 +10,7 @@ import type { ShopifyProduct } from '../types/index.js';
 async function main() {
   initLogger('audit');
   logger.separator();
-  logger.info('ANARIAS Atelier — Product Optimizer');
+  logger.info(`${config.brand.name} — Product Optimizer`);
   logger.info('Modo: AUDIT');
   logger.separator();
 

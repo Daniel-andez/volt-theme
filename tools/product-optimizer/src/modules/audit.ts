@@ -1,4 +1,5 @@
 import { jaccardSimilarity, stripHtml } from '../utils/helpers.js';
+import { config } from '../config/env.js';
 import type { ShopifyProduct, AuditResult, AuditIssue, AuditIssueType } from '../types/index.js';
 
 const SEO_TITLE_MAX = 60;
@@ -169,7 +170,7 @@ export function formatAuditSummary(results: AuditResult[]): string {
 
   const lines = [
     ``,
-    `  RESUMEN DE AUDITORÍA — ANARIAS Atelier`,
+    `  RESUMEN DE AUDITORÍA — ${config.brand.name}`,
     `  ─────────────────────────────────────`,
     `  Productos analizados : ${total}`,
     `  Con issues críticos  : ${critical}`,

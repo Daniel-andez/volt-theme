@@ -1,10 +1,11 @@
 import { logger, initLogger } from '../utils/logger.js';
 import { runApply } from '../modules/apply.js';
+import { config } from '../config/env.js';
 
 async function main() {
   initLogger('apply');
   logger.separator();
-  logger.info('ANARIAS Atelier — Product Optimizer');
+  logger.info(`${config.brand.name} — Product Optimizer`);
   logger.info('Modo: APPLY');
   logger.info('');
   logger.info('Flags disponibles:');

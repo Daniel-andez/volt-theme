@@ -22,9 +22,11 @@ export function buildFilename(
   mediaIndex: number,
   ext: string
 ): string {
-  // Strip any existing brand mention so we don't end up with "anarias-atelier-anarias-atelier"
+  const brandSlug = config.brand.slug;
+  // Strip any existing brand mention so we don't end up with "brand-brand"
+  const brandPattern = new RegExp(brandSlug.replace(/-/g, '(-)?'), 'gi');
   const nameSlug = slugify(product.title)
-    .replace(/anarias(-atelier)?/g, '')
+    .replace(brandPattern, '')
     .replace(/-{2,}/g, '-')
     .replace(/^-+|-+$/g, '')
     .slice(0, 60)
@@ -34,7 +36,7 @@ export function buildFilename(
   );
   const colorSlug = colorOption?.values[0] ? '-' + slugify(colorOption.values[0]) : '';
   const idx = mediaIndex === 0 ? '' : `-${mediaIndex + 1}`;
-  return `${nameSlug}${colorSlug}-anarias-atelier${idx}.${ext}`;
+  return `${nameSlug}${colorSlug}-${brandSlug}${idx}.${ext}`;
 }
 
 async function downloadImage(url: string, destPath: string): Promise<void> {
