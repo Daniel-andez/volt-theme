@@ -1,0 +1,212 @@
+{
+  "sections": {
+    "hero": {
+      "type": "porto-hero",
+      "blocks": {
+        "stat1": { "type": "stat", "settings": { "number": "2", "label": "Líneas: Suites & Residences" } },
+        "stat2": { "type": "stat", "settings": { "number": "34–133 m²", "label": "Áreas disponibles" } },
+        "stat3": { "type": "stat", "settings": { "number": "100 m", "label": "A Playa Salguero" } },
+        "trust1": { "type": "trust", "settings": { "text": "Frente al mar Caribe" } },
+        "trust2": { "type": "trust", "settings": { "text": "Beach club exclusivo" } },
+        "trust3": { "type": "trust", "settings": { "text": "Ideal para renta vacacional" } },
+        "trust4": { "type": "trust", "settings": { "text": "Respaldo Constructora Jiménez" } }
+      },
+      "block_order": ["stat1", "stat2", "stat3", "trust1", "trust2", "trust3", "trust4"],
+      "settings": {
+        "eyebrow": "Santa Marta · Frente al mar Caribe",
+        "title": "Vive y <em>valoriza</em> frente al mar",
+        "subheading": "Porto Sabbia reúne Suites y Residences de lujo en la Bahía de Puerto Gaira, junto a Playa Salguero. Un activo que disfrutas y que se valoriza.",
+        "cta_label": "Quiero información",
+        "cta_anchor": "#contacto",
+        "cta2_label": "Ver proyectos",
+        "cta2_anchor": "#proyectos",
+        "show_scroll_cue": true,
+        "scroll_label": "Descubre",
+        "enable_schema": true,
+        "schema_name": "Porto Sabbia · Suites & Residences",
+        "schema_desc": "Proyecto de apartamentos de lujo frente al mar Caribe en la Bahía de Puerto Gaira, Playa Salguero, Santa Marta. Suites para inversión y Residences para vivir.",
+        "schema_developer": "Constructora Jiménez",
+        "schema_locality": "Santa Marta",
+        "schema_region": "Magdalena",
+        "schema_phone": "+57 300 000 0000",
+        "schema_price_low": "485000000",
+        "schema_price_high": "1500000000"
+      }
+    },
+    "projects": {
+      "type": "porto-projects",
+      "blocks": {
+        "suites": {
+          "type": "project",
+          "settings": {
+            "tag": "Inversión / Renta corta",
+            "name": "Porto Sabbia Suites",
+            "pitch": "Apartasuites tipo resort, diseñadas para maximizar la rentabilidad por renta vacacional en el destino de mayor crecimiento de Santa Marta.",
+            "spec1_label": "Áreas",
+            "spec1_value": "34 – 54 m²",
+            "spec2_label": "Ideal para",
+            "spec2_value": "Airbnb / rentas",
+            "highlights": "Amoblamiento y diseño tipo resort\nPrograma de renta para propietarios\nBeach club exclusivo\nAlta valorización proyectada",
+            "price_label": "Desde",
+            "price_value": "$485.000.000 COP",
+            "cta_label": "Cotizar Suites",
+            "link_label": "Ver detalles"
+          }
+        },
+        "residences": {
+          "type": "project",
+          "settings": {
+            "tag": "Para vivir / Familias",
+            "name": "Porto Sabbia Residences",
+            "pitch": "Residencias amplias frente al mar, pensadas para familias que quieren vivir el Caribe a diario o rentar a grupos grandes con máxima rentabilidad.",
+            "spec1_label": "Áreas",
+            "spec1_value": "51 – 133 m²",
+            "spec2_label": "Ideal para",
+            "spec2_value": "Vivir / familias",
+            "highlights": "Apartamentos de 1, 2 y 3 alcobas\nAcabados premium frente al mar\nZonas sociales y beach club\nValorización por renovación de Puerto Gaira",
+            "price_label": "Desde",
+            "price_value": "$638.000.000 COP",
+            "cta_label": "Cotizar Residences",
+            "link_label": "Ver detalles"
+          }
+        }
+      },
+      "block_order": ["suites", "residences"],
+      "settings": {
+        "background": "ivory",
+        "center_head": true,
+        "eyebrow": "Dos formas de vivir el Caribe",
+        "heading": "Elige tu Porto Sabbia",
+        "subheading": "Apartasuites pensadas para rentar y residencias amplias para vivir frente al mar. Tú eliges cómo disfrutar tu inversión."
+      }
+    },
+    "amenities": {
+      "type": "porto-amenities",
+      "blocks": {
+        "a1": { "type": "amenity", "settings": { "icon": "beach", "title": "Beach club exclusivo", "text": "Club de playa privado para propietarios y huéspedes." } },
+        "a2": { "type": "amenity", "settings": { "icon": "pool", "title": "Piscinas resort", "text": "Piscinas con vista al Caribe y zonas de descanso." } },
+        "a3": { "type": "amenity", "settings": { "icon": "gym", "title": "Gimnasio equipado", "text": "Entrena frente al mar todos los días." } },
+        "a4": { "type": "amenity", "settings": { "icon": "shield", "title": "Seguridad 24/7", "text": "Acceso controlado y vigilancia permanente." } },
+        "a5": { "type": "amenity", "settings": { "icon": "restaurant", "title": "Gastronomía", "text": "Espacios sociales y propuesta gastronómica." } },
+        "a6": { "type": "amenity", "settings": { "icon": "sun", "title": "Solárium", "text": "Terrazas y solárium para días de sol pleno." } },
+        "a7": { "type": "amenity", "settings": { "icon": "concierge", "title": "Servicios hoteleros", "text": "Operación tipo hotel que potencia tu renta." } },
+        "a8": { "type": "amenity", "settings": { "icon": "parking", "title": "Parqueaderos", "text": "Zonas de parqueo para residentes y visitantes." } }
+      },
+      "block_order": ["a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8"],
+      "settings": {
+        "center_head": true,
+        "eyebrow": "Estilo de vida resort",
+        "heading": "Amenidades que se sienten como vacaciones eternas",
+        "subheading": "Cada detalle está pensado para disfrutar y para que tu propiedad rente mejor durante todo el año."
+      }
+    },
+    "invest": {
+      "type": "porto-invest",
+      "blocks": {
+        "k1": { "type": "kpi", "settings": { "number": "485", "prefix": "$", "suffix": "M", "decimals": "0", "label": "Precio desde (COP) en Suites" } },
+        "k2": { "type": "kpi", "settings": { "number": "133", "prefix": "", "suffix": " m²", "decimals": "0", "label": "Hasta, en Residences" } },
+        "k3": { "type": "kpi", "settings": { "number": "100", "prefix": "", "suffix": " m", "decimals": "0", "label": "A Playa Salguero" } },
+        "k4": { "type": "kpi", "settings": { "number": "365", "prefix": "", "suffix": "", "decimals": "0", "label": "Días de destino turístico" } }
+      },
+      "block_order": ["k1", "k2", "k3", "k4"],
+      "settings": {
+        "eyebrow": "Una decisión inteligente",
+        "heading": "No es solo un apartamento. Es un activo que trabaja para ti.",
+        "body": "Puerto Gaira vive una renovación urbana que la convierte en el nuevo epicentro turístico de Santa Marta. Comprar hoy en Porto Sabbia es asegurar precio de lanzamiento y máxima valorización.",
+        "benefits": "Renta vacacional en uno de los destinos de mayor demanda\nValorización por la renovación de la bahía de Puerto Gaira\nPrograma de administración para rentar sin complicaciones\nPrecio preferencial en etapa de lanzamiento",
+        "cta_label": "Quiero proyectar mi rentabilidad",
+        "cta_anchor": "#contacto"
+      }
+    },
+    "location": {
+      "type": "porto-location",
+      "blocks": {
+        "p1": { "type": "poi", "settings": { "icon": "beach", "name": "Playa Salguero", "distance": "2 min" } },
+        "p2": { "type": "poi", "settings": { "icon": "star", "name": "El Rodadero", "distance": "8 min" } },
+        "p3": { "type": "poi", "settings": { "icon": "plane", "name": "Aeropuerto Simón Bolívar", "distance": "15 min" } },
+        "p4": { "type": "poi", "settings": { "icon": "restaurant", "name": "Restaurantes y comercio", "distance": "5 min" } },
+        "p5": { "type": "poi", "settings": { "icon": "location", "name": "Centro histórico de Santa Marta", "distance": "20 min" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4", "p5"],
+      "settings": {
+        "background": "cream",
+        "eyebrow": "Bahía de Puerto Gaira · Santa Marta",
+        "heading": "El nuevo epicentro del Caribe colombiano",
+        "subheading": "Junto a Playa Salguero, en una bahía en plena renovación urbana. Serenidad residencial a minutos de la vida turística y comercial de la ciudad.",
+        "map_query": "Playa Salguero, Santa Marta",
+        "map_zoom": 14,
+        "cta_label": "Agenda una visita guiada",
+        "cta_anchor": "#contacto"
+      }
+    },
+    "gallery": {
+      "type": "porto-gallery",
+      "blocks": {
+        "g1": { "type": "image", "settings": { "size": "lg", "caption": "Fachada frente al mar Porto Sabbia" } },
+        "g2": { "type": "image", "settings": { "size": "md", "caption": "Beach club Porto Sabbia" } },
+        "g3": { "type": "image", "settings": { "size": "sm", "caption": "Piscina con vista al Caribe" } },
+        "g4": { "type": "image", "settings": { "size": "sm", "caption": "Interior de apartamento" } },
+        "g5": { "type": "image", "settings": { "size": "md", "caption": "Zonas sociales" } },
+        "g6": { "type": "image", "settings": { "size": "md", "caption": "Atardecer en Playa Salguero" } }
+      },
+      "block_order": ["g1", "g2", "g3", "g4", "g5", "g6"],
+      "settings": {
+        "background": "ivory",
+        "center_head": true,
+        "eyebrow": "Galería",
+        "heading": "Imagina tu vida frente al mar",
+        "subheading": "Renders y espacios de Porto Sabbia. Toca cualquier imagen para verla en grande."
+      }
+    },
+    "lead": {
+      "type": "porto-lead-form",
+      "settings": {
+        "eyebrow": "Da el primer paso",
+        "heading": "Asegura tu unidad a precio de lanzamiento",
+        "subheading": "Cupos limitados en la primera etapa. Déjanos tus datos y recibe asesoría personalizada sin costo.",
+        "benefits": "Brochure y plan de pagos | Te lo enviamos al instante por WhatsApp\nPrecios de lanzamiento | Antes del próximo incremento\nAsesoría sin costo | Resolvemos todas tus dudas de inversión",
+        "whatsapp": "+57 300 000 0000",
+        "whatsapp_label": "Escríbenos por WhatsApp",
+        "whatsapp_text": "Hola, quiero información de Porto Sabbia",
+        "form_title": "Recibe precios y disponibilidad",
+        "form_sub": "Déjanos tus datos y un asesor te enviará el brochure y el plan de pagos.",
+        "submit_label": "Quiero que me contacten",
+        "consent_text": "Autorizo el tratamiento de mis datos para ser contactado sobre este proyecto.",
+        "privacy_note": "Tus datos están seguros. Sin spam.",
+        "success_title": "¡Gracias! Recibimos tus datos",
+        "success_text": "Un asesor de Porto Sabbia te contactará muy pronto con la información y disponibilidad."
+      }
+    },
+    "faq": {
+      "type": "porto-faq",
+      "blocks": {
+        "f1": { "type": "faq", "settings": { "question": "¿Dónde está ubicado Porto Sabbia?", "answer": "<p>En la Bahía de Puerto Gaira, junto a Playa Salguero, en Santa Marta. Una zona en plena renovación urbana y de alto potencial turístico.</p>" } },
+        "f2": { "type": "faq", "settings": { "question": "¿Cuál es la diferencia entre Suites y Residences?", "answer": "<p>Las <strong>Suites</strong> son apartasuites compactas (34–54 m²) ideales para renta vacacional. Las <strong>Residences</strong> son apartamentos más amplios (51–133 m²) pensados para vivir o rentar a grupos grandes.</p>" } },
+        "f3": { "type": "faq", "settings": { "question": "¿Desde qué precio puedo invertir?", "answer": "<p>Las Suites inician desde $485.000.000 COP y las Residences desde $638.000.000 COP. Consulta el plan de pagos vigente dejando tus datos.</p>" } },
+        "f4": { "type": "faq", "settings": { "question": "¿Puedo rentar mi apartamento?", "answer": "<p>Sí. El proyecto está diseñado para renta vacacional de corta estancia, con beach club y amenidades tipo resort que aumentan la ocupación.</p>" } },
+        "f5": { "type": "faq", "settings": { "question": "¿Cómo recibo más información?", "answer": "<p>Déjanos tus datos en el formulario o escríbenos por WhatsApp. Un asesor te enviará el brochure, precios y disponibilidad sin costo.</p>" } }
+      },
+      "block_order": ["f1", "f2", "f3", "f4", "f5"],
+      "settings": {
+        "background": "cream",
+        "center_head": true,
+        "eyebrow": "Resolvemos tus dudas",
+        "heading": "Preguntas frecuentes",
+        "enable_schema": true
+      }
+    },
+    "sticky": {
+      "type": "porto-sticky-cta",
+      "settings": {
+        "show_bar": true,
+        "bar_title": "Porto Sabbia · Frente al mar",
+        "bar_text": "Precios de lanzamiento por tiempo limitado",
+        "bar_cta": "Quiero info",
+        "show_whatsapp_fab": true,
+        "whatsapp": "+57 300 000 0000",
+        "whatsapp_text": "Hola, quiero información de Porto Sabbia"
+      }
+    }
+  },
+  "order": ["hero", "projects", "amenities", "invest", "location", "gallery", "lead", "faq", "sticky"]
+}

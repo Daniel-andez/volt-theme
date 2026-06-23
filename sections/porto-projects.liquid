@@ -1,0 +1,165 @@
+{%- comment -%}
+  sections/porto-projects.liquid
+  The two flagship lines — Porto Sabbia Suites & Residences — as luxury cards.
+{%- endcomment -%}
+
+{%- render 'porto-assets' -%}
+
+{%- liquid
+  assign s = section.settings
+  assign bg = s.background | default: 'ivory'
+-%}
+
+<section id="proyectos" class="porto porto-section porto-section--{{ bg }}">
+  <div class="porto__wrap">
+    <div class="porto-head {% if s.center_head %}porto-head--center{% endif %}" data-reveal>
+      {%- if s.eyebrow != blank -%}<span class="porto-overline">{{ s.eyebrow }}</span>{%- endif -%}
+      {%- if s.heading != blank -%}<h2 class="porto-display porto-head__title">{{ s.heading }}</h2>{%- endif -%}
+      {%- if s.subheading != blank -%}<p class="porto-lead">{{ s.subheading }}</p>{%- endif -%}
+    </div>
+
+    <div class="porto-projects__grid">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign highlights = block.settings.highlights | newline_to_br | split: '<br />'
+        -%}
+        <article class="porto-project" data-reveal data-reveal-delay="{{ forloop.index0 | times: 120 }}" {{ block.shopify_attributes }}>
+          <div class="porto-project__media">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 1200 | image_tag:
+                alt: block.settings.name | escape, loading: 'lazy',
+                sizes: '(max-width: 720px) 100vw, 50vw', widths: '600, 900, 1200' }}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+            {%- if block.settings.tag != blank -%}<span class="porto-project__tag">{{ block.settings.tag }}</span>{%- endif -%}
+          </div>
+
+          <div class="porto-project__body">
+            {%- if block.settings.name != blank -%}<h3 class="porto-project__name">{{ block.settings.name }}</h3>{%- endif -%}
+            {%- if block.settings.pitch != blank -%}<p class="porto-project__pitch">{{ block.settings.pitch }}</p>{%- endif -%}
+
+            <div class="porto-project__specs">
+              <div>
+                <div class="porto-project__spec-label">{{ block.settings.spec1_label | default: 'Áreas' }}</div>
+                <div class="porto-project__spec-val">{{ block.settings.spec1_value }}</div>
+              </div>
+              <div>
+                <div class="porto-project__spec-label">{{ block.settings.spec2_label | default: 'Tipologías' }}</div>
+                <div class="porto-project__spec-val">{{ block.settings.spec2_value }}</div>
+              </div>
+            </div>
+
+            {%- if highlights.size > 0 -%}
+              <ul class="porto-project__list">
+                {%- for item in highlights -%}
+                  {%- assign clean = item | strip -%}
+                  {%- if clean != blank -%}
+                    <li>
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <span>{{ clean }}</span>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+
+            {%- if block.settings.price_value != blank -%}
+              <div class="porto-project__price">
+                <div class="porto-project__price-label">{{ block.settings.price_label | default: 'Desde' }}</div>
+                <div class="porto-project__price-val">{{ block.settings.price_value }}</div>
+              </div>
+            {%- endif -%}
+
+            <div class="porto-project__actions">
+              <a href="#contacto" class="porto-btn porto-btn--gold" data-porto-scroll data-porto-project="{{ block.settings.name | escape }}">
+                {{ block.settings.cta_label | default: 'Cotizar ahora' }}
+              </a>
+              {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
+                <a href="{{ block.settings.link_url }}" class="porto-link-arrow" style="align-self:center;">
+                  {{ block.settings.link_label }}
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              {%- endif -%}
+            </div>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Porto · Proyectos",
+  "tag": "section",
+  "max_blocks": 3,
+  "settings": [
+    { "type": "select", "id": "background", "label": "Fondo", "options": [
+      { "value": "ivory", "label": "Marfil" },
+      { "value": "cream", "label": "Crema" },
+      { "value": "dark", "label": "Navy oscuro" }
+    ], "default": "ivory" },
+    { "type": "checkbox", "id": "center_head", "label": "Centrar encabezado", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Dos formas de vivir el Caribe" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Elige tu Porto Sabbia" },
+    { "type": "textarea", "id": "subheading", "label": "Subtítulo", "default": "Apartasuites pensadas para rentar y residencias amplias para vivir frente al mar. Tú eliges cómo disfrutar tu inversión." }
+  ],
+  "blocks": [
+    {
+      "type": "project",
+      "name": "Proyecto",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Imagen" },
+        { "type": "text", "id": "tag", "label": "Etiqueta", "default": "Inversión / Renta corta" },
+        { "type": "text", "id": "name", "label": "Nombre", "default": "Porto Sabbia Suites" },
+        { "type": "textarea", "id": "pitch", "label": "Descripción", "default": "Apartasuites tipo resort, diseñadas para maximizar la rentabilidad por renta vacacional en el destino turístico de mayor crecimiento de Santa Marta." },
+        { "type": "text", "id": "spec1_label", "label": "Spec 1 · etiqueta", "default": "Áreas" },
+        { "type": "text", "id": "spec1_value", "label": "Spec 1 · valor", "default": "34 – 54 m²" },
+        { "type": "text", "id": "spec2_label", "label": "Spec 2 · etiqueta", "default": "Ideal para" },
+        { "type": "text", "id": "spec2_value", "label": "Spec 2 · valor", "default": "Airbnb / rentas" },
+        { "type": "textarea", "id": "highlights", "label": "Beneficios (uno por línea)", "default": "Amoblamiento y diseño tipo resort\nPrograma de renta para propietarios\nBeach club exclusivo\nAlta valorización proyectada" },
+        { "type": "text", "id": "price_label", "label": "Etiqueta de precio", "default": "Desde" },
+        { "type": "text", "id": "price_value", "label": "Precio", "default": "$485.000.000 COP" },
+        { "type": "text", "id": "cta_label", "label": "Botón principal", "default": "Cotizar Suites" },
+        { "type": "text", "id": "link_label", "label": "Enlace secundario", "default": "Ver detalles" },
+        { "type": "url", "id": "link_url", "label": "URL enlace secundario" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Porto · Proyectos",
+      "blocks": [
+        {
+          "type": "project",
+          "settings": {
+            "tag": "Inversión / Renta corta",
+            "name": "Porto Sabbia Suites",
+            "pitch": "Apartasuites tipo resort, diseñadas para maximizar la rentabilidad por renta vacacional en el destino de mayor crecimiento de Santa Marta.",
+            "spec1_value": "34 – 54 m²",
+            "spec2_value": "Airbnb / rentas",
+            "highlights": "Amoblamiento y diseño tipo resort\nPrograma de renta para propietarios\nBeach club exclusivo\nAlta valorización proyectada",
+            "price_value": "$485.000.000 COP",
+            "cta_label": "Cotizar Suites"
+          }
+        },
+        {
+          "type": "project",
+          "settings": {
+            "tag": "Para vivir / Familias",
+            "name": "Porto Sabbia Residences",
+            "pitch": "Residencias amplias frente al mar, pensadas para familias que quieren vivir el Caribe a diario o rentar a grupos grandes con máxima rentabilidad.",
+            "spec1_value": "51 – 133 m²",
+            "spec2_label": "Ideal para",
+            "spec2_value": "Vivir / familias",
+            "highlights": "Apartamentos de 1, 2 y 3 alcobas\nAcabados premium frente al mar\nZonas sociales y beach club\nValorización por renovación de Puerto Gaira",
+            "price_value": "$638.000.000 COP",
+            "cta_label": "Cotizar Residences"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

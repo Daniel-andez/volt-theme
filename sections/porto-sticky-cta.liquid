@@ -1,0 +1,58 @@
+{%- comment -%}
+  sections/porto-sticky-cta.liquid
+  Persistent conversion bar (reveals on scroll, hides over the lead form) +
+  optional floating WhatsApp button. Output near the end of the template.
+{%- endcomment -%}
+
+{%- render 'porto-assets' -%}
+
+{%- liquid
+  assign s = section.settings
+  assign wa_clean = s.whatsapp | remove: '+' | remove: ' ' | remove: '-' | remove: '(' | remove: ')'
+-%}
+
+{%- if s.show_bar -%}
+  <div class="porto porto-sticky" data-porto-sticky>
+    <div class="porto-sticky__inner">
+      <div class="porto-sticky__text">
+        <strong>{{ s.bar_title | default: 'Porto Sabbia · Frente al mar' }}</strong>
+        <span>{{ s.bar_text | default: 'Precios de lanzamiento por tiempo limitado' }}</span>
+      </div>
+      <div class="porto-sticky__actions">
+        {%- if s.whatsapp != blank -%}
+          <a href="https://wa.me/{{ wa_clean }}?text={{ s.whatsapp_text | default: 'Hola, quiero información de Porto Sabbia' | url_encode }}"
+             class="porto-btn porto-btn--ghost" target="_blank" rel="noopener" style="color:var(--porto-cream);">
+            {% render 'porto-icon', icon: 'whatsapp', size: 18 %}<span class="porto-hide-sm"> WhatsApp</span>
+          </a>
+        {%- endif -%}
+        <a href="#contacto" class="porto-btn porto-btn--gold" data-porto-scroll>{{ s.bar_cta | default: 'Quiero info' }}</a>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{%- if s.show_whatsapp_fab and s.whatsapp != blank -%}
+  <a href="https://wa.me/{{ wa_clean }}?text={{ s.whatsapp_text | default: 'Hola, quiero información de Porto Sabbia' | url_encode }}"
+     class="porto porto-wa" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+    {% render 'porto-icon', icon: 'whatsapp', size: 28 %}
+  </a>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Porto · CTA flotante",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Barra fija inferior" },
+    { "type": "checkbox", "id": "show_bar", "label": "Mostrar barra de conversión", "default": true },
+    { "type": "text", "id": "bar_title", "label": "Título", "default": "Porto Sabbia · Frente al mar" },
+    { "type": "text", "id": "bar_text", "label": "Texto", "default": "Precios de lanzamiento por tiempo limitado" },
+    { "type": "text", "id": "bar_cta", "label": "Botón", "default": "Quiero info" },
+    { "type": "header", "content": "WhatsApp" },
+    { "type": "checkbox", "id": "show_whatsapp_fab", "label": "Mostrar botón flotante de WhatsApp", "default": true },
+    { "type": "text", "id": "whatsapp", "label": "Número de WhatsApp (con indicativo)", "default": "+57 300 000 0000" },
+    { "type": "text", "id": "whatsapp_text", "label": "Mensaje prellenado", "default": "Hola, quiero información de Porto Sabbia" }
+  ],
+  "presets": [{ "name": "Porto · CTA flotante" }]
+}
+{% endschema %}

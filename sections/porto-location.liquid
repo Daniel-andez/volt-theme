@@ -1,0 +1,103 @@
+{%- comment -%}
+  sections/porto-location.liquid
+  Location storytelling + map embed + proximity (points of interest).
+{%- endcomment -%}
+
+{%- render 'porto-assets' -%}
+
+{%- liquid
+  assign s = section.settings
+  assign bg = s.background | default: 'cream'
+  assign map_q = s.map_query | default: 'Playa Salguero, Santa Marta' | url_encode
+-%}
+
+<section id="ubicacion" class="porto porto-section porto-section--{{ bg }}">
+  <div class="porto__wrap">
+    <div class="porto-head" data-reveal>
+      {%- if s.eyebrow != blank -%}<span class="porto-overline">{{ s.eyebrow }}</span>{%- endif -%}
+      {%- if s.heading != blank -%}<h2 class="porto-display porto-head__title">{{ s.heading }}</h2>{%- endif -%}
+      {%- if s.subheading != blank -%}<p class="porto-lead">{{ s.subheading }}</p>{%- endif -%}
+    </div>
+
+    <div class="porto-location__grid">
+      <div data-reveal>
+        <div class="porto-poi">
+          {%- for block in section.blocks -%}
+            <div class="porto-poi__item" {{ block.shopify_attributes }}>
+              <span class="porto-poi__name">
+                {% render 'porto-icon', icon: block.settings.icon, size: 20 %}
+                {{ block.settings.name }}
+              </span>
+              <span class="porto-poi__dist">{{ block.settings.distance }}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+        {%- if s.cta_label != blank -%}
+          <div style="margin-top:1.8rem;">
+            <a href="{{ s.cta_anchor | default: '#contacto' }}" class="porto-btn porto-btn--dark" data-porto-scroll>{{ s.cta_label }}</a>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="porto-location__map" data-reveal data-reveal-delay="120">
+        <iframe
+          title="Ubicación de Porto Sabbia"
+          src="https://www.google.com/maps?q={{ map_q }}&z={{ s.map_zoom | default: 14 }}&output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Porto · Ubicación",
+  "tag": "section",
+  "settings": [
+    { "type": "select", "id": "background", "label": "Fondo", "options": [
+      { "value": "cream", "label": "Crema" },
+      { "value": "ivory", "label": "Marfil" }
+    ], "default": "cream" },
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Bahía de Puerto Gaira · Santa Marta" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "El nuevo epicentro del Caribe colombiano" },
+    { "type": "textarea", "id": "subheading", "label": "Subtítulo", "default": "Junto a Playa Salguero, en una bahía en plena renovación urbana. Serenidad residencial a minutos de la vida turística y comercial de la ciudad." },
+    { "type": "header", "content": "Mapa" },
+    { "type": "text", "id": "map_query", "label": "Lugar (dirección o nombre)", "default": "Playa Salguero, Santa Marta" },
+    { "type": "range", "id": "map_zoom", "label": "Zoom", "min": 10, "max": 18, "step": 1, "default": 14 },
+    { "type": "header", "content": "Llamado a la acción" },
+    { "type": "text", "id": "cta_label", "label": "Botón", "default": "Agenda una visita guiada" },
+    { "type": "text", "id": "cta_anchor", "label": "Ancla del botón", "default": "#contacto" }
+  ],
+  "blocks": [
+    {
+      "type": "poi",
+      "name": "Punto de interés",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icono", "options": [
+          { "value": "beach", "label": "Playa" },
+          { "value": "wave", "label": "Mar" },
+          { "value": "plane", "label": "Aeropuerto" },
+          { "value": "restaurant", "label": "Gastronomía" },
+          { "value": "location", "label": "Ubicación" },
+          { "value": "home", "label": "Zona residencial" },
+          { "value": "star", "label": "Atractivo" }
+        ], "default": "beach" },
+        { "type": "text", "id": "name", "label": "Nombre", "default": "Playa Salguero" },
+        { "type": "text", "id": "distance", "label": "Distancia / tiempo", "default": "2 min" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Porto · Ubicación",
+      "blocks": [
+        { "type": "poi", "settings": { "icon": "beach", "name": "Playa Salguero", "distance": "2 min" } },
+        { "type": "poi", "settings": { "icon": "star", "name": "El Rodadero", "distance": "8 min" } },
+        { "type": "poi", "settings": { "icon": "plane", "name": "Aeropuerto Simón Bolívar", "distance": "15 min" } },
+        { "type": "poi", "settings": { "icon": "restaurant", "name": "Restaurantes y comercio", "distance": "5 min" } },
+        { "type": "poi", "settings": { "icon": "location", "name": "Centro histórico de Santa Marta", "distance": "20 min" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

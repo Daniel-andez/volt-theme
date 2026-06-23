@@ -1,0 +1,14 @@
+{%- comment -%}
+  snippets/porto-assets.liquid
+  Loads the Porto Sabbia landing CSS + JS. Rendered by every porto-* section so
+  the page styles itself regardless of which sections are present or reordered.
+  Duplicate <link> tags resolve to one download; the JS is idempotent.
+{%- endcomment -%}
+{%- comment -%} Luxury display serif (graceful fallback to Georgia if blocked) {%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap">
+
+{{ 'porto-sabbia.css' | asset_url | stylesheet_tag }}
+<script>document.documentElement.classList.add('porto-js');</script>
+<script src="{{ 'porto-sabbia.js' | asset_url }}" defer></script>

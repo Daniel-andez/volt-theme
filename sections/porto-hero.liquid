@@ -1,0 +1,205 @@
+{%- comment -%}
+  sections/porto-hero.liquid
+  Cinematic full-bleed hero for the Porto Sabbia luxury landing page.
+  Includes JSON-LD structured data (ApartmentComplex + developer) for SEO.
+{%- endcomment -%}
+
+{%- render 'porto-assets' -%}
+
+{%- liquid
+  assign s = section.settings
+  assign stat_blocks  = section.blocks | where: 'type', 'stat'
+  assign trust_blocks = section.blocks | where: 'type', 'trust'
+-%}
+
+<section class="porto porto-hero" aria-label="{{ s.title | default: 'Porto Sabbia' | strip_html }}">
+  <div class="porto-hero__media">
+    {%- if s.video != blank -%}
+      <video autoplay muted loop playsinline
+        {% if s.image != blank %}poster="{{ s.image | image_url: width: 1920 }}"{% endif %}>
+        <source src="{{ s.video.sources[1].url }}" type="{{ s.video.sources[1].mime_type }}">
+      </video>
+    {%- elsif s.image != blank -%}
+      {{ s.image | image_url: width: 2400 | image_tag:
+        alt: s.title | default: 'Porto Sabbia' | strip_html | escape,
+        loading: 'eager', fetchpriority: 'high', sizes: '100vw',
+        widths: '768, 1200, 1600, 2000, 2400' }}
+    {%- else -%}
+      <div style="position:absolute;inset:0;background:linear-gradient(160deg,#13294a,#081627);"></div>
+    {%- endif -%}
+  </div>
+  <div class="porto-hero__scrim"></div>
+
+  <div class="porto-hero__inner">
+    <div class="porto-hero__content">
+      {%- if s.eyebrow != blank -%}
+        <p class="porto-overline porto-hero__overline" data-reveal>{{ s.eyebrow }}</p>
+      {%- endif -%}
+
+      {%- if s.title != blank -%}
+        <h1 class="porto-hero__title" data-reveal data-reveal-delay="80">{{ s.title }}</h1>
+      {%- endif -%}
+
+      {%- if s.subheading != blank -%}
+        <p class="porto-hero__sub" data-reveal data-reveal-delay="160">{{ s.subheading }}</p>
+      {%- endif -%}
+
+      <div class="porto-hero__ctas" data-reveal data-reveal-delay="240">
+        {%- if s.cta_label != blank -%}
+          <a href="{{ s.cta_anchor | default: '#contacto' }}" class="porto-btn porto-btn--gold porto-btn--lg" data-porto-scroll>{{ s.cta_label }}</a>
+        {%- endif -%}
+        {%- if s.cta2_label != blank -%}
+          <a href="{{ s.cta2_anchor | default: '#proyectos' }}" class="porto-btn porto-btn--ghost porto-btn--lg" data-porto-scroll>{{ s.cta2_label }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if stat_blocks.size > 0 -%}
+      <div class="porto-hero__aside" data-reveal data-reveal-delay="320">
+        {%- for block in stat_blocks -%}
+          <div class="porto-hero__stat" {{ block.shopify_attributes }}>
+            <div class="porto-hero__stat-num">{{ block.settings.number }}</div>
+            <div class="porto-hero__stat-label">{{ block.settings.label }}</div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if s.show_scroll_cue -%}
+    <div class="porto-hero__scroll" aria-hidden="true">{{ s.scroll_label | default: 'Descubre' }}<span></span></div>
+  {%- endif -%}
+</section>
+
+{%- if trust_blocks.size > 0 -%}
+  <div class="porto porto-trust">
+    <div class="porto-trust__row">
+      {%- for block in trust_blocks -%}
+        <span class="porto-trust__item" {{ block.shopify_attributes }}>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          {{ block.settings.text }}
+        </span>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{%- comment -%} ── Structured data (SEO) ── {%- endcomment -%}
+{%- if s.enable_schema -%}
+  {%- liquid
+    assign schema_img = s.image | image_url: width: 1600
+    assign price_low  = s.schema_price_low
+    assign price_high = s.schema_price_high
+  -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ApartmentComplex",
+        "name": {{ s.schema_name | default: 'Porto Sabbia' | json }},
+        "description": {{ s.schema_desc | default: s.subheading | strip_html | json }},
+        {% if schema_img %}"image": {{ schema_img | prepend: 'https:' | json }},{% endif %}
+        "url": {{ canonical_url | json }},
+        "numberOfAccommodationUnits": {{ s.schema_units | default: 0 | json }},
+        "petsAllowed": true,
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": {{ s.schema_locality | default: 'Santa Marta' | json }},
+          "addressRegion": {{ s.schema_region | default: 'Magdalena' | json }},
+          "addressCountry": "CO"
+        },
+        "amenityFeature": [
+          { "@type": "LocationFeatureSpecification", "name": "Beach club", "value": true },
+          { "@type": "LocationFeatureSpecification", "name": "Frente al mar", "value": true }
+        ]
+      },
+      {
+        "@type": "Organization",
+        "name": {{ s.schema_developer | default: 'Constructora Jiménez' | json }},
+        "url": {{ canonical_url | json }}
+        {% if s.schema_phone != blank %},"telephone": {{ s.schema_phone | json }}{% endif %}
+      }
+      {% if price_low != blank %},
+      {
+        "@type": "Offer",
+        "name": {{ s.schema_name | default: 'Porto Sabbia' | json }},
+        "priceCurrency": "COP",
+        "lowPrice": {{ price_low | json }},
+        "highPrice": {{ price_high | default: price_low | json }},
+        "url": {{ canonical_url | json }}
+      }{% endif %}
+    ]
+  }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Porto · Hero",
+  "tag": "section",
+  "class": "porto-section-wrap",
+  "settings": [
+    { "type": "header", "content": "Contenido" },
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Santa Marta · Frente al mar Caribe" },
+    { "type": "inline_richtext", "id": "title", "label": "Título (usa cursiva para resaltar)", "default": "Vive y <em>valoriza</em> frente al mar" },
+    { "type": "textarea", "id": "subheading", "label": "Subtítulo", "default": "Porto Sabbia reúne Suites y Residences de lujo en la Bahía de Puerto Gaira, junto a Playa Salguero. Un activo que disfrutas y que se valoriza." },
+    { "type": "header", "content": "Botones" },
+    { "type": "text", "id": "cta_label", "label": "Botón principal", "default": "Quiero información" },
+    { "type": "text", "id": "cta_anchor", "label": "Ancla / enlace principal", "default": "#contacto" },
+    { "type": "text", "id": "cta2_label", "label": "Botón secundario", "default": "Ver proyectos" },
+    { "type": "text", "id": "cta2_anchor", "label": "Ancla / enlace secundario", "default": "#proyectos" },
+    { "type": "header", "content": "Fondo" },
+    { "type": "image_picker", "id": "image", "label": "Imagen de fondo" },
+    { "type": "video", "id": "video", "label": "Video de fondo (opcional, prevalece sobre la imagen)" },
+    { "type": "header", "content": "Indicador de scroll" },
+    { "type": "checkbox", "id": "show_scroll_cue", "label": "Mostrar indicador de scroll", "default": true },
+    { "type": "text", "id": "scroll_label", "label": "Texto del indicador", "default": "Descubre" },
+    { "type": "header", "content": "SEO · Datos estructurados (JSON-LD)" },
+    { "type": "paragraph", "content": "Mejoran cómo Google entiende el proyecto. Verifica los datos antes de publicar." },
+    { "type": "checkbox", "id": "enable_schema", "label": "Activar datos estructurados", "default": true },
+    { "type": "text", "id": "schema_name", "label": "Nombre del proyecto", "default": "Porto Sabbia · Suites & Residences" },
+    { "type": "textarea", "id": "schema_desc", "label": "Descripción para SEO" },
+    { "type": "text", "id": "schema_developer", "label": "Constructora / desarrollador", "default": "Constructora Jiménez" },
+    { "type": "text", "id": "schema_locality", "label": "Ciudad", "default": "Santa Marta" },
+    { "type": "text", "id": "schema_region", "label": "Departamento / región", "default": "Magdalena" },
+    { "type": "text", "id": "schema_phone", "label": "Teléfono de contacto", "default": "+57 300 000 0000" },
+    { "type": "number", "id": "schema_units", "label": "N.º de unidades (aprox.)" },
+    { "type": "text", "id": "schema_price_low", "label": "Precio desde (COP, solo números)", "default": "485000000" },
+    { "type": "text", "id": "schema_price_high", "label": "Precio hasta (COP, solo números)", "default": "1500000000" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Estadística (hero)",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "number", "label": "Número", "default": "34–133 m²" },
+        { "type": "text", "id": "label", "label": "Etiqueta", "default": "Áreas disponibles" }
+      ]
+    },
+    {
+      "type": "trust",
+      "name": "Sello de confianza",
+      "limit": 5,
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "Entrega proyectada" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Porto · Hero",
+      "blocks": [
+        { "type": "stat", "settings": { "number": "2", "label": "Líneas: Suites & Residences" } },
+        { "type": "stat", "settings": { "number": "34–133 m²", "label": "Áreas disponibles" } },
+        { "type": "stat", "settings": { "number": "100 m", "label": "A Playa Salguero" } },
+        { "type": "trust", "settings": { "text": "Frente al mar Caribe" } },
+        { "type": "trust", "settings": { "text": "Beach club exclusivo" } },
+        { "type": "trust", "settings": { "text": "Ideal para renta vacacional" } },
+        { "type": "trust", "settings": { "text": "Respaldo Constructora Jiménez" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

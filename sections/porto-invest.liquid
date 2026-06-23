@@ -1,0 +1,92 @@
+{%- comment -%}
+  sections/porto-invest.liquid
+  Investment thesis + animated KPI counters. Strong lead-gen driver.
+{%- endcomment -%}
+
+{%- render 'porto-assets' -%}
+
+{%- assign s = section.settings -%}
+{%- assign benefits = s.benefits | newline_to_br | split: '<br />' -%}
+
+<section class="porto porto-section porto-section--dark">
+  <div class="porto__wrap">
+    <div class="porto-invest__grid">
+      <div data-reveal>
+        {%- if s.eyebrow != blank -%}<span class="porto-overline">{{ s.eyebrow }}</span>{%- endif -%}
+        {%- if s.heading != blank -%}<h2 class="porto-display" style="margin:1.1rem 0 1.2rem;">{{ s.heading }}</h2>{%- endif -%}
+        {%- if s.body != blank -%}<p class="porto-lead">{{ s.body }}</p>{%- endif -%}
+
+        {%- if benefits.size > 0 -%}
+          <ul class="porto-invest__list">
+            {%- for item in benefits -%}
+              {%- assign clean = item | strip -%}
+              {%- if clean != blank -%}
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M15 5L7 13l-4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>{{ clean }}</span>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if s.cta_label != blank -%}
+          <a href="{{ s.cta_anchor | default: '#contacto' }}" class="porto-btn porto-btn--gold" data-porto-scroll>{{ s.cta_label }}</a>
+        {%- endif -%}
+      </div>
+
+      <div class="porto-stats" data-reveal data-reveal-delay="120">
+        {%- for block in section.blocks -%}
+          <div class="porto-stat" {{ block.shopify_attributes }}>
+            <div class="porto-stat__num"
+              data-count-to="{{ block.settings.number }}"
+              data-count-prefix="{{ block.settings.prefix }}"
+              data-count-suffix="{{ block.settings.suffix }}"
+              data-count-decimals="{{ block.settings.decimals }}">{{ block.settings.prefix }}0{{ block.settings.suffix }}</div>
+            <div class="porto-stat__label">{{ block.settings.label }}</div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Porto · Inversión",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Antetítulo", "default": "Una decisión inteligente" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "No es solo un apartamento. Es un activo que trabaja para ti." },
+    { "type": "textarea", "id": "body", "label": "Texto", "default": "Puerto Gaira vive una renovación urbana que la convierte en el nuevo epicentro turístico de Santa Marta. Comprar hoy en Porto Sabbia es asegurar precio de lanzamiento y máxima valorización." },
+    { "type": "textarea", "id": "benefits", "label": "Beneficios (uno por línea)", "default": "Renta vacacional en uno de los destinos de mayor demanda\nValorización por la renovación de la bahía de Puerto Gaira\nPrograma de administración para rentar sin complicaciones\nPrecio preferencial en etapa de lanzamiento" },
+    { "type": "text", "id": "cta_label", "label": "Botón", "default": "Quiero proyectar mi rentabilidad" },
+    { "type": "text", "id": "cta_anchor", "label": "Ancla del botón", "default": "#contacto" }
+  ],
+  "blocks": [
+    {
+      "type": "kpi",
+      "name": "Indicador",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "number", "label": "Número (solo dígitos)", "default": "100", "info": "Se anima de 0 a este valor." },
+        { "type": "text", "id": "prefix", "label": "Prefijo", "default": "" },
+        { "type": "text", "id": "suffix", "label": "Sufijo", "default": "%" },
+        { "type": "text", "id": "decimals", "label": "Decimales", "default": "0" },
+        { "type": "text", "id": "label", "label": "Etiqueta", "default": "Ocupación en temporada" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Porto · Inversión",
+      "blocks": [
+        { "type": "kpi", "settings": { "number": "485", "prefix": "$", "suffix": "M", "decimals": "0", "label": "Precio desde (COP) en Suites" } },
+        { "type": "kpi", "settings": { "number": "133", "prefix": "", "suffix": " m²", "decimals": "0", "label": "Hasta, en Residences" } },
+        { "type": "kpi", "settings": { "number": "100", "prefix": "", "suffix": " m", "decimals": "0", "label": "A Playa Salguero" } },
+        { "type": "kpi", "settings": { "number": "365", "prefix": "", "suffix": "", "decimals": "0", "label": "Días de destino turístico" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
