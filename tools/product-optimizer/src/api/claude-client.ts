@@ -8,7 +8,32 @@ import type { ShopifyProduct, ClaudeOptimization } from '../types/index.js';
 const client = new Anthropic({ apiKey: config.anthropic.apiKey });
 
 function buildSystemPrompt(): string {
-  const { name, voice } = config.brand;
+  const { name, voice, category } = config.brand;
+
+  if (category === 'skincare') {
+    return `Eres el director de contenido de ${name}, ${voice}.
+Tu lenguaje es limpio, educativo, honesto y cálido — como un dermatólogo de confianza, no como un anuncio.
+
+REGLAS ABSOLUTAS — no hay excepciones:
+1. NUNCA inventes ingredientes activos que no estén en los datos del producto.
+2. NUNCA hagas afirmaciones médicas no respaldadas: "cura", "trata", "elimina permanentemente",
+   "dermatológicamente comprobado" (salvo que el producto lo indique explícitamente).
+3. NUNCA cambies el nombre del producto sin explicar el motivo en risk_notes.
+4. EVITA: "milagroso", "instantáneo", "garantizado", "rejuvenece", "borra arrugas",
+   "la mejor calidad", "precio bajo", "oferta", "compra ahora".
+5. USA vocabulario skincare: activos, textura, hidratación, barrera cutánea, absorción,
+   luminosidad, manchas, poros, microbioma, pH, fórmula, concentración, piel sensible,
+   tipo de piel, rutina, serum, emoliente, humectante, exfoliante, retinol, SPF.
+6. La descripción debe explicar QUÉ hace el producto y PARA QUIÉN es, con honestidad clínica.
+7. seo_title: MÁXIMO 60 caracteres (cuenta exactamente, sin excepción).
+8. seo_description: MÁXIMO 160 caracteres (cuenta exactamente, sin excepción).
+9. alt_texts: uno por imagen, describir el producto (nombre, formato, packaging) y contexto.
+   Ejemplo: "Sérum vitamina C ${name} 30ml — frasco ámbar con gotero sobre superficie blanca".
+10. El HTML de description solo puede usar: <p>, <br>, <strong>, <em>, <ul>, <li>.
+11. Responde ÚNICAMENTE con el JSON válido. Sin texto adicional. Sin markdown.`;
+  }
+
+  // Default: fashion
   return `Eres el director creativo de ${name}, ${voice}.
 Tu lenguaje es editorial, sofisticado, atemporal y cercano. Nunca genérico ni de fast-fashion.
 
@@ -58,6 +83,14 @@ function buildProductPrompt(product: ShopifyProduct): string {
     })),
   };
 
+  const isSkincare = config.brand.category === 'skincare';
+  const descInstruction = isSkincare
+    ? 'HTML educativo y honesto: qué hace, para qué tipo de piel, cómo se usa, 80-250 palabras'
+    : 'HTML editorial, 100-300 palabras';
+  const colorInstruction = isSkincare
+    ? 'presentaciones disponibles (tamaños, formatos), sino array vacío'
+    : 'nombres de color refinados si hay opción de color, sino array vacío';
+
   return `Analiza este producto de ${config.brand.name} y genera las optimizaciones de copy y SEO.
 
 DATOS DEL PRODUCTO:
@@ -66,12 +99,12 @@ ${JSON.stringify(productData, null, 2)}
 Responde con este JSON exacto (sin markdown, sin texto antes o después):
 {
   "title_suggested": "string — título refinado, máx 70 chars",
-  "description_html_suggested": "string — HTML editorial, 100-300 palabras",
+  "description_html_suggested": "string — ${descInstruction}",
   "seo_title": "string — MÁXIMO 60 caracteres, incluye marca",
   "seo_description": "string — MÁXIMO 160 caracteres, evocador y factual",
   "tags_suggested": ["array de tags SEO relevantes en español"],
   "alt_texts": ["un string por cada imagen en el orden dado arriba"],
-  "color_name_suggestions": ["nombres de color refinados si hay opción de color, sino array vacío"],
+  "color_name_suggestions": ["${colorInstruction}"],
   "collection_notes": "string — sugerencias de colecciones donde ubicar el producto",
   "risk_notes": "string — advertencias sobre cambios propuestos, especialmente si se sugiere renombrar"
 }`;

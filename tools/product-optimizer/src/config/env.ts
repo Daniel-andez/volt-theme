@@ -33,7 +33,8 @@ export const config = {
   brand: {
     name: optionalEnv('BRAND_NAME', 'Mi Tienda'),
     slug: optionalEnv('BRAND_SLUG', 'mi-tienda'),
-    voice: optionalEnv('BRAND_VOICE', 'una marca de moda premium'),
+    voice: optionalEnv('BRAND_VOICE', 'una marca premium'),
+    category: optionalEnv('BRAND_CATEGORY', 'fashion'), // 'fashion' | 'skincare'
   },
   targets: {
     productIds: process.env.TARGET_PRODUCT_IDS
