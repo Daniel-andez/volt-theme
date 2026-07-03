@@ -47,8 +47,16 @@ async function main() {
   logger.info('Modo: PREVIEW');
   logger.separator();
 
-  const handleArgs = process.argv.slice(2).filter(a => !a.startsWith('--'));
-  const targetHandles = handleArgs.length > 0 ? handleArgs : config.targets.handles;
+  // Acepta handles como flag (--handles=a,b,c) igual que apply/fix-images,
+  // o como argumentos sueltos (npm run preview -- a b c).
+  const args = process.argv.slice(2);
+  const handlesFlag = args.find(a => a.startsWith('--handles='));
+  const positional = args.filter(a => !a.startsWith('--'));
+  const targetHandles = handlesFlag
+    ? handlesFlag.replace('--handles=', '').split(',').map(s => s.trim()).filter(Boolean)
+    : positional.length > 0
+      ? positional
+      : config.targets.handles;
 
   const auditResults = await loadOrRunAudit(targetHandles);
 
