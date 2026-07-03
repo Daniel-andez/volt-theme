@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "token": "tsx src/scripts/token.ts",
+    "handles": "tsx src/scripts/list-handles.ts",
     "fix-images": "tsx src/scripts/fix-images.ts",
     "audit": "tsx src/scripts/audit.ts",
     "preview": "tsx src/scripts/preview.ts",
