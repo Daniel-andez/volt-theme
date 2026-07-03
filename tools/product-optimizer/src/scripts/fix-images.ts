@@ -104,10 +104,15 @@ async function main() {
   if (opts.dryRun) logger.warn('MODO DRY-RUN — no se hará ningún cambio, solo reporte');
   logger.separator();
 
-  let backups = loadLatestBackups().filter(b => b.product.status === 'ACTIVE');
-  if (opts.handles) backups = backups.filter(b => opts.handles!.includes(b.product.handle));
+  // Con handles explícitos: procesa esos sin importar estado. Sin handles: solo activos.
+  let backups = loadLatestBackups();
+  if (opts.handles) {
+    backups = backups.filter(b => opts.handles!.includes(b.product.handle));
+  } else {
+    backups = backups.filter(b => b.product.status === 'ACTIVE');
+  }
 
-  logger.info(`Productos activos a revisar: ${backups.length}`);
+  logger.info(`Productos a revisar: ${backups.length}`);
   logger.separator();
 
   let fixed = 0;

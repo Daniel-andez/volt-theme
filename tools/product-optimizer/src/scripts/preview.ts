@@ -28,9 +28,11 @@ async function loadOrRunAudit(targetHandles: string[]): Promise<AuditResult[]> {
   let products: ShopifyProduct[];
 
   if (targetHandles.length > 0) {
-    products = (
-      await Promise.all(targetHandles.map(h => fetchProductByHandle(h)))
-    ).filter((p): p is ShopifyProduct => p !== null);
+    const fetched = await Promise.all(targetHandles.map(h => fetchProductByHandle(h)));
+    fetched.forEach((p, i) => {
+      if (!p) logger.warn(`No se encontró el producto con handle "${targetHandles[i]}" — verifica el handle exacto en Shopify (abajo del producto, en "Listado en motores de búsqueda")`);
+    });
+    products = fetched.filter((p): p is ShopifyProduct => p !== null);
   } else {
     products = await fetchAllProducts('status:active');
   }
@@ -55,11 +57,11 @@ async function main() {
     process.exit(0);
   }
 
-  // Filter if target handles specified
-  const filtered = (targetHandles.length > 0
+  // Si nombras handles explícitamente, se procesan sin importar el estado
+  // (para optimizar borradores puntuales). Sin handles: solo productos activos.
+  const filtered = targetHandles.length > 0
     ? auditResults.filter(r => targetHandles.includes(r.product.handle))
-    : auditResults
-  ).filter(r => r.product.status === 'ACTIVE');
+    : auditResults.filter(r => r.product.status === 'ACTIVE');
 
   logger.info(`Generando preview para ${filtered.length} productos...`);
   logger.info('Esto puede tomar varios minutos (Claude + procesamiento de imágenes).');
